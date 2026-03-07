@@ -1,0 +1,237 @@
+{
+    "layout": {
+        "systemTitle": "TEKOSOFT",
+        "systemSubtitle": "S.A.S. SYSTEM",
+        "nav": {
+            "home": "Home Command",
+            "identity": "Identity",
+            "systems": "Systems",
+            "quality": "Quality",
+            "expertise": "Expertise"
+        },
+        "statusOnline": "SYS: ONLINE",
+        "footer": {
+            "coordinates": "COORDINATES:",
+            "coordValue": "34.0522° N, 118.2437° W",
+            "sysStatus": "SYS.STATUS",
+            "optimal": "OPTIMAL"
+        }
+    },
+    "home": {
+        "protocol": "PROTOCOL V.2.04",
+        "title1": "Engineer",
+        "title2": "The Future",
+        "subtitle": "We build custom software and integrate artificial intelligence and business intelligence into your systems to automate processes and improve your company's performance.",
+        "initProject": "Initialize Project",
+        "viewCaps": "VIEW CAPABILITIES",
+        "metrics": {
+            "latency": "LATENCY",
+            "latencyValue": "12ms",
+            "uptime": "UPTIME",
+            "uptimeValue": "99.99%",
+            "encryption": "ENCRYPTION",
+            "encryptionValue": "AES-256"
+        },
+        "liveStats": {
+            "service1": "SOFTWARE ENGINEERING",
+            "service1Title": "Custom Software",
+            "service1Desc": "Web, Mobile & Desktop",
+            "service2": "ARTIFICIAL INTELLIGENCE",
+            "service2Title": "Integrated AI",
+            "service2Desc": "Autonomous Agents",
+            "service3": "BUSINESS INTELLIGENCE",
+            "service3Title": "BI Ecosystems",
+            "service3Desc": "Data Dashboards",
+            "service4": "STAFF AUGMENTATION",
+            "service4Title": "Elite Talent",
+            "service4Desc": "Senior Dev Teams",
+            "service5": "STRATEGIC CONSULTING",
+            "service5Title": "Tech Consulting",
+            "service5Desc": "Digital Transformation"
+        }
+    },
+    "identity": {
+        "secLabel": "SEC_02 // IDENTITY",
+        "loaded": "Identity Matrix Loaded",
+        "title1": "Code With",
+        "title2": "Conscience",
+        "description": "Core operating protocols active. We don't just build systems; we architect the ethical backbone of the digital frontier.",
+        "cards": {
+            "precision": {
+                "title": "Precision Engineering",
+                "desc": "Zero-tolerance for technical debt. We build infrastructure designed to survive the velocity of tomorrow's demands.",
+                "status": "STATUS: OPTIMAL"
+            },
+            "defense": {
+                "title": "Ironclad Defense",
+                "desc": "Enterprise-grade security architecture. We treat every data packet as a high-value asset requiring military-grade protection.",
+                "status": "STATUS: SECURE"
+            },
+            "symbiosis": {
+                "title": "User Symbiosis",
+                "desc": "Technology designed for biological interfaces. We bridge the gap between binary logic and human intuition.",
+                "status": "STATUS: CONNECTED"
+            },
+            "openSource": {
+                "title": "Open Source Logic",
+                "desc": "Clear communication channels established. No black boxes, just transparent code and honest architectural decisions.",
+                "status": "STATUS: VISIBLE"
+            }
+        },
+        "scroll": "SCROLL_VELOCITY: 100%"
+    },
+    "systems": {
+        "secLabel": "[ SERVICES: ACTIVE ]",
+        "title1": "Our",
+        "title2": "Services",
+        "subtitle": "Software development, AI integration & business automation",
+        "intro": "We build new software or integrate into your existing systems — adding artificial intelligence, business intelligence and process automation — to improve your company's performance.",
+        "cards": {
+            "engineering": {
+                "status": "MODULE_01\nSTATUS: ACTIVE",
+                "title": "SOFTWARE DEVELOPMENT",
+                "desc": "Custom software and integration with existing systems. We build web, mobile and desktop applications, or add new features and connect new modules to what you already have.",
+                "footer": "CUSTOM_SOFTWARE"
+            },
+            "ai": {
+                "processing": "PROCESSING...",
+                "live": "● LIVE",
+                "title": "ARTIFICIAL INTELLIGENCE",
+                "desc": "AI integration into new or existing software. Intelligent process automation with Machine Learning, natural language processing and autonomous agents."
+            },
+            "bi": {
+                "status": "MODULE_03\nSTATUS: ACTIVE",
+                "title": "DATA ANALYTICS & BI",
+                "desc": "Business intelligence and enterprise data analytics. Dashboards, real-time reports and predictive models to improve decision-making and business performance.",
+                "footer": "BUSINESS_INTELLIGENCE"
+            },
+            "staff": {
+                "status": "MODULE_04\nSTATUS: ACTIVE",
+                "title": "STAFF AUGMENTATION",
+                "desc": "Expert development teams that integrate into your company. Software development outsourcing with senior developers on a flexible and scalable basis.",
+                "footer": "DEV_OUTSOURCING"
+            },
+            "consulting": {
+                "status": "MODULE_05\nSTATUS: ACTIVE",
+                "title": "TECHNOLOGY CONSULTING",
+                "desc": "Digital transformation and strategic consulting. We define the architecture and roadmap to modernize your systems and digitize your business processes.",
+                "footer": "DIGITAL_TRANSFORMATION"
+            }
+        }
+    },
+    "quality": {
+        "secLabel": "System Integrity Check",
+        "title1": "Quality",
+        "title2": "Protocol",
+        "description": "Our 5-step certification process ensures every deployment meets the highest standards of engineering rigor and operational security.",
+        "steps": {
+            "01": {
+                "step": "// STEP_01",
+                "title": "Strategic Design",
+                "desc": "Detailed blueprinting of system architecture. We define the constraints, scalability requirements, and tech stack before a single line of code is written.",
+                "tags": [
+                    "#Blueprint",
+                    "#Scope"
+                ]
+            },
+            "02": {
+                "step": "// STEP_02",
+                "title": "Foundation Build",
+                "desc": "Establishing the core infrastructure. Server environments, database schemas, and CI/CD pipelines are rigged for high-velocity deployment.",
+                "tags": [
+                    "#Infra",
+                    "#DevOps"
+                ]
+            },
+            "03": {
+                "step": "// STEP_03",
+                "title": "Integrity Check",
+                "desc": "Rigorous stress testing of data models. We simulate high-load scenarios to ensure data consistency, security, and transaction reliability.",
+                "tags": [
+                    "#Security",
+                    "#StressTest"
+                ]
+            },
+            "04": {
+                "step": "// STEP_04",
+                "title": "Compliance Audit",
+                "desc": "Ensuring all software outputs meet industry-specific regulations (GDPR, HIPAA, SOC2) and financial reporting standards.",
+                "tags": [
+                    "#GDPR",
+                    "#Legal"
+                ]
+            },
+            "05": {
+                "step": "// STEP_05_FINAL",
+                "title": "Deployment Authorization",
+                "desc": "Final code freeze and green-light for global rollout. The system is live, monitored, and fully operational.",
+                "btn": "Initiate Launch"
+            }
+        }
+    },
+    "seo": {
+        "home": {
+            "tabTitle": "Software, AI & Business Intelligence",
+            "title": "Custom Software Development with AI & Business Intelligence | Tekosoft",
+            "description": "We build custom software and integrate artificial intelligence, business intelligence and process automation into new or existing systems to improve your company's performance."
+        },
+        "identity": {
+            "tabTitle": "About",
+            "title": "Custom Software Development Company | Tekosoft",
+            "description": "We are a software engineering company specialized in AI integration, data analytics, business intelligence and process automation for enterprises."
+        },
+        "systems": {
+            "tabTitle": "Services",
+            "title": "Software Development, AI Integration & Data Analytics | Tekosoft",
+            "description": "Custom software development, artificial intelligence integration, data analytics and business intelligence, process automation and staff augmentation."
+        },
+        "quality": {
+            "tabTitle": "Process",
+            "title": "Software Development Process with AI Integration | Tekosoft",
+            "description": "Our 5-step process to develop software with artificial intelligence and business intelligence: strategic design, build, testing, compliance audit and deployment."
+        },
+        "expertise": {
+            "tabTitle": "Technologies",
+            "title": "Technologies for Software Development & AI Integration | Tekosoft",
+            "description": "Full technology stack for software development, AI and machine learning integration, data analytics, process automation, cloud infrastructure and DevOps."
+        },
+        "ogImage": "https://tekosoft.io/og-image.png",
+        "siteName": "Tekosoft S.A.S."
+    },
+    "expertise": {
+        "secLabel": "SYS_ID: 05 // DEPLOYED CAPABILITIES",
+        "title1": "TECHNICAL",
+        "title2": "ARSENAL",
+        "subtitle": "Our engineering stack is built for high-velocity deployment. Scalable architecture meets rigorous security protocols.",
+        "initProject": "INIT_PROJECT //",
+        "cards": {
+            "core": {
+                "mod": "MOD_01",
+                "title": "Core Engineering",
+                "backend": "Backend Systems",
+                "frontend": "Frontend Velocity"
+            },
+            "ai": {
+                "title": "AI / Neural",
+                "llm": "LLM Integration",
+                "cv": "Computer Vision",
+                "training": "MODEL_TRAINING_ACTIVE"
+            },
+            "infra": {
+                "title": "DevOps / Cloud"
+            },
+            "design": {
+                "title": "Design Ops"
+            },
+            "qa": {
+                "title": "QA Protocols",
+                "desc": "Automated testing pipelines initialized"
+            }
+        },
+        "footer": {
+            "coord": "COORD: 45.923, -12.004",
+            "end": "/// END OF TRANSMISIÓN ///",
+            "status": "STATUS: OPTIMAL"
+        }
+    }
+}

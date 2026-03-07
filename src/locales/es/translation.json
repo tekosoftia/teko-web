@@ -1,0 +1,237 @@
+{
+    "layout": {
+        "systemTitle": "TEKOSOFT",
+        "systemSubtitle": "SISTEMA S.A.S.",
+        "nav": {
+            "home": "Comando Base",
+            "identity": "Identidad",
+            "systems": "Sistemas",
+            "quality": "Calidad",
+            "expertise": "Experticia"
+        },
+        "statusOnline": "SISTEMA: EN LÍNEA",
+        "footer": {
+            "coordinates": "COORDENADAS:",
+            "coordValue": "34.0522° N, 118.2437° O",
+            "sysStatus": "ESTADO SIS.",
+            "optimal": "ÓPTIMO"
+        }
+    },
+    "home": {
+        "protocol": "PROTOCOLO V.2.04",
+        "title1": "Diseñando",
+        "title2": "El Futuro",
+        "subtitle": "Desarrollamos software a medida e integramos inteligencia artificial y business intelligence en tus sistemas para automatizar procesos y mejorar el rendimiento de tu empresa.",
+        "initProject": "Inicializar Proyecto",
+        "viewCaps": "VER CAPACIDADES",
+        "metrics": {
+            "latency": "LATENCIA",
+            "latencyValue": "12ms",
+            "uptime": "DISPONIB.",
+            "uptimeValue": "99.99%",
+            "encryption": "ENCRIPTACIÓN",
+            "encryptionValue": "AES-256"
+        },
+        "liveStats": {
+            "service1": "ING. DE SOFTWARE",
+            "service1Title": "Desarrollo a Medida",
+            "service1Desc": "Web, Mobile y Desktop",
+            "service2": "INTELIGENCIA ARTIFICIAL",
+            "service2Title": "IA Integrada",
+            "service2Desc": "Agentes Autónomos",
+            "service3": "BUSINESS INTELLIGENCE",
+            "service3Title": "Ecosistemas BI",
+            "service3Desc": "Tableros de Datos",
+            "service4": "STAFF AUGMENTATION",
+            "service4Title": "Talento de Élite",
+            "service4Desc": "Células de Desarrollo",
+            "service5": "CONSULTORÍA",
+            "service5Title": "Consultoría Estratégica",
+            "service5Desc": "Transformación Digital"
+        }
+    },
+    "identity": {
+        "secLabel": "SEC_02 // IDENTIDAD",
+        "loaded": "Matriz de Identidad Cargada",
+        "title1": "Código Con",
+        "title2": "Consciencia",
+        "description": "Protocolos operativos centrales activos. No solo construimos sistemas; diseñamos la columna vertebral ética de la frontera digital.",
+        "cards": {
+            "precision": {
+                "title": "Ingeniería de Precisión",
+                "desc": "Cero tolerancia a la deuda técnica. Construimos infraestructuras diseñadas para sobrevivir a la velocidad de las exigencias del mañana.",
+                "status": "ESTADO: ÓPTIMO"
+            },
+            "defense": {
+                "title": "Defensa Férrea",
+                "desc": "Arquitectura de seguridad empresarial. Tratamos cada paquete de datos como un activo de alto valor que requiere protección de grado militar.",
+                "status": "ESTADO: SEGURO"
+            },
+            "symbiosis": {
+                "title": "Simbiosis con el Usuario",
+                "desc": "Tecnología diseñada para interfaces biológicas. Cerramos la brecha entre la lógica binaria y la intuición humana.",
+                "status": "ESTADO: CONECTADO"
+            },
+            "openSource": {
+                "title": "Lógica de Código Abierto",
+                "desc": "Canales de comunicación claros establecidos. Sin cajas negras, solo código transparente y decisiones arquitectónicas honestas.",
+                "status": "ESTADO: VISIBLE"
+            }
+        },
+        "scroll": "VELOCIDAD_SCROLL: 100%"
+    },
+    "systems": {
+        "secLabel": "[ SERVICIOS: ACTIVOS ]",
+        "title1": "Nuestros",
+        "title2": "Servicios",
+        "subtitle": "Desarrollo de software, IA y automatización empresarial",
+        "intro": "Construimos software nuevo o nos integramos a tus sistemas existentes — agregando inteligencia artificial, business intelligence y automatización de procesos — para mejorar el rendimiento de tu empresa.",
+        "cards": {
+            "engineering": {
+                "status": "MÓDULO_01\nESTADO: ACTIVO",
+                "title": "DESARROLLO DE SOFTWARE",
+                "desc": "Software a medida e integración con sistemas existentes. Construimos aplicaciones web, móvil y desktop, o conectamos nuevas funcionalidades a lo que ya tienes.",
+                "footer": "SOFTWARE_A_MEDIDA"
+            },
+            "ai": {
+                "processing": "PROCESANDO...",
+                "live": "● EN VIVO",
+                "title": "INTELIGENCIA ARTIFICIAL",
+                "desc": "Integración de IA en software nuevo o existente. Automatización inteligente de procesos con Machine Learning, procesamiento de lenguaje natural y agentes autónomos."
+            },
+            "bi": {
+                "status": "MÓDULO_03\nESTADO: ACTIVO",
+                "title": "ANÁLISIS DE DATOS Y BI",
+                "desc": "Business intelligence y análisis de datos empresariales. Dashboards, reportes en tiempo real y modelos predictivos para mejorar la toma de decisiones.",
+                "footer": "BUSINESS_INTELLIGENCE"
+            },
+            "staff": {
+                "status": "MÓDULO_04\nESTADO: ACTIVO",
+                "title": "STAFF AUGMENTATION",
+                "desc": "Equipos de desarrollo que se integran a tu empresa. Outsourcing de desarrollo de software con desarrolladores senior de forma flexible y escalable.",
+                "footer": "OUTSOURCING_DEV"
+            },
+            "consulting": {
+                "status": "MÓDULO_05\nESTADO: ACTIVO",
+                "title": "CONSULTORÍA TECNOLÓGICA",
+                "desc": "Transformación digital y consultoría estratégica. Definimos la arquitectura y roadmap para modernizar tus sistemas y digitalizar tus procesos empresariales.",
+                "footer": "TRANSFORMACION_DIGITAL"
+            }
+        }
+    },
+    "quality": {
+        "secLabel": "Check de Integridad del Sistema",
+        "title1": "Protocolo de",
+        "title2": "Calidad",
+        "description": "Nuestro proceso de certificación de 5 pasos asegura que cada despliegue cumpla con los más altos estándares de rigor de ingeniería y seguridad operativa.",
+        "steps": {
+            "01": {
+                "step": "// PASO_01",
+                "title": "Diseño Estratégico",
+                "desc": "Plano detallado de la arquitectura del sistema. Definimos las restricciones, requisitos de escalabilidad y stack tecnológico antes de escribir una sola línea de código.",
+                "tags": [
+                    "#Plano",
+                    "#Alcance"
+                ]
+            },
+            "02": {
+                "step": "// PASO_02",
+                "title": "Construcción Base",
+                "desc": "Estableciendo la infraestructura base. Los entornos de servidor, esquemas de bases de datos y tuberías CI/CD se preparan para despliegues de alta velocidad.",
+                "tags": [
+                    "#Infra",
+                    "#DevOps"
+                ]
+            },
+            "03": {
+                "step": "// PASO_03",
+                "title": "Check de Integridad",
+                "desc": "Pruebas rigurosas de estrés a los modelos de datos. Simulamos escenarios de alta carga para asegurar la consistencia, seguridad y confiabilidad de transaccional.",
+                "tags": [
+                    "#Seguridad",
+                    "#TestDeEstrés"
+                ]
+            },
+            "04": {
+                "step": "// PASO_04",
+                "title": "Auditoría de Cumplimiento",
+                "desc": "Asegurando que todas las salidas de software cumplan con regulaciones específicas de la industria (GDPR, HIPAA, SOC2) y normas de reportes financieros.",
+                "tags": [
+                    "#GDPR",
+                    "#Legal"
+                ]
+            },
+            "05": {
+                "step": "// PASO_05_FINAL",
+                "title": "Autorización de Despliegue",
+                "desc": "Congelamiento de código final y luz verde para la implementación global. El sistema está en vivo, monitoreado y completamente operativo.",
+                "btn": "Iniciar Lanzamiento"
+            }
+        }
+    },
+    "seo": {
+        "home": {
+            "tabTitle": "Software, IA y Business Intelligence",
+            "title": "Desarrollo de Software con IA y Business Intelligence | Tekosoft",
+            "description": "Desarrollamos software a medida e integramos inteligencia artificial, business intelligence y automatización de procesos en sistemas nuevos o existentes para mejorar el rendimiento de tu empresa."
+        },
+        "identity": {
+            "tabTitle": "Nosotros",
+            "title": "Empresa de Desarrollo de Software | Tekosoft",
+            "description": "Somos una empresa de ingeniería de software especializada en integración de inteligencia artificial, análisis de datos y automatización de procesos empresariales."
+        },
+        "systems": {
+            "tabTitle": "Servicios",
+            "title": "Desarrollo de Software, Inteligencia Artificial y Análisis de Datos | Tekosoft",
+            "description": "Desarrollo de software a medida, integración de inteligencia artificial, análisis de datos y business intelligence, automatización de procesos y staff augmentation."
+        },
+        "quality": {
+            "tabTitle": "Proceso",
+            "title": "Proceso de Desarrollo de Software con IA | Tekosoft",
+            "description": "Proceso de 5 pasos para desarrollar software con inteligencia artificial y business intelligence: diseño estratégico, construcción, pruebas, auditoría y despliegue."
+        },
+        "expertise": {
+            "tabTitle": "Tecnologías",
+            "title": "Tecnologías para Desarrollo de Software e Integración con IA | Tekosoft",
+            "description": "Stack tecnológico completo para desarrollo de software, integración de inteligencia artificial, machine learning, análisis de datos, automatización, cloud y DevOps."
+        },
+        "ogImage": "https://tekosoft.io/og-image.png",
+        "siteName": "Tekosoft S.A.S."
+    },
+    "expertise": {
+        "secLabel": "SYS_ID: 05 // CAPACIDADES DESPLEGADAS",
+        "title1": "ARSENAL",
+        "title2": "TÉCNICO",
+        "subtitle": "Nuestro stack de ingeniería está construido para despliegues de alta velocidad. La arquitectura escalable se encuentra con rigurosos protocolos de seguridad.",
+        "initProject": "INICIALIZAR_PROY //",
+        "cards": {
+            "core": {
+                "mod": "MOD_01",
+                "title": "Ingeniería Core",
+                "backend": "Sistemas Backend",
+                "frontend": "Velocidad Frontend"
+            },
+            "ai": {
+                "title": "IA / Neuronal",
+                "llm": "Integración LLM",
+                "cv": "Visión Computacional",
+                "training": "ENTRENAMIENTO_MODELO_ACTIVO"
+            },
+            "infra": {
+                "title": "DevOps / Nube"
+            },
+            "design": {
+                "title": "Design Ops"
+            },
+            "qa": {
+                "title": "Protocolos QA",
+                "desc": "Tuberías de pruebas automáticas inicializadas"
+            }
+        },
+        "footer": {
+            "coord": "COORD: 45.923, -12.004",
+            "end": "/// FIN DE TRANSMISIÓN ///",
+            "status": "ESTADO: ÓPTIMO"
+        }
+    }
+}

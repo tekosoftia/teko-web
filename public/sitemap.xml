@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Home -->
+  <url>
+    <loc>https://tekosoft.io/es</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tekosoft.io/en</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Nosotros / About -->
+  <url>
+    <loc>https://tekosoft.io/es/nosotros</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/nosotros"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tekosoft.io/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/nosotros"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Servicios / Services -->
+  <url>
+    <loc>https://tekosoft.io/es/servicios</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/servicios"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tekosoft.io/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/servicios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/servicios"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Proceso / Process -->
+  <url>
+    <loc>https://tekosoft.io/es/proceso</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/proceso"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/process"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/proceso"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tekosoft.io/en/process</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/proceso"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/process"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/proceso"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tecnologias / Technologies -->
+  <url>
+    <loc>https://tekosoft.io/es/tecnologias</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/tecnologias"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/tecnologias"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tekosoft.io/en/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tekosoft.io/es/tecnologias"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tekosoft.io/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tekosoft.io/es/tecnologias"/>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
