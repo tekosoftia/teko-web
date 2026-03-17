@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TechPage from '../../components/pages/TechPage.astro';
+import { getSEO } from '../../i18n/utils';
+
+const lang = 'es';
+const seo = getSEO(lang, 'expertise', '/es/tecnologias');
+---
+
+<Layout
+  lang={lang}
+  title={seo.tabTitle}
+  description={seo.description}
+  ogTitle={seo.title}
+  ogDescription={seo.description}
+  ogImage={seo.ogImage}
+  canonical={seo.canonical}
+  alternateES={seo.urlES}
+  alternateEN={seo.urlEN}
+>
+  <TechPage lang={lang} />
+</Layout>

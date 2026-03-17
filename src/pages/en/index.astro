@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HomePage from '../../components/pages/HomePage.astro';
+import { getSEO } from '../../i18n/utils';
+
+const lang = 'en';
+const seo = getSEO(lang, 'home', '/en');
+---
+
+<Layout
+  lang={lang}
+  title={seo.tabTitle}
+  description={seo.description}
+  ogTitle={seo.title}
+  ogDescription={seo.description}
+  ogImage={seo.ogImage}
+  canonical={seo.canonical}
+  alternateES={seo.urlES}
+  alternateEN={seo.urlEN}
+>
+  <HomePage lang={lang} />
+</Layout>

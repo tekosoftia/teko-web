@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServicesPage from '../../components/pages/ServicesPage.astro';
+import { getSEO } from '../../i18n/utils';
+
+const lang = 'en';
+const seo = getSEO(lang, 'systems', '/en/services');
+---
+
+<Layout
+  lang={lang}
+  title={seo.tabTitle}
+  description={seo.description}
+  ogTitle={seo.title}
+  ogDescription={seo.description}
+  ogImage={seo.ogImage}
+  canonical={seo.canonical}
+  alternateES={seo.urlES}
+  alternateEN={seo.urlEN}
+>
+  <ServicesPage lang={lang} />
+</Layout>

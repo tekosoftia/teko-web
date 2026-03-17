@@ -1,0 +1,92 @@
+---
+import Layout from './Layout.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  image?: string;
+  tags?: string[];
+  lang: Lang;
+  slug: string;
+}
+
+const { title, description, date, image, tags, lang, slug } = Astro.props;
+
+const BASE_URL = 'https://tekosoft.io';
+const canonical = `${BASE_URL}/${lang}/blog/${slug}`;
+
+const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout
+  lang={lang}
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  ogImage={image ?? `${BASE_URL}/og-image.png`}
+  canonical={canonical}
+>
+  <main class="relative z-10 flex-grow w-full flex flex-col items-center py-20 px-4 md:px-8">
+    <article class="max-w-3xl w-full mx-auto">
+      <!-- Post Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="h-[1px] w-12 bg-accent/50"></div>
+          <time class="font-mono text-accent text-xs tracking-[0.2em]" datetime={date.toISOString()}>
+            {formattedDate}
+          </time>
+        </div>
+        <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight text-white mb-6">
+          {title}
+        </h1>
+        <p class="font-tech text-lg text-muted border-l-2 border-primary/50 pl-6">
+          {description}
+        </p>
+        {tags && tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-6">
+            {tags.map(tag => (
+              <span class="text-xs font-mono bg-white/5 border border-accent/30 px-3 py-1 rounded-full text-accent">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <!-- Post Content -->
+      <div class="prose prose-invert prose-lg max-w-none
+        prose-headings:font-display prose-headings:text-white prose-headings:font-bold
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-2 prose-h2:border-accent/50 prose-h2:pl-4
+        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
+        prose-p:font-tech prose-p:text-slate-300 prose-p:text-lg prose-p:leading-relaxed
+        prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-white
+        prose-code:text-accent prose-code:bg-white/5 prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
+        prose-pre:bg-void/80 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-lg
+        prose-blockquote:border-accent/50 prose-blockquote:text-muted
+        prose-li:font-tech prose-li:text-slate-300
+        prose-img:rounded-lg prose-img:border prose-img:border-white/10
+      ">
+        <slot />
+      </div>
+
+      <!-- Back to blog -->
+      <div class="mt-16 pt-8 border-t border-white/10">
+        <a
+          href={`/${lang}/blog`}
+          class="inline-flex items-center gap-2 font-mono text-sm text-accent hover:text-white transition-colors no-underline"
+        >
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          {lang === 'es' ? 'Volver al blog' : 'Back to blog'}
+        </a>
+      </div>
+    </article>
+  </main>
+</Layout>

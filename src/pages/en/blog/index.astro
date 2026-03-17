@@ -1,0 +1,21 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import BlogListing from '../../../components/pages/BlogListing.astro';
+
+const lang = 'en';
+const BASE_URL = 'https://tekosoft.io';
+---
+
+<Layout
+  lang={lang}
+  title="Blog"
+  description="Articles about software development, artificial intelligence, business intelligence and technology trends."
+  ogTitle="Blog | Tekosoft"
+  ogDescription="Articles about software development, artificial intelligence, business intelligence and technology trends."
+  ogImage={`${BASE_URL}/og-image.png`}
+  canonical={`${BASE_URL}/en/blog`}
+  alternateES={`${BASE_URL}/es/blog`}
+  alternateEN={`${BASE_URL}/en/blog`}
+>
+  <BlogListing lang={lang} />
+</Layout>

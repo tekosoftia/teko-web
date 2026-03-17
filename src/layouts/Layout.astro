@@ -1,0 +1,218 @@
+---
+import '../styles/global.css';
+import { t, getAlternatePath, type Lang } from '../i18n/utils';
+import logo from '../assets/logo.png';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  canonical?: string;
+  alternateES?: string;
+  alternateEN?: string;
+}
+
+const {
+  lang,
+  title,
+  description,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  canonical,
+  alternateES,
+  alternateEN,
+} = Astro.props;
+
+const displayTitle = title ? `Tekosoft | ${title}` : 'Tekosoft';
+const currentPath = Astro.url.pathname;
+const alternatePath = getAlternatePath(currentPath);
+
+const navLinks = lang === 'es'
+  ? [
+      { label: t(lang, 'layout.nav.home'),      path: '/es' },
+      { label: t(lang, 'layout.nav.identity'),   path: '/es/nosotros' },
+      { label: t(lang, 'layout.nav.systems'),    path: '/es/servicios' },
+      { label: t(lang, 'layout.nav.quality'),    path: '/es/proceso' },
+      { label: t(lang, 'layout.nav.expertise'),  path: '/es/tecnologias' },
+      { label: 'Blog',                           path: '/es/blog' },
+    ]
+  : [
+      { label: t(lang, 'layout.nav.home'),      path: '/en' },
+      { label: t(lang, 'layout.nav.identity'),   path: '/en/about' },
+      { label: t(lang, 'layout.nav.systems'),    path: '/en/services' },
+      { label: t(lang, 'layout.nav.quality'),    path: '/en/process' },
+      { label: t(lang, 'layout.nav.expertise'),  path: '/en/technologies' },
+      { label: 'Blog',                           path: '/en/blog' },
+    ];
+
+function isActive(linkPath: string): boolean {
+  if (linkPath === '/es' || linkPath === '/en') {
+    return currentPath === linkPath || currentPath === linkPath + '/';
+  }
+  return currentPath.startsWith(linkPath);
+}
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A0A0F" />
+  <link rel="icon" type="image/png" href="/favicon-teko.png" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <title>{displayTitle}</title>
+  {description && <meta name="description" content={description} />}
+  <meta property="og:site_name" content={t(lang, 'seo.siteName')} />
+  <meta property="og:type" content="website" />
+  {ogTitle && <meta property="og:title" content={ogTitle} />}
+  {ogDescription && <meta property="og:description" content={ogDescription} />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  {ogTitle && <meta name="twitter:title" content={ogTitle} />}
+  {ogDescription && <meta name="twitter:description" content={ogDescription} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  {alternateES && <link rel="alternate" hreflang="es" href={alternateES} />}
+  {alternateEN && <link rel="alternate" hreflang="en" href={alternateEN} />}
+  {alternateES && <link rel="alternate" hreflang="x-default" href={alternateES} />}
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Tekosoft S.A.S.",
+    "url": "https://tekosoft.io",
+    "logo": "https://tekosoft.io/favicon-teko.png",
+    "description": "Firma de ingeniería dedicada al desarrollo, consultoría y comercialización de soluciones informáticas integrales.",
+    "sameAs": []
+  })} />
+</head>
+<body>
+  <div class="bg-void text-white overflow-x-hidden selection:bg-accent selection:text-void flex flex-col relative w-full min-h-screen">
+
+    <!-- Background Grid & Effects -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+      <div class="absolute inset-0 bg-grid-pattern bg-[length:40px_40px] opacity-10"></div>
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow"></div>
+      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] mix-blend-screen"></div>
+    </div>
+
+    <!-- Top Navbar -->
+    <header class="relative z-40 w-full border-b border-white/10 backdrop-blur-md bg-void/50">
+      <div class="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
+        <!-- Logo Section -->
+        <a href={`/${lang}`} class="flex items-center gap-3 no-underline">
+          <div class="relative size-20 flex items-center justify-center shrink-0">
+            <img src={logo.src} alt="Tekosoft Logo" class="size-20 object-contain" />
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-xl tracking-wide leading-none text-white">{t(lang, 'layout.systemTitle')}</h2>
+            <span class="font-mono text-[10px] text-accent tracking-[0.2em] opacity-80">{t(lang, 'layout.systemSubtitle')}</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links (Desktop) -->
+        <nav class="hidden lg:flex items-center gap-8">
+          {navLinks.map(link => (
+            <a
+              href={link.path}
+              class:list={[
+                'font-tech font-semibold text-sm tracking-widest transition-colors uppercase relative group flex flex-col no-underline',
+                isActive(link.path) ? 'text-accent' : 'text-muted hover:text-accent'
+              ]}
+            >
+              {link.label}
+              <span class:list={[
+                'absolute -bottom-1 left-0 h-[2px] bg-accent transition-all group-hover:w-full',
+                isActive(link.path) ? 'w-full' : 'w-0'
+              ]}></span>
+            </a>
+          ))}
+        </nav>
+
+        <!-- Status & CTA -->
+        <div class="flex items-center gap-4 shrink-0">
+          <!-- Language Toggle -->
+          <a
+            href={alternatePath}
+            class="text-xs font-mono border border-white/20 px-2 py-1 rounded hover:border-accent hover:text-accent transition-colors uppercase no-underline text-white"
+          >
+            {lang}
+          </a>
+          <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-sm">
+            <div class="size-2 rounded-full bg-green-500 animate-pulse"></div>
+            <span class="font-mono text-xs text-green-400">{t(lang, 'layout.statusOnline')}</span>
+          </div>
+          <button id="mobile-menu-btn" class="lg:hidden text-white" aria-label="Menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <nav id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-void/95 backdrop-blur-md">
+        <div class="flex flex-col px-6 py-4 gap-3">
+          {navLinks.map(link => (
+            <a
+              href={link.path}
+              class:list={[
+                'font-tech font-semibold text-sm tracking-widest uppercase py-2 no-underline',
+                isActive(link.path) ? 'text-accent' : 'text-muted'
+              ]}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <slot />
+
+    <!-- HUD Decor: Corners -->
+    <div class="fixed bottom-8 left-8 hidden lg:block font-mono text-[10px] text-accent/40 z-30 pointer-events-none">
+      <div class="flex flex-col gap-1">
+        <span>{t(lang, 'layout.footer.coordinates')}</span>
+        <span class="text-white">{t(lang, 'layout.footer.coordValue')}</span>
+        <div class="w-full h-[1px] bg-accent/30 mt-1"></div>
+      </div>
+    </div>
+    <div class="fixed bottom-8 right-8 hidden lg:block font-mono text-[10px] text-right text-primary/60 z-30 pointer-events-none">
+      <div class="flex flex-col gap-1 items-end">
+        <span>{t(lang, 'layout.footer.sysStatus')}</span>
+        <span class="text-white flex items-center gap-2">
+          {t(lang, 'layout.footer.optimal')}
+          <span class="block w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+        </span>
+        <div class="w-24 h-[1px] bg-primary/30 mt-1"></div>
+      </div>
+    </div>
+
+    <!-- Vertical Binary Stream (Left Edge) -->
+    <div class="fixed top-1/2 left-2 -translate-y-1/2 w-4 hidden md:flex flex-col gap-2 items-center font-mono text-[9px] text-white/10 select-none pointer-events-none">
+      <span>0</span><span>1</span><span class="text-accent/40">0</span><span>1</span><span>1</span><span>0</span><span class="text-primary/40">1</span><span>0</span>
+    </div>
+  </div>
+
+  <!-- Mobile menu toggle script -->
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => {
+      menu?.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
