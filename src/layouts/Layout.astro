@@ -124,8 +124,8 @@ function isActive(linkPath: string): boolean {
       <div class="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
         <!-- Logo Section -->
         <a href={`/${lang}`} class="flex items-center gap-3 no-underline">
-          <div class="relative size-20 flex items-center justify-center shrink-0">
-            <img src={logo.src} alt="Tekosoft Logo" class="size-20 object-contain" />
+          <div class="relative size-14 md:size-20 flex items-center justify-center shrink-0">
+            <img src={logo.src} alt="Tekosoft Logo" class="size-14 md:size-20 object-contain" />
           </div>
           <div>
             <h2 class="font-display font-bold text-xl tracking-wide leading-none text-white">{t(lang, 'layout.systemTitle')}</h2>
@@ -193,14 +193,14 @@ function isActive(linkPath: string): boolean {
     <slot />
 
     <!-- HUD Decor: Corners -->
-    <div class="fixed bottom-8 left-8 hidden lg:block font-mono text-[10px] text-accent/40 z-30 pointer-events-none">
+    <div class="fixed bottom-8 left-8 hidden xl:block font-mono text-[10px] text-accent/40 z-30 pointer-events-none">
       <div class="flex flex-col gap-1">
         <span>{t(lang, 'layout.footer.coordinates')}</span>
         <span class="text-white">{t(lang, 'layout.footer.coordValue')}</span>
         <div class="w-full h-[1px] bg-accent/30 mt-1"></div>
       </div>
     </div>
-    <div class="fixed bottom-8 right-8 hidden lg:block font-mono text-[10px] text-right text-primary/60 z-30 pointer-events-none">
+    <div class="fixed bottom-8 right-8 hidden xl:block font-mono text-[10px] text-right text-primary/60 z-30 pointer-events-none">
       <div class="flex flex-col gap-1 items-end">
         <span>{t(lang, 'layout.footer.sysStatus')}</span>
         <span class="text-white flex items-center gap-2">
@@ -212,7 +212,7 @@ function isActive(linkPath: string): boolean {
     </div>
 
     <!-- Vertical Binary Stream (Left Edge) -->
-    <div class="fixed top-1/2 left-2 -translate-y-1/2 w-4 hidden md:flex flex-col gap-2 items-center font-mono text-[9px] text-white/10 select-none pointer-events-none">
+    <div class="fixed top-1/2 left-2 -translate-y-1/2 w-4 hidden lg:flex flex-col gap-2 items-center font-mono text-[9px] text-white/10 select-none pointer-events-none">
       <span>0</span><span>1</span><span class="text-accent/40">0</span><span>1</span><span>1</span><span>0</span><span class="text-primary/40">1</span><span>0</span>
     </div>
   </div>
