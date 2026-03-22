@@ -1,0 +1,112 @@
+---
+import { t, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  mobile?: boolean;
+}
+
+const { lang, mobile = false } = Astro.props;
+
+const cards = [
+  {
+    icon: 'code',
+    iconColor: 'text-primary',
+    labelColor: 'text-muted',
+    labelKey: 'home.liveStats.service1',
+    titleKey: 'home.liveStats.service1Title',
+    descKey:  'home.liveStats.service1Desc',
+    border:   'border-t border-l border-accent/40',
+    desktopPos: 'top-[-35%] left-[20%]',
+    animDelay: '',
+    ping: false,
+  },
+  {
+    icon: 'psychology',
+    iconColor: 'text-primary',
+    labelColor: 'text-primary',
+    labelKey: 'home.liveStats.service2',
+    titleKey: 'home.liveStats.service2Title',
+    descKey:  'home.liveStats.service2Desc',
+    border:   'border-l border-primary/40',
+    desktopPos: 'top-[-30%] left-[5%]',
+    animDelay: '0.4s',
+    ping: true,
+  },
+  {
+    icon: 'monitoring',
+    iconColor: 'text-accent',
+    labelColor: 'text-muted',
+    labelKey: 'home.liveStats.service3',
+    titleKey: 'home.liveStats.service3Title',
+    descKey:  'home.liveStats.service3Desc',
+    border:   'border-l border-accent/40',
+    desktopPos: 'top-[-25%] left-[0%]',
+    animDelay: '0.8s',
+    ping: false,
+  },
+  {
+    icon: 'groups',
+    iconColor: 'text-primary',
+    labelColor: 'text-muted',
+    labelKey: 'home.liveStats.service4',
+    titleKey: 'home.liveStats.service4Title',
+    descKey:  'home.liveStats.service4Desc',
+    border:   'border-b border-l border-primary/40',
+    desktopPos: 'top-[-20%] left-[5%]',
+    animDelay: '1.2s',
+    ping: false,
+  },
+  {
+    icon: 'lightbulb',
+    iconColor: 'text-accent',
+    labelColor: 'text-muted',
+    labelKey: 'home.liveStats.service5',
+    titleKey: 'home.liveStats.service5Title',
+    descKey:  'home.liveStats.service5Title',
+    border:   'border-b border-accent/40',
+    desktopPos: 'top-[-15%] left-[20%]',
+    animDelay: '1.6s',
+    ping: false,
+  },
+];
+---
+
+{mobile ? (
+  <!-- Mobile: 2-col grid -->
+  <div class="grid grid-cols-2 gap-3 w-full">
+    {cards.map((card, i) => (
+      <div class:list={["glass-panel p-3 rounded-lg cyber-corner bg-void/80 backdrop-blur-md", card.border, i === 4 ? "col-span-2" : ""]}>
+        <div class:list={["flex items-center mb-2 border-b border-white/10 pb-1.5", card.ping ? "justify-between" : "gap-2"]}>
+          <div class="flex items-center gap-2">
+            <span class:list={["material-symbols-outlined text-[14px]", card.iconColor]}>{card.icon}</span>
+            <span class:list={["font-mono text-[9px] tracking-wide uppercase", card.labelColor]}>{t(lang, card.labelKey)}</span>
+          </div>
+          {card.ping && <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>}
+        </div>
+        <div class="font-display font-bold text-sm text-white">{t(lang, card.titleKey)}</div>
+        <div class:list={["text-[7px] font-mono tracking-widest mt-1 uppercase", card.iconColor === 'text-accent' ? "text-accent/80" : "text-muted"]}>{t(lang, card.descKey)}</div>
+      </div>
+    ))}
+  </div>
+) : (
+  <!-- Desktop: absolutely positioned floating cards -->
+  <>
+    {cards.map((card) => (
+      <div
+        class:list={["absolute glass-panel p-3 rounded-lg cyber-corner animate-float z-20 shadow-neon bg-void/80 backdrop-blur-md w-[240px]", card.border, card.desktopPos]}
+        style={card.animDelay ? `animation-delay: ${card.animDelay}` : ''}
+      >
+        <div class:list={["flex items-center mb-2 border-b border-white/10 pb-1.5", card.ping ? "justify-between" : "gap-2"]}>
+          <div class="flex items-center gap-2">
+            <span class:list={["material-symbols-outlined text-[14px]", card.iconColor]}>{card.icon}</span>
+            <span class:list={["font-mono text-[9px] tracking-wide uppercase", card.labelColor]}>{t(lang, card.labelKey)}</span>
+          </div>
+          {card.ping && <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>}
+        </div>
+        <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, card.titleKey)}</div>
+        <div class:list={["text-[7px] font-mono tracking-widest mt-1 uppercase", card.iconColor === 'text-accent' ? "text-accent/80" : "text-muted"]}>{t(lang, card.descKey)}</div>
+      </div>
+    ))}
+  </>
+)}
