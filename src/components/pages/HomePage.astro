@@ -31,13 +31,13 @@ const { lang } = Astro.props;
       </p>
       <!-- CTA Area -->
       <div class="pt-6 flex flex-wrap gap-6 items-center">
-        <button class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] glitch-hover">
+        <a href={lang === 'es' ? '/es/contacto' : '/en/contact'} class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] glitch-hover no-underline">
           <span class="relative z-10 flex items-center gap-2 skew-x-[12deg]">
             {t(lang, 'home.initProject')}
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </span>
           <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-        </button>
+        </a>
         <a class="font-mono text-sm text-white/70 hover:text-accent flex items-center gap-2 group transition-colors no-underline" href="#">
           <span class="w-8 h-[1px] bg-white/30 group-hover:bg-accent transition-colors"></span>
           {t(lang, 'home.viewCaps')}

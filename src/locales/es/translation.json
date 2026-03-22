@@ -7,7 +7,8 @@
             "identity": "Identidad",
             "systems": "Sistemas",
             "quality": "Calidad",
-            "expertise": "Experticia"
+            "expertise": "Experticia",
+            "contact": "Contacto"
         },
         "statusOnline": "SISTEMA: EN LÍNEA",
         "footer": {
@@ -169,6 +170,66 @@
             }
         }
     },
+    "contact": {
+        "secLabel": "INICIALIZAR_CONTACTO",
+        "title1": "Agenda Tu",
+        "title2": "Sesión",
+        "subtitle": "Cuéntanos sobre tu proyecto. Podemos agendar una reunión o enviarte una propuesta antes de hablar.",
+        "modeMeeting": "AGENDAR REUNIÓN",
+        "modeForm": "ENVIAR SOLICITUD",
+        "meeting": {
+            "title": "Agenda una Reunión",
+            "desc": "Selecciona el horario que mejor se adapte a tu agenda. La sesión dura 30 minutos y es completamente sin compromiso.",
+            "duration": "DURACIÓN",
+            "format": "FORMATO",
+            "response": "RESPUESTA",
+            "embedPlaceholder": "CALENDARIO DE CITAS — PRÓXIMAMENTE"
+        },
+        "form": {
+            "sideTitle": "Envíanos tu Solicitud",
+            "sideDesc": "Completa el formulario con los detalles de tu proyecto y te contactamos en menos de 24 horas con una respuesta personalizada.",
+            "steps": {
+                "1": "Completa el formulario con los datos de tu proyecto.",
+                "2": "Elige si quieres recibir una propuesta antes de la reunión.",
+                "3": "Nuestro equipo te contacta en menos de 24 horas."
+            },
+            "name": "Nombre Completo",
+            "namePlaceholder": "Tu nombre completo",
+            "company": "Empresa",
+            "companyPlaceholder": "Nombre de tu empresa",
+            "email": "Correo Electrónico",
+            "emailPlaceholder": "tu@empresa.com",
+            "phone": "Teléfono",
+            "phonePlaceholder": "+57 300 000 0000",
+            "service": "Servicio Requerido",
+            "servicePlaceholder": "Seleccionar servicio",
+            "serviceOptions": {
+                "software": "Desarrollo de Software",
+                "ai": "Automatización e Integración de IA",
+                "bi": "Business Intelligence BI",
+                "staff": "Staff Augmentation",
+                "consulting": "Consultoría Tecnológica",
+                "other": "Otro"
+            },
+            "description": "Descripción del Proyecto",
+            "descriptionPlaceholder": "Describe brevemente tu proyecto, el problema a resolver y el impacto esperado...",
+            "budget": "Presupuesto Estimado (Opcional)",
+            "budgetPlaceholder": "Seleccionar rango",
+            "budgetOptions": {
+                "under5k": "Menos de $5,000 USD",
+                "5k_15k": "$5,000 – $15,000 USD",
+                "15k_50k": "$15,000 – $50,000 USD",
+                "50k_plus": "Más de $50,000 USD",
+                "unknown": "Por definir"
+            },
+            "proposalCheck": "Quiero recibir una propuesta técnica antes de la reunión",
+            "submit": "ENVIAR SOLICITUD",
+            "submitting": "ENVIANDO...",
+            "successTitle": "¡Solicitud Recibida!",
+            "successMsg": "Nos pondremos en contacto contigo en menos de 24 horas.",
+            "errorMsg": "Hubo un error al enviar. Por favor intenta de nuevo."
+        }
+    },
     "seo": {
         "home": {
             "tabTitle": "Software, IA y Business Intelligence",
@@ -194,6 +255,11 @@
             "tabTitle": "Tecnologías",
             "title": "Tecnologías para Desarrollo de Software e Integración con IA | Tekosoft",
             "description": "Stack tecnológico completo para desarrollo de software, integración de inteligencia artificial, machine learning, análisis de datos, automatización, cloud y DevOps."
+        },
+        "contact": {
+            "tabTitle": "Contacto",
+            "title": "Agenda una Reunión o Solicita una Propuesta | Tekosoft",
+            "description": "Agenda una sesión con nuestro equipo o envíanos los detalles de tu proyecto para recibir una propuesta personalizada de desarrollo de software, IA o BI."
         },
         "ogImage": "https://tekosoft.io/og-image.png",
         "siteName": "Tekosoft S.A.S."

@@ -39,6 +39,7 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.quality'),    path: '/es/proceso' },
       { label: t(lang, 'layout.nav.expertise'),  path: '/es/tecnologias' },
       { label: 'Blog',                           path: '/es/blog' },
+      { label: t(lang, 'layout.nav.contact'),    path: '/es/contacto' },
     ]
   : [
       { label: t(lang, 'layout.nav.home'),      path: '/en' },
@@ -47,6 +48,7 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.quality'),    path: '/en/process' },
       { label: t(lang, 'layout.nav.expertise'),  path: '/en/technologies' },
       { label: 'Blog',                           path: '/en/blog' },
+      { label: t(lang, 'layout.nav.contact'),    path: '/en/contact' },
     ];
 
 function isActive(linkPath: string): boolean {
