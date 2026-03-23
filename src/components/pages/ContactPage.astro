@@ -1,5 +1,8 @@
 ---
 import { t, type Lang } from '../../i18n/utils';
+import { HUBSPOT_PORTAL_ID, HUBSPOT_FORM_GUID, CALENDLY_URL } from '../../config/constants';
+
+const calendlyEmbed = `${CALENDLY_URL}?background_color=0b0b12&text_color=ffffff&primary_color=62c3f6`;
 
 interface Props {
   lang: Lang;
@@ -107,23 +110,13 @@ const budgetOptions = [
         </div>
 
         <!-- Calendly embed -->
-        <div class="lg:col-span-3 glass-panel rounded-lg overflow-hidden min-h-[520px] flex flex-col items-center justify-center relative border border-white/5">
-          <!-- Reemplaza este bloque con tu embed de Calendly/cal.com -->
-          <div class="calendly-placeholder flex flex-col items-center justify-center gap-4 p-10 text-center w-full h-full">
-            <span class="material-symbols-outlined text-accent/40 text-5xl">calendar_today</span>
-            <p class="font-mono text-muted text-xs tracking-widest uppercase">{t(lang, 'contact.meeting.embedPlaceholder')}</p>
-            <code class="font-mono text-[10px] text-white/20 bg-white/5 px-3 py-1 rounded">
-              &lt;!-- Calendly / cal.com embed --&gt;
-            </code>
+        <div class="lg:col-span-3 rounded-lg overflow-hidden relative border border-white/5 flex items-center justify-center p-2" style="background:#0b0b12;">
+          <div class="calendly-inline-widget w-full"
+            data-url={calendlyEmbed}
+            data-resize="true"
+            style="width:100%;">
           </div>
-          <!--
-            Para integrar Calendly pega tu widget aquí:
-            <div class="calendly-inline-widget w-full h-full min-h-[520px]"
-              data-url="https://calendly.com/TU_USUARIO/30min"
-              style="min-width:320px;height:700px;">
-            </div>
-            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-          -->
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
       </div>
     </div>
