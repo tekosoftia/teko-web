@@ -1,13 +1,14 @@
 {
     "layout": {
         "systemTitle": "TEKOSOFT",
-        "systemSubtitle": "SISTEMA S.A.S.",
+        "systemSubtitle": "Software Development",
         "nav": {
             "home": "Comando Base",
             "identity": "Identidad",
             "systems": "Sistemas",
             "quality": "Calidad",
-            "expertise": "Experticia"
+            "expertise": "Experticia",
+            "software": "Nuestro Software"
         },
         "statusOnline": "SISTEMA: EN LÍNEA",
         "footer": {
@@ -194,6 +195,11 @@
             "tabTitle": "Tecnologías",
             "title": "Tecnologías para Desarrollo de Software e Integración con IA | Tekosoft",
             "description": "Stack tecnológico completo para desarrollo de software, integración de inteligencia artificial, machine learning, análisis de datos, automatización, cloud y DevOps."
+        },
+        "software": {
+            "tabTitle": "Nuestro Software",
+            "title": "CRM Elegance – Software para Restaurantes | Tekosoft",
+            "description": "CRM Elegance es el sistema de gestión integral para restaurantes de Tekosoft. Reservas omnicanal, cocina en tiempo real, menú digital, IA de voz y WhatsApp en una sola plataforma SaaS."
         },
         "ogImage": "https://tekosoft.io/og-image.png",
         "siteName": "Tekosoft S.A.S."

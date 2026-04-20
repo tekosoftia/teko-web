@@ -1,90 +1,267 @@
 ---
-import { getCollection } from 'astro:content';
-import { t, type Lang } from '../../i18n/utils';
+import { type Lang } from '../../i18n/utils';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const isEs = lang === 'es';
 
-const allPosts = await getCollection('blog');
-const posts = allPosts
-  .filter(post => post.data.lang === lang)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const articles = [
+  {
+    image: '/blog/bombillo.jpg',
+    category: isEs ? 'INTELIGENCIA ARTIFICIAL' : 'ARTIFICIAL INTELLIGENCE',
+    date: '16.04.2026',
+    title: isEs
+      ? 'Meta sacude el tablero: Muse Spark llega para desafiar el trono de GPT-5'
+      : 'Meta shakes the board: Muse Spark arrives to challenge GPT-5',
+    description: isEs
+      ? 'Meta lanza Muse Spark, su modelo de razonamiento avanzado que compite directamente con GPT-5 y supera a Gemini 3.1 Pro en benchmarks de lógica pura.'
+      : 'Meta launches Muse Spark, its advanced reasoning model that directly competes with GPT-5 and outperforms Gemini 3.1 Pro in pure logic benchmarks.',
+    href: `/${lang}/blog/meta-muse-spark-desafia-gpt5`,
+  },
+  {
+    image: '/blog/avenida.jpg',
+    category: isEs ? 'IA EMPRESARIAL' : 'ENTERPRISE AI',
+    date: '15.03.2026',
+    title: isEs
+      ? 'Qué es la Inteligencia Artificial Empresarial y Cómo Implementarla'
+      : 'What is Enterprise Artificial Intelligence and How to Implement It',
+    description: isEs
+      ? 'Guía completa sobre cómo las empresas pueden integrar IA en sus procesos para automatizar tareas y mejorar la toma de decisiones.'
+      : 'Complete guide on how companies can integrate AI into their processes to automate tasks and improve decision-making.',
+    href: isEs
+      ? `/${lang}/blog/que-es-inteligencia-artificial-empresarial`
+      : `/${lang}/blog/what-is-enterprise-artificial-intelligence`,
+  },
+  {
+    image: '/blog/fuego.jpg',
+    category: isEs ? 'INGENIERÍA' : 'ENGINEERING',
+    date: '—',
+    title: isEs ? 'Próximamente — Nuevo artículo en camino' : 'Coming Soon — New article on the way',
+    description: isEs
+      ? 'Contenido sobre ingeniería de software moderna, arquitecturas cloud y sistemas escalables.'
+      : 'Content on modern software engineering, cloud architectures and scalable systems.',
+    href: null,
+  },
+];
+
+const tickerItems = isEs
+  ? [
+      'TENDENCIA: MUSE SPARK SUPERA A GPT-5 EN BENCHMARKS',
+      'ESTADO DEL SISTEMA: ÓPTIMO',
+      'NUEVO: GUÍA DE IA EMPRESARIAL DISPONIBLE',
+      'TEKOSOFT // ALMUERZO CON ALGORITMOS',
+      'PRÓXIMO ARTÍCULO: INGENIERÍA CLOUD EN 2026',
+    ]
+  : [
+      'TRENDING: MUSE SPARK OUTPERFORMS GPT-5 IN BENCHMARKS',
+      'SYSTEM STATUS: OPTIMAL',
+      'NEW: ENTERPRISE AI GUIDE NOW AVAILABLE',
+      'TEKOSOFT // SIGNALS FROM THE FUTURE',
+      'UPCOMING: CLOUD ENGINEERING IN 2026',
+    ];
 ---
 
-<main class="relative z-10 flex-grow w-full flex flex-col items-center py-20 px-4 md:px-8">
-  <div class="max-w-5xl w-full mx-auto">
-    <!-- Section Header -->
-    <header class="mb-16 relative">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="h-[1px] w-12 bg-accent/50"></div>
-        <span class="font-mono text-accent text-xs tracking-[0.2em]">BLOG</span>
-      </div>
-      <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-tight text-white uppercase">
-        {lang === 'es' ? 'Nuestro' : 'Our'} <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">Blog</span>
-      </h1>
-      <p class="font-tech text-lg text-muted mt-4 max-w-2xl border-l-2 border-primary/50 pl-6">
-        {lang === 'es'
-          ? 'Artículos sobre desarrollo de software, inteligencia artificial, business intelligence y tendencias tecnológicas.'
-          : 'Articles about software development, artificial intelligence, business intelligence and technology trends.'}
-      </p>
-    </header>
+<main class="relative z-10 flex-grow w-full flex flex-col">
 
-    <!-- Posts Grid -->
-    {posts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {posts.map(post => {
-          const formattedDate = post.data.date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          });
-          return (
-            <a href={`/${lang}/blog/${post.data.slug}`} class="group block no-underline">
-              <article class="glass-panel p-8 rounded-xl transition-all duration-300 hover:border-accent/40 hover:shadow-[0_0_20px_rgba(98,195,246,0.15)] hover:-translate-y-1 h-full flex flex-col">
-                {post.data.image && (
-                  <div class="w-full h-48 rounded-lg overflow-hidden mb-6 border border-white/5">
-                    <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  </div>
-                )}
-                <time class="font-mono text-xs text-accent/70 tracking-widest" datetime={post.data.date.toISOString()}>
-                  {formattedDate}
-                </time>
-                <h2 class="font-display font-bold text-2xl text-white mt-3 mb-3 group-hover:text-accent transition-colors">
-                  {post.data.title}
-                </h2>
-                <p class="font-tech text-muted text-base leading-relaxed flex-grow">
-                  {post.data.description}
-                </p>
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <div class="flex flex-wrap gap-2 mt-4">
-                    {post.data.tags.map(tag => (
-                      <span class="text-[10px] font-mono bg-white/5 border border-white/10 px-2 py-0.5 rounded text-slate-400">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-                  <span class="font-mono text-xs text-accent group-hover:text-white transition-colors">
-                    {lang === 'es' ? 'Leer más' : 'Read more'}
-                  </span>
-                  <span class="material-symbols-outlined text-sm text-accent group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </div>
-              </article>
-            </a>
-          );
-        })}
+  <!-- ─── TICKER BAR ──────────────────────────────────────────── -->
+  <div class="w-full border-b border-accent/20 bg-void/60 backdrop-blur-sm overflow-hidden">
+    <div class="ticker-wrap py-2">
+      <div class="ticker-track font-mono text-[10px] tracking-widest uppercase whitespace-nowrap">
+        {[...tickerItems, ...tickerItems, ...tickerItems].map(item => (
+          <span class="inline-flex items-center gap-2 mr-16 text-white/50">
+            <span class="text-accent text-xs">⚡</span>{item}
+          </span>
+        ))}
       </div>
-    ) : (
-      <div class="glass-panel p-12 rounded-xl text-center">
-        <span class="material-symbols-outlined text-4xl text-accent/50 mb-4 block">article</span>
-        <p class="font-tech text-muted text-lg">
-          {lang === 'es' ? 'Próximamente publicaremos artículos aquí.' : 'We will publish articles here soon.'}
+    </div>
+  </div>
+
+  <div class="max-w-6xl w-full mx-auto px-4 md:px-8 flex flex-col gap-20 py-16">
+
+    <!-- ─── HERO ────────────────────────────────────────────────── -->
+    <section class="relative flex flex-col lg:flex-row items-start gap-12 min-h-[400px]">
+
+      <!-- Texto izquierdo -->
+      <div class="flex flex-col gap-7 z-10 flex-1 min-w-0">
+        <div class="flex items-center gap-3">
+          <div class="h-[1px] w-12 bg-accent/50"></div>
+          <span class="font-mono text-accent text-xs tracking-[0.2em]">
+            {isEs ? 'TRANSMISIONES // BLOG' : 'TRANSMISSIONS // BLOG'}
+          </span>
+        </div>
+
+        <h1 class="font-display font-bold text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.88] tracking-tighter uppercase">
+          <span class="text-white">{isEs ? 'ALMUERZO' : 'SIGNALS'}</span><br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">
+            {isEs ? 'CON' : 'FROM THE'}
+          </span><br/>
+          <span class="text-white">{isEs ? 'ALGORITMOS' : 'FUTURE'}</span>
+        </h1>
+
+        <p class="font-tech text-white/60 text-lg max-w-sm border-l-2 border-accent/30 pl-5 leading-relaxed">
+          {isEs
+            ? 'Seguro escuchas sobre IA en todos lados, pero ¿realmente sabemos cómo sacarle provecho? En este blog bajamos la Inteligencia Artificial a la tierra. Sin complicaciones ni términos aburridos, te compartimos herramientas, trucos y reflexiones para que dejes de ver a la IA como algo de ciencia ficción y empieces a verla como tu nueva mejor aliada. ¡Ponte cómodo y exploremos el futuro juntos!'
+            : 'You probably hear about AI everywhere, but do we actually know how to make the most of it? In this blog, we bring Artificial Intelligence down to earth. No complications, no boring jargon—we share tools, tips, and insights so you can stop seeing AI as something out of a sci-fi movie and start seeing it as your new best ally. Get comfortable and let’s explore the future together!'}
         </p>
+
       </div>
-    )}
+
+      <!-- Imagen featured derecha + botón -->
+      <div class="flex flex-col gap-4 w-full lg:w-[520px] shrink-0 lg:mt-20">
+        <a href={articles[0].href} class="group relative h-[360px] lg:h-[460px] rounded-xl overflow-hidden block no-underline">
+          <img
+            src={articles[0].image}
+            alt={articles[0].title}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            class="absolute inset-0"
+            style="background: linear-gradient(to top, rgba(6,6,20,0.92) 0%, rgba(6,6,20,0.35) 55%, transparent 100%);"
+          ></div>
+          <!-- HUD corners -->
+          <div class="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-accent/60"></div>
+          <div class="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-accent/60"></div>
+          <!-- Label top-left -->
+          <div class="absolute top-4 left-4 font-mono text-[9px] tracking-[0.2em] text-white/50 uppercase bg-black/40 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+            {articles[0].category}
+          </div>
+          <!-- Texto sobre imagen -->
+          <div class="absolute bottom-6 left-6 right-6">
+            <h2 class="font-display font-bold text-white text-lg md:text-xl leading-snug line-clamp-2">
+              {articles[0].title}
+            </h2>
+            <p class="font-tech text-white/60 text-sm mt-2 line-clamp-2">{articles[0].description}</p>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-2">
+          <span class="animate-pulse w-2 h-2 rounded-full bg-accent inline-block"></span>
+          <span class="font-mono text-accent text-[10px] tracking-[0.3em] uppercase">{isEs ? 'Lo más reciente' : 'What\'s new'}</span>
+        </div>
+
+        <a
+          href={articles[0].href}
+          class="group inline-flex items-center gap-3 px-6 py-3 border border-accent/50 text-accent font-mono text-xs tracking-widest uppercase hover:bg-accent hover:text-void transition-all duration-300 w-fit no-underline"
+        >
+          {isEs ? 'LEER AHORA' : 'READ NOW'}
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-300">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Glow decorativo -->
+      <div class="absolute -z-10 top-1/2 left-1/4 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+    </section>
+
+    <!-- ─── ÚLTIMAS PUBLICACIONES ──────────────────────────────── -->
+    <section class="flex flex-col gap-8">
+      <div class="flex items-end justify-between border-b border-white/10 pb-4">
+        <div class="flex flex-col gap-1">
+          <span class="font-mono text-accent text-[10px] tracking-[0.3em] uppercase">
+            {isEs ? 'ÚLTIMAS PUBLICACIONES' : 'RECENT POSTS'}
+          </span>
+        </div>
+        <span class="font-mono text-[10px] text-white/30 tracking-widest uppercase hidden md:block">
+          {isEs ? 'ARCHIVO COMPLETO →' : 'VIEW FULL ARCHIVE →'}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {articles.map((article) => (
+          <div class={`group flex flex-col gap-4 ${!article.href ? 'opacity-40 pointer-events-none' : ''}`}>
+
+            <!-- Thumbnail -->
+            <a href={article.href ?? '#'} class="block relative overflow-hidden rounded-lg h-[200px] no-underline">
+              <img
+                src={article.image}
+                alt={article.title}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-void/30 group-hover:bg-void/10 transition-colors duration-500"></div>
+              <!-- Hover corners -->
+              <div class="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+
+            <!-- Meta + texto -->
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-accent text-[10px] tracking-widest uppercase">{article.category}</span>
+                <span class="font-mono text-white/30 text-[10px]">{article.date}</span>
+              </div>
+              <a href={article.href ?? '#'} class="no-underline group">
+                <h3 class="font-display font-bold text-white text-base leading-snug group-hover:text-accent transition-colors duration-300 line-clamp-2">
+                  {article.title}
+                </h3>
+              </a>
+              <p class="font-tech text-white/45 text-sm leading-relaxed line-clamp-2">
+                {article.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ─── EDITORIAL DESTACADO ───────────────────────────────── -->
+    <section class="grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-xl border border-white/8">
+
+      <!-- Izquierda: cita + CTA -->
+      <div class="glass-morph flex flex-col justify-center gap-7 p-10 md:p-14">
+        <span class="font-mono text-accent text-[10px] tracking-[0.3em] uppercase">
+          {isEs ? 'EDITORIAL DESTACADO' : 'FEATURED EDITORIAL'}
+        </span>
+
+        <blockquote class="font-display font-bold text-white text-2xl md:text-3xl leading-snug">
+          {isEs
+            ? '"La inteligencia artificial empresarial no es una moda pasajera. Es una herramienta concreta que, bien implementada, genera retorno de inversión medible."'
+            : '"Enterprise AI is not a passing fad. It is a concrete tool that, when properly implemented, generates a measurable return on investment."'}
+        </blockquote>
+
+        <div class="flex items-center gap-3">
+          <div class="h-[2px] w-8 bg-accent"></div>
+          <span class="font-mono text-accent text-xs tracking-widest uppercase">TEKOSOFT S.A.S.</span>
+        </div>
+
+        <a
+          href={isEs
+            ? `/${lang}/blog/que-es-inteligencia-artificial-empresarial`
+            : `/${lang}/blog/what-is-enterprise-artificial-intelligence`}
+          class="group inline-flex items-center gap-2 font-mono text-xs text-white/50 hover:text-accent transition-colors duration-300 no-underline w-fit uppercase tracking-widest"
+        >
+          {isEs ? 'Leer artículo completo' : 'Read full article'}
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-300">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Derecha: imagen -->
+      <div class="relative h-[320px] md:h-auto overflow-hidden">
+        <img src="/blog/avenida.jpg" alt="Editorial destacado" class="w-full h-full object-cover" />
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(to right, rgba(6,6,20,0.5) 0%, transparent 50%);"
+        ></div>
+      </div>
+    </section>
+
   </div>
 </main>
+
+<style>
+  .ticker-wrap {
+    overflow: hidden;
+  }
+  .ticker-track {
+    display: inline-block;
+    animation: ticker-scroll 35s linear infinite;
+  }
+  .ticker-wrap:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+  }
+</style>

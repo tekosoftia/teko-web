@@ -38,6 +38,7 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.systems'),    path: '/es/servicios' },
       { label: t(lang, 'layout.nav.quality'),    path: '/es/proceso' },
       { label: t(lang, 'layout.nav.expertise'),  path: '/es/tecnologias' },
+      { label: t(lang, 'layout.nav.software'),   path: '/es/software' },
       { label: 'Blog',                           path: '/es/blog' },
     ]
   : [
@@ -46,6 +47,7 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.systems'),    path: '/en/services' },
       { label: t(lang, 'layout.nav.quality'),    path: '/en/process' },
       { label: t(lang, 'layout.nav.expertise'),  path: '/en/technologies' },
+      { label: t(lang, 'layout.nav.software'),   path: '/en/software' },
       { label: 'Blog',                           path: '/en/blog' },
     ];
 
@@ -68,7 +70,7 @@ function isActive(linkPath: string): boolean {
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
   <title>{displayTitle}</title>
@@ -103,6 +105,8 @@ function isActive(linkPath: string): boolean {
 
     <!-- Background Grid & Effects -->
     <div class="fixed inset-0 z-0 pointer-events-none">
+      <img src="/images/fondo.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-10 animate-ken-burns" />
+      <div class="absolute inset-0 bg-gradient-to-b from-void/60 via-void/40 to-void/80"></div>
       <div class="absolute inset-0 bg-grid-pattern bg-[length:40px_40px] opacity-10"></div>
       <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-pulse-glow"></div>
       <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] mix-blend-screen"></div>
@@ -117,7 +121,7 @@ function isActive(linkPath: string): boolean {
             <img src={logo.src} alt="Tekosoft Logo" class="size-20 object-contain" />
           </div>
           <div>
-            <h2 class="font-display font-bold text-xl tracking-wide leading-none text-white">{t(lang, 'layout.systemTitle')}</h2>
+            <h2 class="font-orbitron font-bold text-xl tracking-wide leading-none text-white">{t(lang, 'layout.systemTitle')}</h2>
             <span class="font-mono text-[10px] text-accent tracking-[0.2em] opacity-80">{t(lang, 'layout.systemSubtitle')}</span>
           </div>
         </a>

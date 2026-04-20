@@ -24,12 +24,14 @@ export const pathMap: Record<string, string> = {
   '/es/proceso': '/en/process',
   '/es/tecnologias': '/en/technologies',
   '/es/blog': '/en/blog',
+  '/es/software': '/en/software',
   '/en': '/es',
   '/en/about': '/es/nosotros',
   '/en/services': '/es/servicios',
   '/en/process': '/es/proceso',
   '/en/technologies': '/es/tecnologias',
   '/en/blog': '/es/blog',
+  '/en/software': '/es/software',
 };
 
 export function getAlternatePath(currentPath: string): string {
@@ -50,6 +52,7 @@ export function getSEO(lang: Lang, page: string, currentPath: string) {
     systems:   { es: '/es/servicios',    en: '/en/services' },
     quality:   { es: '/es/proceso',      en: '/en/process' },
     expertise: { es: '/es/tecnologias',  en: '/en/technologies' },
+    software:  { es: '/es/software',     en: '/en/software' },
   };
 
   const paths = slugs[page] ?? { es: currentPath, en: currentPath };
