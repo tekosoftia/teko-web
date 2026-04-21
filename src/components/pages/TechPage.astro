@@ -8,13 +8,13 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<main class="relative z-10 flex-grow flex flex-col items-center justify-center py-16 px-6 overflow-hidden w-full">
+<main class="relative z-10 flex-grow flex flex-col items-center justify-center py-10 md:py-16 px-4 md:px-6 overflow-hidden w-full">
   <div class="w-full max-w-7xl relative">
     <!-- Section Header -->
     <div class="flex flex-wrap justify-between items-end gap-6 mb-12 border-l-2 border-accent pl-6 py-2 relative">
       <div class="absolute -top-10 left-[-2px] h-10 w-0.5 bg-gradient-to-t from-accent to-transparent"></div>
       <div class="flex flex-col gap-1">
-        <h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-white font-display uppercase">
+        <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white font-display uppercase">
           {t(lang, 'expertise.title1')} <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">{t(lang, 'expertise.title2')}</span>
         </h2>
         <div class="flex items-center gap-3 font-mono text-xs text-accent/80 tracking-widest mt-2">
