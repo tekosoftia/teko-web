@@ -27,6 +27,74 @@
         @apply bg-surface-glass backdrop-blur-md border border-white/5 shadow-glass;
     }
 
+    .glass-morph {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(24px) saturate(160%);
+        -webkit-backdrop-filter: blur(24px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-morph::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .glass-morph-accent {
+        background: rgba(98, 195, 246, 0.05);
+        backdrop-filter: blur(24px) saturate(160%);
+        -webkit-backdrop-filter: blur(24px) saturate(160%);
+        border: 1px solid rgba(98, 195, 246, 0.15);
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.45),
+            0 0 20px rgba(98, 195, 246, 0.08),
+            inset 0 1px 0 rgba(98, 195, 246, 0.15),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-morph-accent::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(98,195,246,0.35) 50%, transparent 100%);
+        pointer-events: none;
+    }
+
+    .glass-morph-primary {
+        background: rgba(109, 40, 217, 0.07);
+        backdrop-filter: blur(24px) saturate(160%);
+        -webkit-backdrop-filter: blur(24px) saturate(160%);
+        border: 1px solid rgba(109, 40, 217, 0.2);
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.45),
+            0 0 24px rgba(109, 40, 217, 0.1),
+            inset 0 1px 0 rgba(109, 40, 217, 0.2),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-morph-primary::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(109,40,217,0.4) 50%, transparent 100%);
+        pointer-events: none;
+    }
+
     .text-stroke-1 {
         -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
     }
@@ -42,6 +110,25 @@
     .rotate-x-2 {
         transform: rotateX(2deg);
     }
+}
+
+/* Shimmer sweep — light reflection across a card on hover */
+@keyframes shimmer-sweep {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Ken Burns — slow zoom + drift for background images */
+@keyframes ken-burns {
+    0%   { transform: scale(1)    translate(0px, 0px); }
+    33%  { transform: scale(1.06) translate(-8px, -5px); }
+    66%  { transform: scale(1.04) translate(6px, 8px); }
+    100% { transform: scale(1)    translate(0px, 0px); }
+}
+
+.animate-ken-burns {
+    animation: ken-burns 24s ease-in-out infinite;
+    transform-origin: center center;
 }
 
 /* Hide scrollbar for clean UI */

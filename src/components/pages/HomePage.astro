@@ -98,7 +98,7 @@ const { lang } = Astro.props;
         </div>
 
         <!-- Neural Network SVG Lines -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0 hidden lg:block overflow-visible">
+        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0 hidden lg:block overflow-visible" style="position:relative;z-index:2;">
           <line x1="70%" y1="40%" x2="35%" y2="15%" stroke="url(#cyan-purple)" stroke-width="1.5" stroke-dasharray="4 4" class="animate-[pulse_3s_linear_infinite]" />
           <circle cx="35%" cy="15%" r="4" fill="#62C3F6" class="animate-ping" />
           <line x1="70%" y1="43%" x2="20%" y2="30%" stroke="url(#cyan-purple)" stroke-width="1.5" stroke-dasharray="4 4" class="animate-[pulse_4s_linear_infinite]" />
@@ -125,3 +125,4 @@ const { lang } = Astro.props;
     </div>
   </div>
 </main>
+

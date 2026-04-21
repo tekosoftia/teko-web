@@ -1,0 +1,262 @@
+---
+import { type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const isEs = lang === 'es';
+
+const modules = isEs
+  ? [
+      {
+        icon: 'calendar_month',
+        label: 'MÓDULO 01',
+        title: 'Gestión de Reservas',
+        desc: 'Calendario diario con estados en tiempo real: pendiente, confirmada, en mesa, completada. Registro de walk-ins y canales múltiples.',
+        color: 'accent',
+      },
+      {
+        icon: 'restaurant_menu',
+        label: 'MÓDULO 02',
+        title: 'Cocina en Tiempo Real',
+        desc: 'Panel KDS con columnas Nuevo → En Preparación → Listo. Alertas sonoras, temporizadores y ticket de cocina.',
+        color: 'primary',
+      },
+      {
+        icon: 'qr_code_scanner',
+        label: 'MÓDULO 03',
+        title: 'Check-in con QR',
+        desc: 'Los meseros escanean el QR del cliente para confirmar llegada. El cliente ve su menú y realiza pedidos desde su dispositivo.',
+        color: 'accent',
+      },
+      {
+        icon: 'monitoring',
+        label: 'MÓDULO 04',
+        title: 'Dashboard Analítico',
+        desc: 'Ingresos, ticket promedio, ocupación de mesas, tasa de no-show y proyección de flujo de clientes basada en 90 días históricos.',
+        color: 'primary',
+      },
+      {
+        icon: 'menu_book',
+        label: 'MÓDULO 05',
+        title: 'Menú Digital',
+        desc: 'Carta categorizada accesible via QR en mesa. Disponibilidad en tiempo real, precios y tiempo de preparación por plato.',
+        color: 'accent',
+      },
+      {
+        icon: 'settings',
+        label: 'MÓDULO 06',
+        title: 'Configuración Total',
+        desc: 'Zonas, mesas, horarios, personal y parámetros de reserva. Importación masiva desde Excel con plantilla descargable.',
+        color: 'primary',
+      },
+    ]
+  : [
+      {
+        icon: 'calendar_month',
+        label: 'MODULE 01',
+        title: 'Reservation Management',
+        desc: 'Daily calendar with real-time statuses: pending, confirmed, seated, completed. Walk-in registration and multi-channel support.',
+        color: 'accent',
+      },
+      {
+        icon: 'restaurant_menu',
+        label: 'MODULE 02',
+        title: 'Real-Time Kitchen Display',
+        desc: 'KDS panel with New → In Preparation → Ready columns. Sound alerts, timers and printable 80mm kitchen ticket.',
+        color: 'primary',
+      },
+      {
+        icon: 'qr_code_scanner',
+        label: 'MODULE 03',
+        title: 'QR Check-in',
+        desc: 'Waiters scan the customer QR to confirm arrival. The customer views the menu and places orders from their device.',
+        color: 'accent',
+      },
+      {
+        icon: 'monitoring',
+        label: 'MODULE 04',
+        title: 'Analytics Dashboard',
+        desc: 'Revenue, average ticket, table occupancy, no-show rate and customer flow forecast based on 90-day historical data.',
+        color: 'primary',
+      },
+      {
+        icon: 'menu_book',
+        label: 'MODULE 05',
+        title: 'Digital Menu',
+        desc: 'Categorized menu accessible via table QR. Real-time availability, prices and preparation time per dish.',
+        color: 'accent',
+      },
+      {
+        icon: 'settings',
+        label: 'MODULE 06',
+        title: 'Full Configuration',
+        desc: 'Zones, tables, schedules, staff and reservation parameters. Bulk import from Excel with downloadable template.',
+        color: 'primary',
+      },
+    ];
+
+const integrations = [
+  { name: 'Vapi', desc: isEs ? 'Agente de Voz IA' : 'AI Voice Agent', icon: 'mic', color: '#A855F7' },
+  { name: 'WhatsApp', desc: isEs ? 'Bot de Reservas' : 'Booking Bot', icon: 'chat', color: '#22C55E' },
+  { name: 'Twilio', desc: isEs ? 'SMS Confirmación' : 'SMS Confirmation', icon: 'sms', color: '#EF4444' },
+  { name: 'Supabase', desc: isEs ? 'Tiempo Real' : 'Realtime Sync', icon: 'bolt', color: '#62C3F6' },
+];
+
+const channels = isEs
+  ? ['Web', 'Walk-in', 'WhatsApp', 'Voz IA']
+  : ['Web', 'Walk-in', 'WhatsApp', 'AI Voice'];
+---
+
+<main class="relative z-10 flex-grow w-full px-6 pb-24 pt-16">
+  <div class="max-w-[1200px] mx-auto flex flex-col gap-24">
+
+    <!-- ─── HERO ─────────────────────────────────────────────────── -->
+    <section class="relative flex flex-col lg:flex-row gap-12 items-center">
+      <div class="flex flex-col gap-6 max-w-2xl z-10">
+        <!-- Label -->
+        <div class="flex items-center gap-3">
+          <div class="h-[1px] w-12 bg-accent/50"></div>
+          <span class="font-mono text-accent text-xs tracking-[0.2em] uppercase">
+            {isEs ? 'PRODUCTO // CRM_ELEGANCE_v1' : 'PRODUCT // CRM_ELEGANCE_v1'}
+          </span>
+        </div>
+        <!-- Heading -->
+        <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tighter text-white uppercase">
+          CRM<br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-primary">Elegance</span>
+        </h1>
+        <p class="font-tech text-xl text-white/80 border-l-2 border-accent/50 pl-5 py-1 max-w-lg">
+          {isEs
+            ? 'Gestiona reservas, cocina y menús en un solo lugar.'
+            : 'Manage bookings, kitchen, and menus, all in one place.'}
+        </p>
+        <!-- Stack pill -->
+        <div class="flex mt-2">
+          <span class="font-mono text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 text-white/40 bg-white/5 rounded-sm">SaaS · Serverless · PWA</span>
+        </div>
+        <!-- CTA -->
+        <div class="flex flex-wrap gap-4 mt-4 items-center">
+          <a
+            href={`mailto:info@tekosoft.io?subject=${isEs ? 'Demo CRM Elegance' : 'CRM Elegance Demo'}`}
+            class="group relative px-7 py-3.5 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] inline-flex no-underline"
+          >
+            <span class="relative z-10 flex items-center gap-2 skew-x-[12deg]">
+              {isEs ? 'Solicitar Demo' : 'Request Demo'}
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </span>
+            <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- BG glow -->
+      <div class="absolute -z-10 top-0 left-0 w-80 h-80 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+    </section>
+
+    <!-- ─── MODULES GRID ──────────────────────────────────────────── -->
+    <section class="flex flex-col gap-10">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-3">
+          <div class="h-[1px] w-8 bg-primary/60"></div>
+          <span class="font-mono text-primary text-[10px] tracking-[0.25em] uppercase">{isEs ? 'ARQUITECTURA FUNCIONAL' : 'FUNCTIONAL ARCHITECTURE'}</span>
+        </div>
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-white uppercase">
+          {isEs ? 'Módulos del Sistema' : 'System Modules'}
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {modules.map(mod => (
+          <div class="glass-morph cyber-corner rounded-lg p-5 border border-white/5 hover:border-accent/30 transition-all hover:shadow-neon group flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <span class={`material-symbols-outlined text-${mod.color} text-[22px]`}>{mod.icon}</span>
+              <span class="font-mono text-[9px] text-white/30 tracking-widest">{mod.label}</span>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-white text-base group-hover:text-accent transition-colors">{mod.title}</h3>
+              <p class="font-tech text-sm text-white/60 mt-1 leading-relaxed">{mod.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ─── ROLES & ACCESS ────────────────────────────────────────── -->
+    <section class="flex flex-col gap-8">
+      <div class="flex items-center gap-3">
+        <div class="h-[1px] w-8 bg-accent/60"></div>
+        <span class="font-mono text-accent text-[10px] tracking-[0.25em] uppercase">{isEs ? 'CONTROL DE ACCESO POR ROLES' : 'ROLE-BASED ACCESS CONTROL'}</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          {
+            role: isEs ? 'Administrador' : 'Administrator',
+            icon: 'admin_panel_settings',
+            perms: isEs
+              ? ['Dashboard y métricas', 'Gestión de reservas', 'Historial y reportes', 'Configuración del sistema', 'Gestión de integraciones']
+              : ['Dashboard & metrics', 'Reservation management', 'History & reports', 'System configuration', 'Integration management'],
+          },
+          {
+            role: isEs ? 'Cocinero' : 'Kitchen Staff',
+            icon: 'restaurant_menu',
+            perms: isEs
+              ? ['Panel KDS en tiempo real', 'Actualizar estado de platos', 'Alertas sonoras configurables', 'Ticket de cocina imprimible']
+              : ['Real-time KDS panel', 'Update dish status', 'Configurable sound alerts', 'Printable kitchen ticket'],
+          },
+          {
+            role: isEs ? 'Mesero' : 'Waiter',
+            icon: 'qr_code_scanner',
+            perms: isEs
+              ? ['Escáner QR de reservas', 'Confirmación de llegada', 'Toma de pedidos en mesa', 'Visualización de mesas activas']
+              : ['Reservation QR scanner', 'Arrival confirmation', 'Table order taking', 'Active table overview'],
+          },
+        ].map(r => (
+          <div class="glass-morph cyber-corner rounded-lg p-5 border border-white/5 flex flex-col gap-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-accent text-[18px]">{r.icon}</span>
+              <span class="font-display font-bold text-white text-sm">{r.role}</span>
+            </div>
+            <ul class="flex flex-col gap-1.5">
+              {r.perms.map(p => (
+                <li class="flex items-center gap-2 font-tech text-xs text-white/60">
+                  <span class="w-1 h-1 rounded-full bg-accent/60 shrink-0"></span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ─── BOTTOM CTA ────────────────────────────────────────────── -->
+    <section class="relative glass-morph cyber-corner rounded-lg border border-accent/20 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden">
+      <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
+      <div class="flex flex-col gap-3">
+        <span class="font-mono text-accent text-[10px] tracking-[0.25em] uppercase">{isEs ? '// LISTO PARA DESPLEGAR' : '// READY TO DEPLOY'}</span>
+        <h2 class="font-display font-bold text-2xl md:text-3xl text-white uppercase">
+          {isEs ? '¿Tu restaurante, potenciado por IA?' : 'Your restaurant, powered by AI?'}
+        </h2>
+        <p class="font-tech text-white/60 text-sm max-w-md">
+          {isEs
+            ? 'Agenda una demo gratuita y ve CRM Elegance en acción con datos reales de tu operación.'
+            : 'Schedule a free demo and see CRM Elegance in action with your own operation data.'}
+        </p>
+      </div>
+      <a
+        href={`mailto:info@tekosoft.io?subject=${isEs ? 'Demo CRM Elegance' : 'CRM Elegance Demo'}`}
+        class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] inline-flex no-underline shrink-0"
+      >
+        <span class="relative z-10 flex items-center gap-2 skew-x-[12deg]">
+          {isEs ? 'Agendar Demo' : 'Schedule Demo'}
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </span>
+        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </a>
+    </section>
+
+  </div>
+</main>

@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SoftwarePage from '../../components/pages/SoftwarePage.astro';
+import { getSEO } from '../../i18n/utils';
+
+const lang = 'en';
+const seo = getSEO(lang, 'software', '/en/software');
+---
+
+<Layout
+  lang={lang}
+  title={seo.tabTitle}
+  description={seo.description}
+  ogTitle={seo.title}
+  ogDescription={seo.description}
+  ogImage={seo.ogImage}
+  canonical={seo.canonical}
+  alternateES={seo.urlES}
+  alternateEN={seo.urlEN}
+>
+  <SoftwarePage lang={lang} />
+</Layout>

@@ -18,9 +18,7 @@ const BASE_URL = 'https://tekosoft.io';
 const canonical = `${BASE_URL}/${lang}/blog/${slug}`;
 
 const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
+  year: 'numeric', month: 'long', day: 'numeric',
 });
 ---
 
@@ -33,60 +31,299 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   ogImage={image ?? `${BASE_URL}/og-image.png`}
   canonical={canonical}
 >
-  <main class="relative z-10 flex-grow w-full flex flex-col items-center py-12 sm:py-20 px-4 md:px-8">
-    <article class="max-w-3xl w-full mx-auto">
-      <!-- Post Header -->
-      <header class="mb-12">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="h-[1px] w-12 bg-accent/50"></div>
-          <time class="font-mono text-accent text-xs tracking-[0.2em]" datetime={date.toISOString()}>
-            {formattedDate}
-          </time>
-        </div>
-        <h1 class="font-display font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight text-white mb-6">
-          {title}
-        </h1>
-        <p class="font-tech text-base md:text-lg text-muted border-l-2 border-primary/50 pl-4 sm:pl-6">
-          {description}
-        </p>
-        {tags && tags.length > 0 && (
-          <div class="flex flex-wrap gap-2 mt-6">
-            {tags.map(tag => (
-              <span class="text-xs font-mono bg-white/5 border border-accent/30 px-3 py-1 rounded-full text-accent">
-                {tag}
+  <!-- Reading progress bar -->
+  <div
+    id="reading-bar"
+    class="fixed top-0 left-0 h-[3px] z-50 transition-all duration-100"
+    style="width:0%; background: linear-gradient(90deg, #62C3F6, #6D28D9);"
+  ></div>
+
+  <main class="relative z-10 flex-grow w-full py-16 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Back link -->
+      <a
+        href={`/${lang}/blog`}
+        class="inline-flex items-center gap-2 font-mono text-xs text-white/40 hover:text-accent transition-colors no-underline mb-10 group"
+      >
+        <span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        {lang === 'es' ? 'Volver al blog' : 'Back to blog'}
+      </a>
+
+      <div class="flex gap-12 items-start">
+
+        <!-- ── MAIN CONTENT ───────────────────────────────── -->
+        <article class="flex-1 min-w-0">
+
+          <!-- Header -->
+          <header class="mb-12">
+
+            <!-- Meta row -->
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+              <div class="flex items-center gap-2">
+                <div class="h-[1px] w-8 bg-accent/50"></div>
+                <time class="font-mono text-accent text-xs tracking-[0.2em]" datetime={date.toISOString()}>
+                  {formattedDate}
+                </time>
+              </div>
+              <span class="font-mono text-[10px] text-white/25">·</span>
+              <span id="read-time" class="font-mono text-xs text-white/40 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                <span>— min</span>
               </span>
-            ))}
+            </div>
+
+            <!-- Title -->
+            <h1 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-[1.15] text-white mb-6 tracking-tight">
+              {title}
+            </h1>
+
+            <!-- Description -->
+            <p class="font-tech text-lg text-white/60 border-l-2 border-primary/50 pl-5 py-1 leading-relaxed">
+              {description}
+            </p>
+
+            <!-- Tags inline -->
+            {tags && tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mt-6">
+                {tags.map(tag => (
+                  <span class="text-[11px] font-mono bg-accent/5 border border-accent/25 px-3 py-1 rounded-full text-accent/80 tracking-wide">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <!-- Divider -->
+            <div class="mt-10 h-[1px] w-full bg-gradient-to-r from-accent/30 via-primary/20 to-transparent"></div>
+          </header>
+
+          <!-- Body -->
+          <div id="post-body" class="blog-content">
+            <slot />
           </div>
-        )}
-      </header>
 
-      <!-- Post Content -->
-      <div class="prose prose-invert prose-base md:prose-lg max-w-none
-        prose-headings:font-display prose-headings:text-white prose-headings:font-bold
-        prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-l-2 prose-h2:border-accent/50 prose-h2:pl-4
-        prose-h3:text-xl md:prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-        prose-p:font-tech prose-p:text-slate-300 prose-p:leading-relaxed
-        prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-        prose-strong:text-white
-        prose-code:text-accent prose-code:bg-white/5 prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
-        prose-pre:bg-void/80 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-lg
-        prose-blockquote:border-accent/50 prose-blockquote:text-muted
-        prose-li:font-tech prose-li:text-slate-300
-        prose-img:rounded-lg prose-img:border prose-img:border-white/10
-      ">
-        <slot />
-      </div>
+          <!-- Footer -->
+          <footer class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <a
+              href={`/${lang}/blog`}
+              class="inline-flex items-center gap-2 font-mono text-sm text-accent hover:text-white transition-colors no-underline group"
+            >
+              <span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+              {lang === 'es' ? 'Volver al blog' : 'Back to blog'}
+            </a>
+            <span class="font-mono text-[10px] text-white/20 tracking-widest">// FIN DE TRANSMISIÓN</span>
+          </footer>
 
-      <!-- Back to blog -->
-      <div class="mt-16 pt-8 border-t border-white/10">
-        <a
-          href={`/${lang}/blog`}
-          class="inline-flex items-center gap-2 font-mono text-sm text-accent hover:text-white transition-colors no-underline"
-        >
-          <span class="material-symbols-outlined text-sm">arrow_back</span>
-          {lang === 'es' ? 'Volver al blog' : 'Back to blog'}
-        </a>
+        </article>
+
+        <!-- ── SIDEBAR ─────────────────────────────────────── -->
+        <aside class="hidden lg:flex flex-col gap-6 w-64 shrink-0 sticky top-28">
+
+          <!-- Reading progress card -->
+          <div class="glass-panel rounded-xl p-5 border border-white/5 flex flex-col gap-3">
+            <span class="font-mono text-[9px] text-accent/70 tracking-[0.2em] uppercase">
+              {lang === 'es' ? 'Progreso de lectura' : 'Reading progress'}
+            </span>
+            <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+              <div id="sidebar-bar" class="h-full rounded-full transition-all duration-150" style="width:0%; background: linear-gradient(90deg,#62C3F6,#6D28D9);"></div>
+            </div>
+            <span id="sidebar-pct" class="font-mono text-xs text-white/40">0%</span>
+          </div>
+
+          <!-- Tags card -->
+          {tags && tags.length > 0 && (
+            <div class="glass-panel rounded-xl p-5 border border-white/5 flex flex-col gap-3">
+              <span class="font-mono text-[9px] text-white/40 tracking-[0.2em] uppercase">
+                {lang === 'es' ? 'Etiquetas' : 'Tags'}
+              </span>
+              <div class="flex flex-wrap gap-2">
+                {tags.map(tag => (
+                  <span class="text-[10px] font-mono bg-white/5 border border-white/10 px-2 py-1 rounded text-white/50 leading-none">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Date card -->
+          <div class="glass-panel rounded-xl p-5 border border-white/5 flex flex-col gap-2">
+            <span class="font-mono text-[9px] text-white/40 tracking-[0.2em] uppercase">
+              {lang === 'es' ? 'Publicado' : 'Published'}
+            </span>
+            <time class="font-mono text-sm text-accent/80" datetime={date.toISOString()}>
+              {formattedDate}
+            </time>
+            <span id="sidebar-read-time" class="font-mono text-xs text-white/30 flex items-center gap-1 mt-1">
+              <span class="material-symbols-outlined text-sm">schedule</span>
+              <span>— min {lang === 'es' ? 'de lectura' : 'read'}</span>
+            </span>
+          </div>
+
+        </aside>
       </div>
-    </article>
+    </div>
   </main>
 </Layout>
+
+<style is:global>
+  /* ── Blog content typography ─────────────────────── */
+  .blog-content {
+    color: rgba(203, 213, 225, 0.9);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.85;
+  }
+
+  .blog-content p {
+    margin-bottom: 1.75rem;
+  }
+
+  .blog-content h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.65rem;
+    color: #fff;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(98, 195, 246, 0.5);
+    line-height: 1.3;
+  }
+
+  .blog-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .blog-content strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .blog-content a {
+    color: #62C3F6;
+    text-decoration: none;
+  }
+  .blog-content a:hover { text-decoration: underline; }
+
+  .blog-content ul,
+  .blog-content ol {
+    margin: 1.5rem 0 1.75rem 0;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .blog-content ul li { list-style: none; padding-left: 1rem; position: relative; }
+  .blog-content ul li::before {
+    content: '▸';
+    position: absolute;
+    left: -0.5rem;
+    color: #62C3F6;
+    font-size: 0.75rem;
+    top: 0.3rem;
+  }
+
+  .blog-content ol li { list-style: decimal; color: rgba(203,213,225,0.9); }
+
+  /* Blockquote — card with glow */
+  .blog-content blockquote {
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    background: rgba(98, 195, 246, 0.05);
+    border-left: 3px solid #62C3F6;
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: 0 0 20px rgba(98, 195, 246, 0.08), inset 0 1px 0 rgba(98,195,246,0.1);
+    color: rgba(255,255,255,0.75);
+    font-style: normal;
+  }
+
+  .blog-content blockquote p {
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* Horizontal rule */
+  .blog-content hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(98,195,246,0.3), rgba(109,40,217,0.2), transparent);
+    margin: 2.5rem 0;
+  }
+
+  /* Inline code */
+  .blog-content code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: rgba(255,255,255,0.06);
+    color: #62C3F6;
+    padding: 0.15em 0.45em;
+    border-radius: 0.25rem;
+  }
+
+  /* Code block */
+  .blog-content pre {
+    background: rgba(6, 14, 11, 0.8);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* Images */
+  .blog-content img {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin: 2rem 0;
+    width: 100%;
+  }
+</style>
+
+<script>
+(function () {
+  // Reading time
+  const body = document.getElementById('post-body');
+  const readTimeEl   = document.getElementById('read-time');
+  const sidebarRt    = document.getElementById('sidebar-read-time');
+  if (body) {
+    const words = body.innerText.split(/\s+/).length;
+    const mins  = Math.max(1, Math.round(words / 200));
+    const label = document.documentElement.lang === 'es'
+      ? `${mins} min de lectura`
+      : `${mins} min read`;
+    if (readTimeEl)  readTimeEl.innerHTML = `<span class="material-symbols-outlined text-sm">schedule</span><span>${label}</span>`;
+    if (sidebarRt)   sidebarRt.innerHTML  = `<span class="material-symbols-outlined text-sm">schedule</span><span>${label}</span>`;
+  }
+
+  // Scroll progress
+  const topBar     = document.getElementById('reading-bar');
+  const sideBar    = document.getElementById('sidebar-bar');
+  const sidePct    = document.getElementById('sidebar-pct');
+
+  function onScroll () {
+    const scrollTop  = window.scrollY;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    const pct        = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+    const pctStr     = pct.toFixed(0) + '%';
+    if (topBar)  topBar.style.width  = pctStr;
+    if (sideBar) sideBar.style.width = pctStr;
+    if (sidePct) sidePct.textContent = pctStr;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>

@@ -20,6 +20,7 @@ export default {
             },
             fontFamily: {
                 "display": ["Space Grotesk", "sans-serif"],
+                "orbitron": ["Orbitron", "sans-serif"],
                 "tech": ["Rajdhani", "sans-serif"],
                 "mono": ["JetBrains Mono", "monospace"],
                 "body": ["Rajdhani", "sans-serif"],
@@ -57,5 +58,5 @@ export default {
             }
         },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 }

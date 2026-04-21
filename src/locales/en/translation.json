@@ -8,6 +8,7 @@
             "systems": "Systems",
             "quality": "Quality",
             "expertise": "Expertise",
+            "software": "Our Software",
             "contact": "Contact"
         },
         "statusOnline": "SYS: ONLINE",
@@ -255,6 +256,11 @@
             "tabTitle": "Technologies",
             "title": "Technologies for Software Development & AI Integration | Tekosoft",
             "description": "Full technology stack for software development, AI and machine learning integration, data analytics, process automation, cloud infrastructure and DevOps."
+        },
+        "software": {
+            "tabTitle": "Our Software",
+            "title": "CRM Elegance – Restaurant Management Software | Tekosoft",
+            "description": "CRM Elegance is Tekosoft's all-in-one restaurant management system. Omnichannel reservations, real-time kitchen display, digital menu, AI voice agent and WhatsApp in a single SaaS platform."
         },
         "contact": {
             "tabTitle": "Contact",
