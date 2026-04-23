@@ -25,6 +25,7 @@ export const pathMap: Record<string, string> = {
   '/es/tecnologias': '/en/technologies',
   '/es/blog': '/en/blog',
   '/es/software': '/en/software',
+  '/es/contacto': '/en/contact',
   '/en': '/es',
   '/en/about': '/es/nosotros',
   '/en/services': '/es/servicios',
@@ -32,6 +33,7 @@ export const pathMap: Record<string, string> = {
   '/en/technologies': '/es/tecnologias',
   '/en/blog': '/es/blog',
   '/en/software': '/es/software',
+  '/en/contact': '/es/contacto',
 };
 
 export function getAlternatePath(currentPath: string): string {
@@ -53,6 +55,7 @@ export function getSEO(lang: Lang, page: string, currentPath: string) {
     quality:   { es: '/es/proceso',      en: '/en/process' },
     expertise: { es: '/es/tecnologias',  en: '/en/technologies' },
     software:  { es: '/es/software',     en: '/en/software' },
+    contact:   { es: '/es/contacto',     en: '/en/contact' },
   };
 
   const paths = slugs[page] ?? { es: currentPath, en: currentPath };

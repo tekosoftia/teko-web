@@ -1,5 +1,6 @@
 ---
 import { t, type Lang } from '../../i18n/utils';
+import ServiceCards from './ServiceCards.astro';
 
 interface Props {
   lang: Lang;
@@ -11,7 +12,7 @@ const { lang } = Astro.props;
 <main class="relative z-10 flex-grow w-full flex items-center justify-center px-6 overflow-hidden">
   <div class="max-w-[1440px] w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center relative h-full py-12 lg:py-0">
     <!-- Left Column: Typography & Action -->
-    <div class="flex flex-col gap-8 z-20 order-2 lg:order-1">
+    <div class="flex flex-col gap-8 z-20 order-1">
       <!-- Decorative Label -->
       <div class="flex items-center gap-3">
         <div class="h-[1px] w-12 bg-accent/50"></div>
@@ -31,20 +32,20 @@ const { lang } = Astro.props;
       </p>
       <!-- CTA Area -->
       <div class="pt-6 flex flex-wrap gap-6 items-center">
-        <button class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] glitch-hover">
+        <a href={lang === 'es' ? '/es/contacto' : '/en/contact'} class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] glitch-hover no-underline">
           <span class="relative z-10 flex items-center gap-2 skew-x-[12deg]">
             {t(lang, 'home.initProject')}
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </span>
           <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-        </button>
+        </a>
         <a class="font-mono text-sm text-white/70 hover:text-accent flex items-center gap-2 group transition-colors no-underline" href="#">
           <span class="w-8 h-[1px] bg-white/30 group-hover:bg-accent transition-colors"></span>
           {t(lang, 'home.viewCaps')}
         </a>
       </div>
-      <!-- Bottom Metrics (Decor) -->
-      <div class="mt-12 flex gap-8 font-mono text-[10px] text-white/40">
+      <!-- Bottom Metrics (Decor) — visible only on desktop -->
+      <div class="mt-12 hidden lg:flex gap-8 font-mono text-[10px] text-white/40">
         <div>
           <span class="block text-accent mb-1">{t(lang, 'home.metrics.latency')}</span>
           {t(lang, 'home.metrics.latencyValue')}
@@ -61,10 +62,10 @@ const { lang } = Astro.props;
     </div>
 
     <!-- Right Column: Visual Anchor -->
-    <div class="relative flex items-center justify-center min-h-[600px] lg:min-h-[800px] order-1 lg:order-2 w-full lg:w-[110%] lg:-ml-[5%]" style="perspective: 1000px;">
+    <div class="relative flex items-center justify-center min-h-[380px] sm:min-h-[500px] lg:min-h-[800px] order-2 w-full lg:w-[110%] lg:-ml-[5%]" style="perspective: 1000px;">
 
       <!-- Background Orbit/Rings System -->
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-[20%] lg:translate-x-[30%] opacity-40">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-0 sm:translate-x-[20%] lg:translate-x-[30%] opacity-40">
         <div class="w-[450px] h-[450px] md:w-[750px] md:h-[750px] rounded-full border border-white/5 animate-spin-slow absolute"></div>
         <div class="w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full border border-dashed border-accent/20 animate-spin-reverse-slow absolute"></div>
         <div class="w-[250px] h-[250px] md:w-[450px] md:h-[450px] rounded-full border border-primary/30 shadow-[0_0_40px_rgba(109,40,217,0.3)] animate-pulse-glow absolute"></div>
@@ -77,10 +78,10 @@ const { lang } = Astro.props;
       </div>
 
       <!-- AI & Data Analytics Central Core -->
-      <div class="relative z-10 w-full h-[600px] lg:h-[800px]">
+      <div class="relative z-10 w-full h-[380px] sm:h-[500px] lg:h-[800px]">
 
         <!-- Central Corporate Panel -->
-        <div class="absolute right-[-50%] top-1/2 -translate-y-1/2 z-10 w-[260px] lg:w-[340px] min-h-[350px] glass-morph-primary p-10 rounded-lg cyber-corner flex flex-col justify-center">
+        <div class="absolute left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-[-50%] top-1/2 -translate-y-1/2 z-10 w-[260px] lg:w-[340px] min-h-[350px] glass-panel p-10 rounded-lg cyber-corner border border-primary/50 bg-void/90 backdrop-blur-xl shadow-[0_0_50px_rgba(109,40,217,0.2)] flex flex-col justify-center">
           <div class="text-center mb-6">
             <h2 class="font-mono text-accent text-base tracking-[0.3em] uppercase">{lang === 'es' ? 'QUIENES SOMOS' : 'WHO WE ARE'}</h2>
           </div>
@@ -91,57 +92,9 @@ const { lang } = Astro.props;
           </p>
         </div>
 
-        <!-- Module 1: Software Engineering -->
-        <div class="absolute top-[-35%] left-[20%] glass-morph-accent p-3 rounded-lg cyber-corner animate-float z-20 hidden sm:block w-[240px]">
-          <div class="flex items-center gap-2 mb-2 border-b border-white/10 pb-1.5">
-            <span class="material-symbols-outlined text-primary text-[14px]">code</span>
-            <span class="font-mono text-[9px] text-muted tracking-wide uppercase">{t(lang, 'home.liveStats.service1')}</span>
-          </div>
-          <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, 'home.liveStats.service1Title')}</div>
-          <div class="text-[7px] font-mono text-accent/80 tracking-widest mt-1 uppercase">{t(lang, 'home.liveStats.service1Desc')}</div>
-        </div>
-
-        <!-- Module 2: AI -->
-        <div class="absolute top-[-30%] left-[5%] glass-morph-primary p-3 rounded-lg cyber-corner animate-float z-20 hidden sm:block w-[240px]" style="animation-delay: 0.4s;">
-          <div class="flex items-center justify-between mb-2 border-b border-white/10 pb-1.5">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary text-[14px]">psychology</span>
-              <span class="font-mono text-[9px] text-primary tracking-wide uppercase">{t(lang, 'home.liveStats.service2')}</span>
-            </div>
-            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>
-          </div>
-          <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, 'home.liveStats.service2Title')}</div>
-          <div class="text-[7px] font-mono text-muted tracking-widest mt-1 uppercase">{t(lang, 'home.liveStats.service2Desc')}</div>
-        </div>
-
-        <!-- Module 3: BI -->
-        <div class="absolute top-[-25%] left-[0%] glass-morph-accent p-3 rounded-lg cyber-corner animate-float z-20 hidden sm:block w-[240px]" style="animation-delay: 0.8s;">
-          <div class="flex items-center gap-2 mb-2 border-b border-white/10 pb-1.5">
-            <span class="material-symbols-outlined text-accent text-[14px]">monitoring</span>
-            <span class="font-mono text-[9px] text-muted tracking-wide uppercase">{t(lang, 'home.liveStats.service3')}</span>
-          </div>
-          <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, 'home.liveStats.service3Title')}</div>
-          <div class="text-[7px] font-mono text-muted tracking-widest mt-1 uppercase">{t(lang, 'home.liveStats.service3Desc')}</div>
-        </div>
-
-        <!-- Module 4: Staff Augmentation -->
-        <div class="absolute top-[-20%] left-[5%] glass-morph-primary p-3 rounded-lg cyber-corner animate-float z-20 hidden sm:block w-[240px]" style="animation-delay: 1.2s;">
-          <div class="flex items-center gap-2 mb-2 border-b border-white/10 pb-1.5">
-            <span class="material-symbols-outlined text-primary text-[14px]">groups</span>
-            <span class="font-mono text-[9px] text-muted tracking-wide uppercase">{t(lang, 'home.liveStats.service4')}</span>
-          </div>
-          <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, 'home.liveStats.service4Title')}</div>
-          <div class="text-[7px] font-mono text-muted tracking-widest mt-1 uppercase">{t(lang, 'home.liveStats.service4Desc')}</div>
-        </div>
-
-        <!-- Module 5: Strategic Consulting -->
-        <div class="absolute top-[-15%] left-[20%] glass-morph-accent p-3 rounded-lg cyber-corner animate-float z-20 hidden sm:block w-[240px]" style="animation-delay: 1.6s;">
-          <div class="flex items-center gap-2 mb-2 border-b border-white/10 pb-1.5">
-            <span class="material-symbols-outlined text-accent text-[14px]">lightbulb</span>
-            <span class="font-mono text-[9px] text-muted tracking-wide uppercase">{t(lang, 'home.liveStats.service5')}</span>
-          </div>
-          <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, 'home.liveStats.service5Title')}</div>
-          <div class="text-[7px] font-mono text-muted tracking-widest mt-1 uppercase">{t(lang, 'home.liveStats.service5Title')}</div>
+        <!-- Service Modules: desktop floating cards -->
+        <div class="hidden lg:contents">
+          <ServiceCards lang={lang} />
         </div>
 
         <!-- Neural Network SVG Lines -->
@@ -164,6 +117,11 @@ const { lang } = Astro.props;
           </defs>
         </svg>
       </div>
+    </div>
+
+    <!-- Service Cards — mobile only -->
+    <div class="order-3 lg:hidden w-full">
+      <ServiceCards lang={lang} mobile={true} />
     </div>
   </div>
 </main>

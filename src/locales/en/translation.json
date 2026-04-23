@@ -8,7 +8,8 @@
             "systems": "Systems",
             "quality": "Quality",
             "expertise": "Expertise",
-            "software": "Our Software"
+            "software": "Our Software",
+            "contact": "Contact"
         },
         "statusOnline": "SYS: ONLINE",
         "footer": {
@@ -170,6 +171,66 @@
             }
         }
     },
+    "contact": {
+        "secLabel": "INIT_CONTACT",
+        "title1": "Schedule Your",
+        "title2": "Session",
+        "subtitle": "Tell us about your project. We can schedule a meeting or send you a proposal before we talk.",
+        "modeMeeting": "SCHEDULE MEETING",
+        "modeForm": "SEND REQUEST",
+        "meeting": {
+            "title": "Book a Meeting",
+            "desc": "Select the time that best fits your schedule. The session lasts 30 minutes and is completely free.",
+            "duration": "DURATION",
+            "format": "FORMAT",
+            "response": "RESPONSE",
+            "embedPlaceholder": "BOOKING CALENDAR — COMING SOON"
+        },
+        "form": {
+            "sideTitle": "Send Us Your Request",
+            "sideDesc": "Fill in the form with your project details and we'll get back to you in less than 24 hours with a personalized response.",
+            "steps": {
+                "1": "Complete the form with your project information.",
+                "2": "Choose if you want a proposal before the meeting.",
+                "3": "Our team will contact you within 24 hours."
+            },
+            "name": "Full Name",
+            "namePlaceholder": "Your full name",
+            "company": "Company",
+            "companyPlaceholder": "Your company name",
+            "email": "Email Address",
+            "emailPlaceholder": "you@company.com",
+            "phone": "Phone",
+            "phonePlaceholder": "+1 000 000 0000",
+            "service": "Required Service",
+            "servicePlaceholder": "Select a service",
+            "serviceOptions": {
+                "software": "Software Development",
+                "ai": "AI Automation & Integration",
+                "bi": "Business Intelligence BI",
+                "staff": "Staff Augmentation",
+                "consulting": "Technology Consulting",
+                "other": "Other"
+            },
+            "description": "Project Description",
+            "descriptionPlaceholder": "Briefly describe your project, the problem to solve, and the expected impact...",
+            "budget": "Estimated Budget (Optional)",
+            "budgetPlaceholder": "Select range",
+            "budgetOptions": {
+                "under5k": "Under $5,000 USD",
+                "5k_15k": "$5,000 – $15,000 USD",
+                "15k_50k": "$15,000 – $50,000 USD",
+                "50k_plus": "Over $50,000 USD",
+                "unknown": "To be defined"
+            },
+            "proposalCheck": "I want to receive a technical proposal before the meeting",
+            "submit": "SEND REQUEST",
+            "submitting": "SENDING...",
+            "successTitle": "Request Received!",
+            "successMsg": "We will get back to you within 24 hours.",
+            "errorMsg": "There was an error sending. Please try again."
+        }
+    },
     "seo": {
         "home": {
             "tabTitle": "Software, AI & Business Intelligence",
@@ -200,6 +261,11 @@
             "tabTitle": "Our Software",
             "title": "CRM Elegance – Restaurant Management Software | Tekosoft",
             "description": "CRM Elegance is Tekosoft's all-in-one restaurant management system. Omnichannel reservations, real-time kitchen display, digital menu, AI voice agent and WhatsApp in a single SaaS platform."
+        },
+        "contact": {
+            "tabTitle": "Contact",
+            "title": "Book a Meeting or Request a Proposal | Tekosoft",
+            "description": "Schedule a session with our team or send us your project details to receive a custom proposal for software development, AI or BI."
         },
         "ogImage": "https://tekosoft.io/og-image.png",
         "siteName": "Tekosoft S.A.S."

@@ -1,0 +1,536 @@
+---
+// Standalone game page - no layout
+---
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Teko Runner | TekoSoft</title>
+  <link rel="icon" href="/favicon-teko.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style is:inline>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0B0B12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    #wrap {
+      width: 100%;
+      max-width: 840px;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #F8FAFC;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 6px;
+    }
+    h1 span { color: #62C3F6; text-shadow: 0 0 20px rgba(98,195,246,0.35); }
+    canvas {
+      width: 100%;
+      display: block;
+      border: 1px solid rgba(109,40,217,0.3);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .hint {
+      color: #94A3B8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      margin-top: 12px;
+    }
+    kbd {
+      background: rgba(109,40,217,0.2);
+      border: 1px solid rgba(109,40,217,0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #62C3F6;
+      font-family: inherit;
+    }
+    @media (max-width: 500px) {
+      h1 { font-size: 1.4rem; letter-spacing: 4px; }
+      #wrap { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <h1>TEKO <span>RUNNER</span></h1>
+    <canvas id="game" width="800" height="200"></canvas>
+    <p class="hint"><kbd>SPACE</kbd> / <kbd>↑</kbd> / <kbd>TAP</kbd> para saltar</p>
+  </div>
+
+  <script is:inline>
+  (() => {
+    'use strict';
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const W = 800, H = 200;
+
+    /* ── Constants ── */
+    const GROUND   = 170;
+    const GRAV     = 0.65;
+    const JUMP_V   = -10.5;
+    const SPD0     = 5;
+    const SPD_MAX  = 13;
+    const SPD_INC  = 0.002;
+
+    /* ── Palette ── */
+    const WHITE  = '#F8FAFC';
+    const GRAY   = '#E2E8F0';
+    const DGRAY  = '#E0E0E8';
+    const BLACK  = '#1E1E2E';
+    const BG     = '#0B0B12';
+    const CYAN   = '#62C3F6';
+    const PURPLE = '#6D28D9';
+    const PINK   = '#FF6B9D';
+    const GREEN  = '#22C55E';
+    const RED    = '#EF4444';
+    const MUTED  = '#94A3B8';
+
+    /* ── Audio ── */
+    let actx;
+    function initA() { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); }
+    function beep(f, d, v) {
+      if (!actx) return;
+      v = v || 0.07;
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'square'; o.frequency.value = f;
+      g.gain.value = v;
+      g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + d);
+      o.connect(g); g.connect(actx.destination);
+      o.start(); o.stop(actx.currentTime + d);
+    }
+
+    /* ── State ── */
+    let state = 'idle';   // idle | play | over
+    let sc = 0, hi = +localStorage.getItem('tekoHi') || 0;
+    let spd = SPD0, tick = 0, scroll = 0, shake = 0, blink = 0;
+    let obs = [], parts = [], spawnD = 220;
+
+    /* ── Player ── */
+    const dog = { x:60, y:GROUND-44, w:52, h:44, vy:0, gnd:true, fr:0, ft:0 };
+    const HB = { x:12, y:8, w:28, h:30 }; // hitbox offsets
+
+    /* ── Input ── */
+    function act() {
+      initA();
+      if (state === 'idle')  { state = 'play'; jump(); }
+      else if (state === 'play') jump();
+      else if (state === 'over') restart();
+    }
+    function jump() {
+      if (dog.gnd) {
+        dog.vy = JUMP_V; dog.gnd = false;
+        beep(500, 0.08);
+        emitP(dog.x + 20, GROUND, 4, CYAN, 2.5, -3, 0);
+      }
+    }
+    function restart() {
+      sc = 0; spd = SPD0; tick = 0; obs = []; parts = [];
+      spawnD = 220; shake = 0; blink = 0;
+      dog.y = GROUND - dog.h; dog.vy = 0; dog.gnd = true;
+      state = 'play';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); act(); }
+    });
+    canvas.addEventListener('click', act);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); act(); }, { passive: false });
+
+    /* ── Particles ── */
+    function emitP(x, y, n, col, vr, vyMin, vyMax) {
+      for (let i = 0; i < n; i++)
+        parts.push({ x, y, vx:(Math.random()-.5)*vr, vy:vyMin+Math.random()*(vyMax-vyMin),
+                      life:14+Math.random()*10, max:24, sz:1.5+Math.random()*2, col });
+    }
+
+    /* ── Obstacle types ── */
+    const OTYPES = [
+      { t:'bug',  w:24, h:22, wt:3, minSc:0   },
+      { t:'bug2', w:46, h:22, wt:2, minSc:80  },
+      { t:'err',  w:30, h:38, wt:2, minSc:40  },
+      { t:'srv',  w:24, h:52, wt:1, minSc:180 },
+    ];
+
+    function spawn() {
+      const pool = OTYPES.filter(o => sc >= o.minSc);
+      const tw = pool.reduce((s,o) => s + o.wt, 0);
+      let r = Math.random() * tw, sel = pool[0];
+      for (const o of pool) { r -= o.wt; if (r <= 0) { sel = o; break; } }
+      obs.push({ x:W+10, y:GROUND-sel.h, w:sel.w, h:sel.h, t:sel.t, pass:false });
+      const mg = Math.max(140, 260 - spd * 10);
+      spawnD = mg + Math.random() * 130;
+    }
+
+    /* ── Collision ── */
+    function hit(o) {
+      const ax = dog.x + HB.x, ay = dog.y + HB.y;
+      return ax < o.x + o.w && ax + HB.w > o.x && ay < o.y + o.h && ay + HB.h > o.y;
+    }
+
+    /* ── Update ── */
+    function update() {
+      if (state !== 'play') return;
+      tick++; sc += spd * 0.018; spd = Math.min(SPD_MAX, spd + SPD_INC);
+      scroll += spd;
+
+      // Milestone each 100 pts
+      const si = Math.floor(sc), prev = Math.floor(sc - spd * 0.018);
+      if (si >= 100 && Math.floor(si / 100) !== Math.floor(prev / 100) && blink <= 0) {
+        blink = 40; beep(800, 0.08); setTimeout(() => beep(1200, 0.12), 80);
+      }
+      if (blink > 0) blink--;
+
+      // Physics
+      if (!dog.gnd) {
+        dog.vy += GRAV; dog.y += dog.vy;
+        if (dog.y >= GROUND - dog.h) {
+          dog.y = GROUND - dog.h; dog.vy = 0; dog.gnd = true;
+          emitP(dog.x + 22, GROUND, 3, CYAN, 2, -2, 0);
+        }
+      }
+
+      // Run anim
+      dog.ft++;
+      if (dog.ft >= 7) { dog.ft = 0; dog.fr = 1 - dog.fr; }
+
+      // Obstacles
+      spawnD -= spd;
+      if (spawnD <= 0) spawn();
+      for (let i = obs.length - 1; i >= 0; i--) {
+        const o = obs[i]; o.x -= spd;
+        if (!o.pass && o.x + o.w < dog.x) o.pass = true;
+        if (o.x + o.w < -20) { obs.splice(i, 1); continue; }
+        if (hit(o)) { die(); return; }
+      }
+
+      // Particles
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const p = parts[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life--;
+        if (p.life <= 0) parts.splice(i, 1);
+      }
+      if (dog.gnd && tick % 8 === 0)
+        emitP(dog.x + 12, GROUND - 1, 1, 'rgba(98,195,246,0.3)', 1.5, -1.5, 0);
+
+      if (shake > 0) { shake *= 0.85; if (shake < 0.3) shake = 0; }
+    }
+
+    function die() {
+      state = 'over';
+      if (sc > hi) { hi = Math.floor(sc); localStorage.setItem('tekoHi', hi); }
+      shake = 10; beep(150, 0.3);
+      emitP(dog.x + dog.w / 2, dog.y + dog.h / 2, 12, RED, 6, -4, 4);
+      emitP(dog.x + dog.w / 2, dog.y + dog.h / 2, 6, CYAN, 4, -3, 3);
+    }
+
+    /* ═══════════════ DRAW ═══════════════ */
+
+    function drawBg() {
+      ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+      // Grid
+      ctx.strokeStyle = 'rgba(109,40,217,0.05)'; ctx.lineWidth = 1;
+      const gs = 40, ox = scroll % gs;
+      for (let x = -ox; x < W; x += gs) { ctx.beginPath(); ctx.moveTo(x|0,0); ctx.lineTo(x|0,H); ctx.stroke(); }
+      for (let y = 0; y < H; y += gs)   { ctx.beginPath(); ctx.moveTo(0,y);   ctx.lineTo(W,y);   ctx.stroke(); }
+      // Parallax floaters
+      ctx.fillStyle = 'rgba(109,40,217,0.07)';
+      const cs = scroll * 0.3;
+      for (let i = 0; i < 5; i++) {
+        const cx = ((i * 180 - cs) % 1000 + 1000) % 1000 - 50;
+        const cy = 20 + i * 22 + Math.sin(i * 2.1) * 8;
+        ctx.fillRect(cx, cy, 30 + i * 4, 2);
+        ctx.fillRect(cx + 8, cy - 2, 14 + i * 2, 2);
+      }
+    }
+
+    function drawGround() {
+      // Glow line
+      ctx.save();
+      ctx.shadowColor = CYAN; ctx.shadowBlur = 10;
+      ctx.strokeStyle = CYAN; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, GROUND); ctx.lineTo(W, GROUND); ctx.stroke();
+      ctx.restore();
+      // Dashes
+      ctx.fillStyle = 'rgba(98,195,246,0.12)';
+      const ds = 28, doff = scroll % ds;
+      for (let x = -doff; x < W; x += ds)
+        ctx.fillRect(x|0, GROUND + 4, 2 + Math.abs(Math.sin(x * 0.05)) * 4, 1);
+      // Code text
+      ctx.font = '8px "JetBrains Mono",monospace';
+      ctx.fillStyle = 'rgba(98,195,246,0.06)';
+      const txts = ['> npm run build','01001011','const teko = new App()','████ 100%','git push','{ ok: true }','deploy --prod'];
+      const to = scroll % 800;
+      for (let i = 0; i < txts.length; i++)
+        ctx.fillText(txts[i], ((i * 120 - to) % 800 + 800) % 800, GROUND + 16);
+    }
+
+    function drawDog() {
+      const x = dog.x;
+      let y = dog.y;
+      // Idle bobbing
+      if (state === 'idle') y += Math.sin(tick * 0.06) * 2;
+
+      // Tail
+      ctx.fillStyle = DGRAY;
+      ctx.beginPath(); ctx.arc(x + 3, y + 6, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = WHITE;
+      ctx.beginPath(); ctx.arc(x + 1, y + 4, 5.5, 0, Math.PI * 2); ctx.fill();
+
+      // Body
+      ctx.fillStyle = WHITE;
+      ctx.beginPath(); ctx.ellipse(x + 24, y + 22, 17, 13, 0, 0, Math.PI * 2); ctx.fill();
+      // Belly
+      ctx.fillStyle = GRAY;
+      ctx.beginPath(); ctx.ellipse(x + 26, y + 28, 10, 6, 0, 0, Math.PI); ctx.fill();
+
+      // Head
+      ctx.fillStyle = WHITE;
+      ctx.beginPath(); ctx.arc(x + 38, y + 12, 11, 0, Math.PI * 2); ctx.fill();
+      // Cheeks
+      ctx.beginPath(); ctx.arc(x + 35, y + 16, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 42, y + 15, 6, 0, Math.PI * 2); ctx.fill();
+
+      // Ear
+      ctx.fillStyle = DGRAY;
+      ctx.beginPath(); ctx.moveTo(x+35,y+5); ctx.lineTo(x+38,y-5); ctx.lineTo(x+42,y+5); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#FFD4E0';
+      ctx.beginPath(); ctx.moveTo(x+36,y+4); ctx.lineTo(x+38,y-2); ctx.lineTo(x+41,y+4); ctx.closePath(); ctx.fill();
+
+      // Eye
+      ctx.fillStyle = BLACK;
+      ctx.beginPath(); ctx.arc(x + 42, y + 10, 2.2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#FFF';
+      ctx.beginPath(); ctx.arc(x + 42.8, y + 9.2, 0.8, 0, Math.PI * 2); ctx.fill();
+
+      // Nose
+      ctx.fillStyle = BLACK;
+      ctx.beginPath(); ctx.ellipse(x + 48, y + 13, 2.2, 1.8, 0, 0, Math.PI * 2); ctx.fill();
+
+      // Tongue
+      if (dog.gnd && dog.fr === 0) {
+        ctx.fillStyle = PINK;
+        ctx.beginPath(); ctx.ellipse(x + 47, y + 18, 1.8, 2.8, 0, 0, Math.PI); ctx.fill();
+      }
+
+      // Mouth line
+      ctx.strokeStyle = '#CBD5E1'; ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(x + 46, y + 16); ctx.lineTo(x + 48.5, y + 17); ctx.stroke();
+
+      // Legs
+      if (!dog.gnd) {
+        // Tucked
+        ctx.fillStyle = DGRAY;
+        ctx.fillRect(x + 15, y + 32, 5, 7);
+        ctx.fillRect(x + 27, y + 32, 5, 7);
+        ctx.fillStyle = WHITE;
+        ctx.fillRect(x + 18, y + 33, 5, 6);
+        ctx.fillRect(x + 30, y + 33, 5, 6);
+      } else if (state === 'idle') {
+        // Standing still
+        ctx.fillStyle = DGRAY;
+        ctx.fillRect(x + 14, y + 32, 5, 12);
+        ctx.fillRect(x + 28, y + 32, 5, 12);
+        ctx.fillStyle = WHITE;
+        ctx.fillRect(x + 18, y + 32, 5, 12);
+        ctx.fillRect(x + 32, y + 32, 5, 12);
+      } else if (dog.fr === 0) {
+        ctx.fillStyle = DGRAY;
+        ctx.fillRect(x + 14, y + 32, 5, 12);
+        ctx.fillRect(x + 28, y + 34, 5, 10);
+        ctx.fillStyle = WHITE;
+        ctx.fillRect(x + 18, y + 34, 5, 10);
+        ctx.fillRect(x + 32, y + 32, 5, 12);
+      } else {
+        ctx.fillStyle = DGRAY;
+        ctx.fillRect(x + 14, y + 34, 5, 10);
+        ctx.fillRect(x + 28, y + 32, 5, 12);
+        ctx.fillStyle = WHITE;
+        ctx.fillRect(x + 18, y + 32, 5, 12);
+        ctx.fillRect(x + 32, y + 34, 5, 10);
+      }
+    }
+
+    function drawObs(o) {
+      switch (o.t) {
+        case 'bug': case 'bug2': {
+          const n = o.t === 'bug2' ? 2 : 1;
+          for (let i = 0; i < n; i++) {
+            const bx = o.x + i * 22, by = o.y + 2;
+            // Body
+            ctx.fillStyle = GREEN;
+            ctx.beginPath(); ctx.ellipse(bx + 9, by + 10, 7, 5.5, 0, 0, Math.PI * 2); ctx.fill();
+            // Head
+            ctx.fillStyle = '#16A34A';
+            ctx.beginPath(); ctx.arc(bx + 17, by + 10, 4, 0, Math.PI * 2); ctx.fill();
+            // Eyes
+            ctx.fillStyle = RED;
+            ctx.beginPath(); ctx.arc(bx + 19, by + 8, 1.3, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(bx + 19, by + 12, 1.3, 0, Math.PI * 2); ctx.fill();
+            // Legs
+            ctx.strokeStyle = '#16A34A'; ctx.lineWidth = 1.2;
+            for (let j = 0; j < 3; j++) {
+              const lx = bx + 4 + j * 4;
+              ctx.beginPath(); ctx.moveTo(lx, by + 5); ctx.lineTo(lx - 2, by); ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(lx, by + 15); ctx.lineTo(lx - 2, by + 20); ctx.stroke();
+            }
+            // Antennae
+            ctx.beginPath(); ctx.moveTo(bx + 19, by + 6); ctx.lineTo(bx + 23, by + 1); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(bx + 19, by + 14); ctx.lineTo(bx + 23, by + 19); ctx.stroke();
+          }
+          break;
+        }
+        case 'err': {
+          // Window
+          ctx.fillStyle = '#14142390'; ctx.fillRect(o.x, o.y, o.w, o.h);
+          ctx.strokeStyle = RED; ctx.lineWidth = 2; ctx.strokeRect(o.x, o.y, o.w, o.h);
+          // Title bar
+          ctx.fillStyle = RED; ctx.fillRect(o.x, o.y, o.w, 9);
+          ctx.fillStyle = WHITE; ctx.font = 'bold 7px sans-serif'; ctx.fillText('✕', o.x + o.w - 9, o.y + 8);
+          // Content
+          ctx.fillStyle = RED;
+          ctx.font = 'bold 13px "JetBrains Mono",monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('404', o.x + o.w / 2, o.y + 24);
+          ctx.font = '7px "JetBrains Mono",monospace';
+          ctx.fillStyle = '#FF6B6B';
+          ctx.fillText('ERROR', o.x + o.w / 2, o.y + 33);
+          ctx.textAlign = 'left';
+          break;
+        }
+        case 'srv': {
+          // Rack
+          ctx.fillStyle = '#14142390'; ctx.fillRect(o.x, o.y, o.w, o.h);
+          ctx.strokeStyle = PURPLE; ctx.lineWidth = 1.5; ctx.strokeRect(o.x, o.y, o.w, o.h);
+          // Shelves + LEDs
+          for (let i = 1; i < 5; i++) {
+            const sy = o.y + i * 10;
+            ctx.strokeStyle = 'rgba(109,40,217,0.25)';
+            ctx.beginPath(); ctx.moveTo(o.x + 2, sy); ctx.lineTo(o.x + o.w - 2, sy); ctx.stroke();
+            // LEDs
+            ctx.fillStyle = i % 2 ? GREEN : RED;
+            ctx.beginPath(); ctx.arc(o.x + 6, sy - 4, 1.5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = CYAN;
+            ctx.beginPath(); ctx.arc(o.x + 12, sy - 4, 1.5, 0, Math.PI * 2); ctx.fill();
+            // Mini lines (data)
+            ctx.fillStyle = 'rgba(98,195,246,0.2)';
+            ctx.fillRect(o.x + 16, sy - 5, 4, 1);
+            ctx.fillRect(o.x + 16, sy - 3, 3, 1);
+          }
+          break;
+        }
+      }
+    }
+
+    function drawParts() {
+      for (const p of parts) {
+        ctx.globalAlpha = p.life / p.max;
+        ctx.fillStyle = p.col;
+        ctx.fillRect(p.x - p.sz / 2, p.y - p.sz / 2, p.sz, p.sz);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawUI() {
+      // Score
+      ctx.font = 'bold 16px "Space Grotesk",sans-serif';
+      ctx.textAlign = 'right';
+      if (blink > 0 && Math.floor(blink / 4) % 2) ctx.fillStyle = CYAN;
+      else ctx.fillStyle = WHITE;
+      ctx.fillText(String(Math.floor(sc)).padStart(5, '0'), W - 16, 24);
+      // Hi score
+      if (hi > 0) {
+        ctx.font = '10px "Space Grotesk",sans-serif';
+        ctx.fillStyle = MUTED;
+        ctx.fillText('HI ' + String(hi).padStart(5, '0'), W - 16, 38);
+      }
+      ctx.textAlign = 'left';
+      // Brand
+      ctx.font = '10px "Space Grotesk",sans-serif';
+      ctx.fillStyle = 'rgba(109,40,217,0.35)';
+      ctx.fillText('TEKOSOFT', 12, 18);
+    }
+
+    function drawIdle() {
+      // Blinking prompt
+      ctx.textAlign = 'center';
+      ctx.font = '12px "JetBrains Mono",monospace';
+      ctx.fillStyle = MUTED;
+      const cur = Math.floor(tick / 30) % 2 === 0 ? ' ▌' : '';
+      ctx.fillText('Presiona ESPACIO para comenzar' + cur, W / 2, H / 2 - 30);
+      ctx.textAlign = 'left';
+    }
+
+    function drawOver() {
+      // Dim overlay
+      ctx.fillStyle = 'rgba(11,11,18,0.65)';
+      ctx.fillRect(0, 0, W, H);
+      ctx.textAlign = 'center';
+      // GAME OVER
+      ctx.save();
+      ctx.shadowColor = RED; ctx.shadowBlur = 16;
+      ctx.font = 'bold 28px "Space Grotesk",sans-serif';
+      ctx.fillStyle = RED;
+      ctx.fillText('GAME OVER', W / 2, H / 2 - 18);
+      ctx.restore();
+      // Score
+      ctx.font = '14px "Space Grotesk",sans-serif';
+      ctx.fillStyle = WHITE;
+      ctx.fillText('Puntos: ' + Math.floor(sc), W / 2, H / 2 + 8);
+      // New hi
+      if (Math.floor(sc) >= hi && hi > 0) {
+        ctx.fillStyle = CYAN;
+        ctx.font = '10px "JetBrains Mono",monospace';
+        ctx.fillText('★ NUEVO RÉCORD ★', W / 2, H / 2 + 22);
+      }
+      // Restart
+      ctx.font = '10px "JetBrains Mono",monospace';
+      ctx.fillStyle = MUTED;
+      ctx.fillText('ESPACIO para reiniciar', W / 2, H / 2 + 38);
+      ctx.textAlign = 'left';
+    }
+
+    /* ── Main loop ── */
+    let lastT = 0, acc = 0;
+    const STEP = 1000 / 60;
+
+    function loop(ts) {
+      if (state === 'idle') tick++;
+      const dt = Math.min(ts - lastT, 100);
+      lastT = ts; acc += dt;
+      while (acc >= STEP) { update(); acc -= STEP; }
+
+      ctx.save();
+      if (shake > 0) ctx.translate((Math.random() - .5) * shake, (Math.random() - .5) * shake);
+
+      drawBg();
+      drawGround();
+      drawParts();
+      for (const o of obs) drawObs(o);
+      drawDog();
+      if (state !== 'idle') drawUI();
+
+      ctx.restore();
+
+      if (state === 'idle') drawIdle();
+      if (state === 'over') drawOver();
+
+      requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+  })();
+  </script>
+</body>
+</html>

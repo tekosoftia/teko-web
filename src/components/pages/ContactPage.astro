@@ -1,0 +1,566 @@
+---
+import { t, type Lang } from '../../i18n/utils';
+import { HUBSPOT_PORTAL_ID, HUBSPOT_FORM_GUID, CALENDLY_URL } from '../../config/constants';
+
+const calendlyEmbed = `${CALENDLY_URL}?background_color=0b0b12&text_color=ffffff&primary_color=62c3f6&locale=${lang}`;
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const serviceOptions = [
+  { value: 'software', label: t(lang, 'contact.form.serviceOptions.software') },
+  { value: 'ai',       label: t(lang, 'contact.form.serviceOptions.ai') },
+  { value: 'bi',       label: t(lang, 'contact.form.serviceOptions.bi') },
+  { value: 'staff',    label: t(lang, 'contact.form.serviceOptions.staff') },
+  { value: 'consulting', label: t(lang, 'contact.form.serviceOptions.consulting') },
+  { value: 'other',    label: t(lang, 'contact.form.serviceOptions.other') },
+];
+
+const budgetOptions = [
+  { value: 'under5k',  label: t(lang, 'contact.form.budgetOptions.under5k') },
+  { value: '5k_15k',   label: t(lang, 'contact.form.budgetOptions.5k_15k') },
+  { value: '15k_50k',  label: t(lang, 'contact.form.budgetOptions.15k_50k') },
+  { value: '50k_plus', label: t(lang, 'contact.form.budgetOptions.50k_plus') },
+  { value: 'unknown',  label: t(lang, 'contact.form.budgetOptions.unknown') },
+];
+---
+
+<main class="relative z-10 flex-grow w-full px-6 py-16 lg:py-24">
+  <div class="max-w-[1100px] mx-auto">
+
+    <!-- Section header -->
+    <div class="mb-12 flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-[1px] w-12 bg-accent/50"></div>
+        <span class="font-mono text-accent text-xs tracking-[0.2em]">{t(lang, 'contact.secLabel')}</span>
+      </div>
+      <h1 class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tighter text-white uppercase">
+        {t(lang, 'contact.title1')}<br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-primary">{t(lang, 'contact.title2')}</span>
+      </h1>
+      <p class="font-tech text-lg text-muted max-w-xl border-l-2 border-primary/50 pl-6 py-1">
+        {t(lang, 'contact.subtitle')}
+      </p>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="flex gap-2 mb-10 p-1 bg-void/80 border border-white/10 rounded w-fit">
+      <button
+        id="btn-meeting"
+        class="mode-btn active-mode font-mono text-xs tracking-widest uppercase px-5 py-2.5 rounded transition-all duration-200"
+      >
+        <span class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">calendar_month</span>
+          {t(lang, 'contact.modeMeeting')}
+        </span>
+      </button>
+      <button
+        id="btn-form"
+        class="mode-btn font-mono text-xs tracking-widest uppercase px-5 py-2.5 rounded transition-all duration-200 text-muted hover:text-white"
+      >
+        <span class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">edit_note</span>
+          {t(lang, 'contact.modeForm')}
+        </span>
+      </button>
+    </div>
+
+    <!-- ── PANEL: AGENDAR REUNIÓN ── -->
+    <div id="panel-meeting" class="contact-panel">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+        <!-- Info lateral -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+          <div class="glass-panel cyber-corner relative p-6 rounded-lg">
+            <span class="corner-bracket corner-tl"></span>
+            <span class="corner-bracket corner-tr"></span>
+            <span class="corner-bracket corner-bl"></span>
+            <span class="corner-bracket corner-br"></span>
+            <h2 class="font-display text-xl text-white mb-2">{t(lang, 'contact.meeting.title')}</h2>
+            <p class="font-tech text-muted text-sm leading-relaxed">{t(lang, 'contact.meeting.desc')}</p>
+          </div>
+
+          <!-- Stats decorativos -->
+          <div class="glass-panel p-5 rounded-lg flex flex-col gap-4">
+            <div class="flex items-center gap-3 pb-3 border-b border-white/5">
+              <span class="material-symbols-outlined text-accent text-base">schedule</span>
+              <div>
+                <div class="font-mono text-[10px] text-muted tracking-widest uppercase">{t(lang, 'contact.meeting.duration')}</div>
+                <div class="font-display text-white text-sm">30 min</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 pb-3 border-b border-white/5">
+              <span class="material-symbols-outlined text-accent text-base">videocam</span>
+              <div>
+                <div class="font-mono text-[10px] text-muted tracking-widest uppercase">{t(lang, 'contact.meeting.format')}</div>
+                <div class="font-display text-white text-sm">Google Meet / Zoom</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-accent text-base">bolt</span>
+              <div>
+                <div class="font-mono text-[10px] text-muted tracking-widest uppercase">{t(lang, 'contact.meeting.response')}</div>
+                <div class="font-display text-white text-sm">&lt; 24h</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendly embed -->
+        <div class="lg:col-span-3 rounded-lg overflow-hidden relative border border-white/5 flex items-center justify-center p-2" style="background:#0b0b12;">
+          <div class="calendly-inline-widget w-full"
+            data-url={calendlyEmbed}
+            data-resize="true"
+            style="width:100%;">
+          </div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL: FORMULARIO ── -->
+    <div id="panel-form" class="contact-panel hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+        <!-- Info lateral -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+          <div class="glass-panel cyber-corner relative p-6 rounded-lg">
+            <span class="corner-bracket corner-tl"></span>
+            <span class="corner-bracket corner-tr"></span>
+            <span class="corner-bracket corner-bl"></span>
+            <span class="corner-bracket corner-br"></span>
+            <h2 class="font-display text-xl text-white mb-2">{t(lang, 'contact.form.sideTitle')}</h2>
+            <p class="font-tech text-muted text-sm leading-relaxed">{t(lang, 'contact.form.sideDesc')}</p>
+          </div>
+
+          <!-- Pasos -->
+          <div class="glass-panel p-5 rounded-lg flex flex-col gap-4">
+            {[1, 2, 3].map((step) => (
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-mono text-[10px] text-primary">
+                  {step}
+                </div>
+                <p class="font-tech text-muted text-sm">{t(lang, `contact.form.steps.${step}`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="lg:col-span-3">
+          <form
+            id="contact-form"
+            class="glass-panel cyber-corner relative rounded-lg p-6 md:p-8 flex flex-col gap-5"
+            novalidate
+          >
+            <span class="corner-bracket corner-tl"></span>
+            <span class="corner-bracket corner-tr"></span>
+            <span class="corner-bracket corner-bl"></span>
+            <span class="corner-bracket corner-br"></span>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label for="f-name" class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                  {t(lang, 'contact.form.name')} <span class="text-accent">*</span>
+                </label>
+                <input
+                  id="f-name" name="name" type="text" required minlength="2"
+                  placeholder={t(lang, 'contact.form.namePlaceholder') as string}
+                  class="form-input"
+                />
+                <span class="field-error hidden font-mono text-[10px] text-red-400" data-for="f-name"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="f-company" class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                  {t(lang, 'contact.form.company')}
+                </label>
+                <input
+                  id="f-company" name="company" type="text"
+                  placeholder={t(lang, 'contact.form.companyPlaceholder') as string}
+                  class="form-input"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label for="f-email" class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                  {t(lang, 'contact.form.email')} <span class="text-accent">*</span>
+                </label>
+                <input
+                  id="f-email" name="email" type="email" required
+                  placeholder={t(lang, 'contact.form.emailPlaceholder') as string}
+                  class="form-input"
+                />
+                <span class="field-error hidden font-mono text-[10px] text-red-400" data-for="f-email"></span>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="f-phone" class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                  {t(lang, 'contact.form.phone')}
+                </label>
+                <input
+                  id="f-phone" name="phone" type="tel"
+                  placeholder={t(lang, 'contact.form.phonePlaceholder') as string}
+                  class="form-input"
+                />
+                <span class="field-error hidden font-mono text-[10px] text-red-400" data-for="f-phone"></span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                {t(lang, 'contact.form.service')} <span class="text-accent">*</span>
+              </label>
+              <div class="custom-select relative" data-required="true">
+                <input type="hidden" id="f-service" name="service" />
+                <button type="button" class="custom-select-trigger form-input text-left flex items-center justify-between w-full">
+                  <span class="custom-select-label text-muted">{t(lang, 'contact.form.servicePlaceholder')}</span>
+                  <span class="material-symbols-outlined text-muted text-base transition-transform duration-200">expand_more</span>
+                </button>
+                <div class="custom-select-panel hidden absolute top-full left-0 w-full z-50 mt-1 rounded border border-white/10 overflow-hidden shadow-glass" style="background:#12121f">
+                  {serviceOptions.map(opt => (
+                    <div class="custom-select-option px-4 py-2.5 font-body text-sm text-muted cursor-pointer transition-all duration-150" data-value={opt.value}>
+                      {opt.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <span class="field-error hidden font-mono text-[10px] text-red-400" data-for="f-service"></span>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label for="f-description" class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                {t(lang, 'contact.form.description')} <span class="text-accent">*</span>
+              </label>
+              <textarea
+                id="f-description" name="description" required minlength="10" rows="4"
+                placeholder={t(lang, 'contact.form.descriptionPlaceholder') as string}
+                class="form-input resize-none"
+              ></textarea>
+              <span class="field-error hidden font-mono text-[10px] text-red-400" data-for="f-description"></span>
+            </div>
+
+            <!-- Presupuesto -->
+            <div class="flex flex-col gap-1.5">
+              <label class="font-mono text-[10px] text-muted tracking-widest uppercase">
+                {t(lang, 'contact.form.budget')}
+              </label>
+              <!-- Custom dropdown -->
+              <div class="custom-select relative">
+                <input type="hidden" id="f-budget" name="budget" />
+                <button type="button" class="custom-select-trigger form-input text-left flex items-center justify-between w-full">
+                  <span class="custom-select-label text-muted">{t(lang, 'contact.form.budgetPlaceholder')}</span>
+                  <span class="material-symbols-outlined text-muted text-base transition-transform duration-200">expand_more</span>
+                </button>
+                <div class="custom-select-panel hidden absolute top-full left-0 w-full z-50 mt-1 rounded border border-white/10 overflow-hidden shadow-glass" style="background:#12121f">
+                  {budgetOptions.map(opt => (
+                    <div class="custom-select-option px-4 py-2.5 font-body text-sm text-muted cursor-pointer transition-all duration-150" data-value={opt.value}>
+                      {opt.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <!-- Checkbox propuesta -->
+            <label class="flex items-start gap-3 cursor-pointer group">
+              <div class="relative mt-0.5">
+                <input id="f-proposal" name="proposal" type="checkbox" class="peer sr-only" />
+                <div class="w-5 h-5 bg-void border border-white/20 rounded peer-checked:border-accent peer-checked:bg-accent/10 transition-all duration-200 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-accent text-sm opacity-0 peer-checked:opacity-100 absolute transition-opacity">check</span>
+                </div>
+              </div>
+              <span class="font-tech text-sm text-muted group-hover:text-white transition-colors leading-snug">
+                {t(lang, 'contact.form.proposalCheck')}
+              </span>
+            </label>
+
+            <!-- Mensajes de estado -->
+            <div id="form-success" class="hidden glass-panel border border-green-500/30 bg-green-500/5 rounded p-4 flex items-start gap-3">
+              <span class="material-symbols-outlined text-green-400 text-xl">check_circle</span>
+              <div>
+                <p class="font-display text-white text-sm">{t(lang, 'contact.form.successTitle')}</p>
+                <p class="font-tech text-muted text-xs mt-0.5">{t(lang, 'contact.form.successMsg')}</p>
+              </div>
+            </div>
+            <div id="form-error" class="hidden glass-panel border border-red-500/30 bg-red-500/5 rounded p-4 flex items-start gap-3">
+              <span class="material-symbols-outlined text-red-400 text-xl">error</span>
+              <p class="font-tech text-muted text-sm">{t(lang, 'contact.form.errorMsg')}</p>
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              id="form-submit"
+              class="group relative mt-2 px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[8deg] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              <span class="relative z-10 flex items-center justify-center gap-2 skew-x-[8deg]">
+                <span id="submit-label">{t(lang, 'contact.form.submit')}</span>
+                <span class="material-symbols-outlined text-sm">send</span>
+              </span>
+              <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  .form-input {
+    @apply w-full bg-void/60 border border-white/10 rounded px-4 py-2.5
+           font-body text-text-light text-sm
+           placeholder:text-muted
+           focus:outline-none focus:border-accent
+           transition-all duration-200;
+  }
+  .form-input:focus {
+    box-shadow: 0 0 0 1px rgba(98,195,246,0.3), inset 0 0 8px rgba(98,195,246,0.05);
+  }
+  .active-mode {
+    @apply bg-accent/10 text-accent border border-accent/30;
+  }
+  .custom-select-option:hover {
+    background-color: rgba(109, 40, 217, 0.3);
+    color: #ffffff;
+  }
+  .custom-select-option.selected {
+    background-color: rgba(109, 40, 217, 0.5);
+    color: #ffffff;
+  }
+  .custom-select-trigger.open {
+    border-color: rgba(98, 195, 246, 0.6);
+    box-shadow: 0 0 0 1px rgba(98,195,246,0.3);
+  }
+  .custom-select-trigger.open .material-symbols-outlined {
+    transform: rotate(180deg);
+    color: #62C3F6;
+  }
+  .form-input.input-error {
+    border-color: rgba(248, 113, 113, 0.6);
+    box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.3);
+  }
+  .custom-select-trigger.input-error {
+    border-color: rgba(248, 113, 113, 0.6);
+    box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.3);
+  }
+</style>
+
+<script>
+  // ── HubSpot config ──
+  const HS_PORTAL_ID = '51240089';
+  const HS_FORM_GUID = '86d06b92-885b-47f6-954d-e458f1475061';
+  const HS_ENDPOINT  = `https://api.hsforms.com/submissions/v3/integration/submit/${HS_PORTAL_ID}/${HS_FORM_GUID}`;
+
+  // ── Tab switch ──
+  const btnMeeting   = document.getElementById('btn-meeting')!;
+  const btnForm      = document.getElementById('btn-form')!;
+  const panelMeeting = document.getElementById('panel-meeting')!;
+  const panelForm    = document.getElementById('panel-form')!;
+
+  function activateMode(mode: 'meeting' | 'form') {
+    const isMeeting = mode === 'meeting';
+    panelMeeting.classList.toggle('hidden', !isMeeting);
+    panelForm.classList.toggle('hidden', isMeeting);
+    btnMeeting.classList.toggle('active-mode', isMeeting);
+    btnMeeting.classList.toggle('text-muted', !isMeeting);
+    btnForm.classList.toggle('active-mode', !isMeeting);
+    btnForm.classList.toggle('text-muted', isMeeting);
+  }
+
+  btnMeeting.addEventListener('click', () => activateMode('meeting'));
+  btnForm.addEventListener('click',    () => activateMode('form'));
+
+  // ── Custom dropdowns ──
+  document.querySelectorAll<HTMLElement>('.custom-select').forEach(select => {
+    const trigger = select.querySelector<HTMLButtonElement>('.custom-select-trigger')!;
+    const panel   = select.querySelector<HTMLElement>('.custom-select-panel')!;
+    const label   = select.querySelector<HTMLElement>('.custom-select-label')!;
+    const input   = select.querySelector<HTMLInputElement>('input[type="hidden"]')!;
+
+    // Abrir / cerrar
+    trigger.addEventListener('click', () => {
+      const isOpen = !panel.classList.contains('hidden');
+      // Cerrar todos primero
+      document.querySelectorAll('.custom-select-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.custom-select-trigger').forEach(t => t.classList.remove('open'));
+      if (!isOpen) {
+        panel.classList.remove('hidden');
+        trigger.classList.add('open');
+      }
+    });
+
+    // Seleccionar opción
+    panel.querySelectorAll<HTMLElement>('.custom-select-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const value = opt.dataset.value!;
+        const text  = opt.textContent?.trim() ?? '';
+        input.value = value;
+        label.textContent = text;
+        label.classList.remove('text-muted');
+        label.classList.add('text-text-light');
+        panel.querySelectorAll('.custom-select-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        panel.classList.add('hidden');
+        trigger.classList.remove('open');
+      });
+    });
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.custom-select')) {
+      document.querySelectorAll('.custom-select-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.custom-select-trigger').forEach(t => t.classList.remove('open'));
+    }
+  });
+
+  // ── Checkbox visual fix ──
+  const proposalCheckbox = document.getElementById('f-proposal') as HTMLInputElement;
+  const checkIcon = proposalCheckbox?.nextElementSibling?.querySelector('span.material-symbols-outlined');
+  proposalCheckbox?.addEventListener('change', () => {
+    if (checkIcon) checkIcon.classList.toggle('opacity-100', proposalCheckbox.checked);
+  });
+
+  // ── Validación ──
+  const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const REGEX_PHONE = /^[\d\s\+\-\(\)]{7,20}$/;
+
+  const errorMessages: Record<string, string> = {
+    'f-name':        'Ingresa tu nombre completo',
+    'f-email':       'Ingresa un correo válido (ej: nombre@empresa.com)',
+    'f-phone':       'Solo se permiten números, espacios y los caracteres + - ( )',
+    'f-service':     'Selecciona un servicio',
+    'f-description': 'Describe tu proyecto (mínimo 10 caracteres)',
+  };
+
+  function showError(fieldId: string, msg?: string) {
+    const el  = document.getElementById(fieldId) as HTMLInputElement | null;
+    const err = document.querySelector<HTMLElement>(`.field-error[data-for="${fieldId}"]`);
+    if (err) { err.textContent = msg ?? errorMessages[fieldId] ?? ''; err.classList.remove('hidden'); }
+    if (el)  { el.classList.add('input-error'); }
+    if (fieldId === 'f-service') {
+      document.querySelector<HTMLElement>('.custom-select-trigger')?.classList.add('input-error');
+    }
+  }
+
+  function clearError(fieldId: string) {
+    const el  = document.getElementById(fieldId) as HTMLInputElement | null;
+    const err = document.querySelector<HTMLElement>(`.field-error[data-for="${fieldId}"]`);
+    if (err) err.classList.add('hidden');
+    if (el)  el.classList.remove('input-error');
+    if (fieldId === 'f-service') {
+      document.querySelector<HTMLElement>('.custom-select-trigger')?.classList.remove('input-error');
+    }
+  }
+
+  function validateField(fieldId: string): boolean {
+    const el = document.getElementById(fieldId) as HTMLInputElement | HTMLTextAreaElement | null;
+    const val = el?.value?.trim() ?? '';
+
+    if (fieldId === 'f-name') {
+      if (val.length < 2) { showError(fieldId); return false; }
+    }
+    if (fieldId === 'f-email') {
+      if (!REGEX_EMAIL.test(val)) { showError(fieldId); return false; }
+    }
+    if (fieldId === 'f-phone' && val !== '') {
+      if (!REGEX_PHONE.test(val)) { showError(fieldId); return false; }
+    }
+    if (fieldId === 'f-service') {
+      if (val === '') { showError(fieldId); return false; }
+    }
+    if (fieldId === 'f-description') {
+      if (val.length < 10) { showError(fieldId); return false; }
+    }
+    clearError(fieldId);
+    return true;
+  }
+
+  // Validar al salir del campo
+  ['f-name', 'f-email', 'f-phone', 'f-description'].forEach(id => {
+    document.getElementById(id)?.addEventListener('blur', () => validateField(id));
+    document.getElementById(id)?.addEventListener('input', () => {
+      const err = document.querySelector<HTMLElement>(`.field-error[data-for="${id}"]`);
+      if (!err?.classList.contains('hidden')) validateField(id);
+    });
+  });
+
+  // Teléfono: solo permite dígitos, +, -, espacios y paréntesis mientras escribe
+  const phoneInput = document.getElementById('f-phone') as HTMLInputElement;
+  phoneInput?.addEventListener('input', () => {
+    phoneInput.value = phoneInput.value.replace(/[^\d\s\+\-\(\)]/g, '');
+  });
+
+  // ── Form submit → HubSpot API ──
+  const form        = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn   = document.getElementById('form-submit') as HTMLButtonElement;
+  const submitLabel = document.getElementById('submit-label')!;
+  const successMsg  = document.getElementById('form-success')!;
+  const errorMsg    = document.getElementById('form-error')!;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    successMsg.classList.add('hidden');
+    errorMsg.classList.add('hidden');
+
+    const required = ['f-name', 'f-email', 'f-service', 'f-description'];
+    const optional = ['f-phone'];
+    const phoneVal = (document.getElementById('f-phone') as HTMLInputElement)?.value?.trim();
+    const toCheck  = phoneVal ? [...required, ...optional] : required;
+    const valid    = toCheck.map(id => validateField(id)).every(Boolean);
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    const originalLabel = submitLabel.textContent;
+    submitLabel.textContent = 'ENVIANDO...';
+
+    const getValue = (id: string) =>
+      (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement)?.value?.trim() ?? '';
+
+    const proposalValue = (document.getElementById('f-proposal') as HTMLInputElement).checked;
+
+    const fields = [
+      { objectTypeId: '0-1', name: 'firstname',                  value: getValue('f-name') },
+      { objectTypeId: '0-1', name: 'company',                    value: getValue('f-company') },
+      { objectTypeId: '0-1', name: 'email',                      value: getValue('f-email') },
+      { objectTypeId: '0-1', name: 'phone',                      value: getValue('f-phone') },
+      { objectTypeId: '0-1', name: 'servicio_requerido',         value: getValue('f-service') },
+      { objectTypeId: '0-1', name: 'descripcion_del_proyecto',   value: getValue('f-description') },
+      { objectTypeId: '0-1', name: 'presupuesto_estimado',       value: getValue('f-budget') },
+      { objectTypeId: '0-1', name: 'propuesta_antes_de_reunion', value: proposalValue ? 'Sí' : 'No' },
+    ].filter(f => f.value !== '');
+
+    try {
+      const res = await fetch(HS_ENDPOINT, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ fields, context: { pageUri: window.location.href, pageName: document.title } }),
+      });
+
+      if (res.ok) {
+        successMsg.classList.remove('hidden');
+        setTimeout(() => successMsg.classList.add('hidden'), 30000);
+        form.reset();
+        if (checkIcon) checkIcon.classList.remove('opacity-100');
+        document.querySelectorAll<HTMLElement>('.custom-select-label').forEach(el => {
+          el.classList.add('text-muted'); el.classList.remove('text-text-light');
+        });
+      } else {
+        errorMsg.classList.remove('hidden');
+        setTimeout(() => errorMsg.classList.add('hidden'), 30000);
+      }
+    } catch {
+      errorMsg.classList.remove('hidden');
+      setTimeout(() => errorMsg.classList.add('hidden'), 30000);
+    } finally {
+      submitBtn.disabled = false;
+      submitLabel.textContent = originalLabel;
+    }
+  });
+</script>
