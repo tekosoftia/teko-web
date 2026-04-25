@@ -2,13 +2,13 @@
 import { t, type Lang } from '../../i18n/utils';
 import { HUBSPOT_PORTAL_ID, HUBSPOT_FORM_GUID, CALENDLY_URL } from '../../config/constants';
 
-const calendlyEmbed = `${CALENDLY_URL}?background_color=0b0b12&text_color=ffffff&primary_color=62c3f6&locale=${lang}`;
-
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+
+const calendlyEmbed = `${CALENDLY_URL}?background_color=0b0b12&text_color=ffffff&primary_color=62c3f6&locale=${lang}`;
 
 const serviceOptions = [
   { value: 'software', label: t(lang, 'contact.form.serviceOptions.software') },
