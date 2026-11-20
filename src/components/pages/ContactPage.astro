@@ -1,6 +1,6 @@
 ---
 import { t, type Lang } from '../../i18n/utils';
-import { HUBSPOT_PORTAL_ID, HUBSPOT_FORM_GUID, CALENDLY_URL } from '../../config/constants';
+import { HUBSPOT_PORTAL_ID, HUBSPOT_FORM_GUID, BOOKING_URL, BOOKING_SHORT_URL } from '../../config/constants';
 
 interface Props {
   lang: Lang;
@@ -8,7 +8,7 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const calendlyEmbed = `${CALENDLY_URL}?background_color=070b14&text_color=ffffff&primary_color=38bdf8&locale=${lang}`;
+const bookingEmbed = `${BOOKING_URL}?gv=true&hl=${lang}`;
 
 const serviceOptions = [
   { value: 'software', label: t(lang, 'contact.form.serviceOptions.software') },
@@ -96,7 +96,7 @@ const budgetOptions = [
               <span class="material-symbols-outlined text-accent text-base">videocam</span>
               <div>
                 <div class="font-mono text-[10px] text-muted tracking-widest uppercase">{t(lang, 'contact.meeting.format')}</div>
-                <div class="font-display text-white text-sm">Google Meet / Zoom</div>
+                <div class="font-display text-white text-sm">Google Meet</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
@@ -109,14 +109,19 @@ const budgetOptions = [
           </div>
         </div>
 
-        <!-- Calendly embed -->
-        <div class="lg:col-span-3 rounded-lg overflow-hidden relative border border-white/5 flex items-center justify-center p-2" style="background:#070b14;">
-          <div class="calendly-inline-widget w-full"
-            data-url={calendlyEmbed}
-            data-resize="true"
-            style="width:100%;">
+        <!-- Google Calendar booking page (Workspace) -->
+        <div class="lg:col-span-3 flex flex-col gap-2">
+          <div class="rounded-lg overflow-hidden border border-white/10 bg-white">
+            <iframe
+              src={bookingEmbed}
+              title={lang === 'es' ? 'Agendar una reunión con Tekosoft' : 'Book a meeting with Tekosoft'}
+              class="block w-full h-[680px] border-0"
+              loading="lazy"></iframe>
           </div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <a href={BOOKING_SHORT_URL} target="_blank" rel="noopener" class="self-end font-mono text-[11px] text-muted hover:text-accent no-underline inline-flex items-center gap-1">
+            {lang === 'es' ? 'Abrir agenda en una pestaña nueva' : 'Open booking page in a new tab'}
+            <span class="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
         </div>
       </div>
     </div>

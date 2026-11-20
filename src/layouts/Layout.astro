@@ -31,6 +31,8 @@ const {
 const displayTitle = title ? `Tekosoft | ${title}` : 'Tekosoft';
 const currentPath = Astro.url.pathname;
 const alternatePath = getAlternatePath(currentPath);
+// Hide the "Agendar diagnóstico" CTA on the contact page itself.
+const isContactPage = /^\/(es\/contacto|en\/contact)\/?$/.test(currentPath);
 
 const navLinks = lang === 'es'
   ? [
@@ -162,12 +164,12 @@ function isActive(linkPath: string): boolean {
           >
             {lang}
           </a>
-          <a
+          {!isContactPage && (<a
             href={lang === 'es' ? '/es/contacto' : '/en/contact'}
             class="hidden md:inline-flex whitespace-nowrap items-center gap-2 px-4 py-2 rounded-lg bg-accent text-void font-jakarta font-semibold text-sm no-underline transition-all hover:shadow-neon hover:-translate-y-px"
           >
             {t(lang, 'layout.ctaDiagnosis')}
-          </a>
+          </a>)}
           <button id="mobile-menu-btn" class="xl:hidden text-white" aria-label="Menu">
             <span class="material-symbols-outlined">menu</span>
           </button>
@@ -188,12 +190,12 @@ function isActive(linkPath: string): boolean {
               {link.label}
             </a>
           ))}
-          <a
+          {!isContactPage && (<a
             href={lang === 'es' ? '/es/contacto' : '/en/contact'}
             class="mt-2 inline-flex justify-center items-center px-4 py-3 rounded-lg bg-accent text-void font-jakarta font-semibold text-sm no-underline"
           >
             {t(lang, 'layout.ctaDiagnosis')}
-          </a>
+          </a>)}
         </div>
       </nav>
     </header>

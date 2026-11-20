@@ -6,6 +6,8 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const contactPath = lang === 'es' ? '/es/contacto' : '/en/contact';
+const contactLabel = lang === 'es' ? 'Contáctanos' : 'Contact us';
 
 const cardsData = [
   {
@@ -83,7 +85,7 @@ const cardsData = [
     </div>
 
     <!-- Value Proposition -->
-    <p class="font-tech text-slate-300 text-base md:text-lg max-w-3xl mb-10 border-l-2 border-accent/50 pl-4 sm:pl-5 leading-relaxed">
+    <p class="font-tech text-slate-300 text-base md:text-lg w-full lg:w-1/2 text-justify hyphens-auto mb-10 border-l-2 border-accent/50 pl-4 sm:pl-5 leading-relaxed">
       {t(lang, 'systems.intro')}
     </p>
 
@@ -181,9 +183,9 @@ const cardsData = [
                     </span>
                   ))}
                 </div>
-                <button class="text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-void flex items-center justify-center rounded-sm bg-transparent group-hover:p-2 hover:group-hover:bg-white group-hover:opacity-100 opacity-50">
+                <a href={contactPath} aria-label={`${contactLabel}: ${card.title}`} class="no-underline text-accent transition-all duration-500 group-hover:bg-accent group-hover:text-void flex items-center justify-center rounded-sm bg-transparent group-hover:p-2 hover:group-hover:bg-white group-hover:opacity-100 opacity-50">
                   <span class="material-symbols-outlined">arrow_forward</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -263,9 +265,9 @@ const cardsData = [
                       <span class="font-mono text-xs text-slate-500 group-hover:px-2 group-hover:py-1 group-hover:bg-accent/10 group-hover:border group-hover:border-accent/30 group-hover:text-accent group-hover:text-[10px] group-hover:rounded transition-all duration-500">{tag}</span>
                     ))}
                   </div>
-                  <button class="text-accent group-hover:bg-accent group-hover:text-void flex items-center justify-center rounded-sm bg-transparent group-hover:p-2 opacity-50 group-hover:opacity-100 transition-all duration-500">
+                  <a href={contactPath} tabindex="-1" class="no-underline text-accent group-hover:bg-accent group-hover:text-void flex items-center justify-center rounded-sm bg-transparent group-hover:p-2 opacity-50 group-hover:opacity-100 transition-all duration-500">
                     <span class="material-symbols-outlined">arrow_forward</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -285,17 +287,70 @@ const cardsData = [
 </main>
 
 <style>
-  @keyframes marquee-scroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
   .services-marquee {
-    animation: marquee-scroll 50s linear infinite;
     width: max-content;
+    will-change: transform;
+    touch-action: pan-y;
+    cursor: grab;
   }
-
-  .services-marquee:hover {
-    animation-play-state: paused;
-  }
+  .services-marquee.is-dragging { cursor: grabbing; user-select: none; }
 </style>
+
+<script>
+  // JS-driven marquee: slow auto-scroll + fast manual control (horizontal wheel /
+  // trackpad, Shift+wheel, drag or swipe). Loops seamlessly over the duplicated set.
+  const track = document.getElementById('services-carousel');
+  if (track) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const AUTO = reduced ? 0 : 40;   // px/s auto-scroll
+    const WHEEL_BOOST = 2.2;         // wheel delta multiplier (higher = faster)
+    const FRICTION = 0.9;            // momentum decay per frame
+    let x = 0, v = 0, hovering = false, dragging = false;
+    let lastX = 0, lastT = 0, prev = performance.now();
+    let half = track.scrollWidth / 2;
+    const measure = () => { half = track.scrollWidth / 2; };
+    new ResizeObserver(measure).observe(track);
+
+    const wrap = () => { if (half > 0) { x %= half; if (x > 0) x -= half; } };
+
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+      if (!dragging) {
+        x += v; v *= FRICTION; if (Math.abs(v) < 0.05) v = 0;
+        if (!hovering && v === 0) x -= AUTO * dt;
+      }
+      wrap();
+      track.style.transform = `translate3d(${x}px,0,0)`;
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+
+    track.addEventListener('mouseenter', () => { hovering = true; });
+    track.addEventListener('mouseleave', () => { hovering = false; });
+
+    // Horizontal wheel / trackpad swipe, or Shift + vertical wheel. Plain vertical scroll still scrolls the page.
+    track.addEventListener('wheel', (e) => {
+      const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+      if (!dx) return;
+      e.preventDefault();
+      v -= dx * WHEEL_BOOST * 0.12;
+    }, { passive: false });
+
+    // Drag (mouse) and swipe (touch) with momentum on release.
+    track.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).closest('a,button')) return;
+      dragging = true; v = 0; lastX = e.clientX; lastT = performance.now();
+      track.setPointerCapture(e.pointerId); track.classList.add('is-dragging');
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dx = (e.clientX - lastX) * 1.5;
+      x += dx; v = dx * (16 / Math.max(1, now - lastT));
+      lastX = e.clientX; lastT = now;
+    });
+    const end = () => { dragging = false; track.classList.remove('is-dragging'); };
+    track.addEventListener('pointerup', end);
+    track.addEventListener('pointercancel', end);
+  }
+</script>
