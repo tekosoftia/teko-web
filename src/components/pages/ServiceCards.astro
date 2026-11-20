@@ -3,110 +3,60 @@ import { t, type Lang } from '../../i18n/utils';
 
 interface Props {
   lang: Lang;
-  mobile?: boolean;
 }
 
-const { lang, mobile = false } = Astro.props;
+const { lang } = Astro.props;
+const servicesPath = lang === 'es' ? '/es/servicios' : '/en/services';
 
+// Bento layout (lg): tall card on the left, two wide cards stacked on the right.
 const cards = [
-  {
-    icon: 'code',
-    iconColor: 'text-primary',
-    labelColor: 'text-muted',
-    labelKey: 'home.liveStats.service1',
-    titleKey: 'home.liveStats.service1Title',
-    descKey:  'home.liveStats.service1Desc',
-    border:   'border-t border-l border-accent/40',
-    desktopPos: 'top-[-35%] left-[20%]',
-    animDelay: '',
-    ping: false,
-  },
-  {
-    icon: 'psychology',
-    iconColor: 'text-primary',
-    labelColor: 'text-primary',
-    labelKey: 'home.liveStats.service2',
-    titleKey: 'home.liveStats.service2Title',
-    descKey:  'home.liveStats.service2Desc',
-    border:   'border-l border-primary/40',
-    desktopPos: 'top-[-30%] left-[5%]',
-    animDelay: '0.4s',
-    ping: true,
-  },
-  {
-    icon: 'monitoring',
-    iconColor: 'text-accent',
-    labelColor: 'text-muted',
-    labelKey: 'home.liveStats.service3',
-    titleKey: 'home.liveStats.service3Title',
-    descKey:  'home.liveStats.service3Desc',
-    border:   'border-l border-accent/40',
-    desktopPos: 'top-[-25%] left-[0%]',
-    animDelay: '0.8s',
-    ping: false,
-  },
-  {
-    icon: 'groups',
-    iconColor: 'text-primary',
-    labelColor: 'text-muted',
-    labelKey: 'home.liveStats.service4',
-    titleKey: 'home.liveStats.service4Title',
-    descKey:  'home.liveStats.service4Desc',
-    border:   'border-b border-l border-primary/40',
-    desktopPos: 'top-[-20%] left-[5%]',
-    animDelay: '1.2s',
-    ping: false,
-  },
-  {
-    icon: 'lightbulb',
-    iconColor: 'text-accent',
-    labelColor: 'text-muted',
-    labelKey: 'home.liveStats.service5',
-    titleKey: 'home.liveStats.service5Title',
-    descKey:  'home.liveStats.service5Title',
-    border:   'border-b border-accent/40',
-    desktopPos: 'top-[-15%] left-[20%]',
-    animDelay: '1.6s',
-    ping: false,
-  },
+  { key: 'software', icon: 'code',      index: '01', span: 'lg:row-span-2' },
+  { key: 'data',     icon: 'database',  index: '02', span: 'lg:col-span-2' },
+  { key: 'ai',       icon: 'neurology', index: '03', span: 'lg:col-span-2' },
 ];
 ---
 
-{mobile ? (
-  <!-- Mobile: 2-col grid -->
-  <div class="grid grid-cols-2 gap-3 w-full">
-    {cards.map((card, i) => (
-      <div class:list={["glass-panel p-3 rounded-lg cyber-corner bg-void/80 backdrop-blur-md", card.border, i === 4 ? "col-span-2" : ""]}>
-        <div class:list={["flex items-center mb-2 border-b border-white/10 pb-1.5", card.ping ? "justify-between" : "gap-2"]}>
-          <div class="flex items-center gap-2">
-            <span class:list={["material-symbols-outlined text-[14px]", card.iconColor]}>{card.icon}</span>
-            <span class:list={["font-mono text-[9px] tracking-wide uppercase", card.labelColor]}>{t(lang, card.labelKey)}</span>
-          </div>
-          {card.ping && <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-4 lg:gap-5">
+  {cards.map((card, i) => (
+    <article
+      class:list={[
+        'group relative glass-panel cyber-corner rounded-xl p-6 lg:p-8 flex flex-col gap-4 bg-void/70 backdrop-blur-md border border-accent/15 transition-all duration-300 hover:border-accent/50 hover:shadow-neon hover:-translate-y-1',
+        i === 0 ? 'md:col-span-2 lg:col-span-1' : '',
+        card.span,
+      ]}
+    >
+      <div class="flex items-center justify-between">
+        <div class="size-11 rounded-lg flex items-center justify-center bg-accent/10 border border-accent/30 shadow-[0_0_18px_rgba(56,189,248,0.15)]">
+          <span class="material-symbols-outlined text-accent text-[22px]">{card.icon}</span>
         </div>
-        <div class="font-display font-bold text-sm text-white">{t(lang, card.titleKey)}</div>
-        <div class:list={["text-[7px] font-mono tracking-widest mt-1 uppercase", card.iconColor === 'text-accent' ? "text-accent/80" : "text-muted"]}>{t(lang, card.descKey)}</div>
+        <span class="font-mono text-[10px] tracking-[0.2em] text-muted">{card.index}</span>
       </div>
-    ))}
-  </div>
-) : (
-  <!-- Desktop: absolutely positioned floating cards -->
-  <>
-    {cards.map((card) => (
-      <div
-        class:list={["absolute glass-panel p-3 rounded-lg cyber-corner animate-float z-20 shadow-neon bg-void/80 backdrop-blur-md w-[240px]", card.border, card.desktopPos]}
-        style={card.animDelay ? `animation-delay: ${card.animDelay}` : ''}
-      >
-        <div class:list={["flex items-center mb-2 border-b border-white/10 pb-1.5", card.ping ? "justify-between" : "gap-2"]}>
-          <div class="flex items-center gap-2">
-            <span class:list={["material-symbols-outlined text-[14px]", card.iconColor]}>{card.icon}</span>
-            <span class:list={["font-mono text-[9px] tracking-wide uppercase", card.labelColor]}>{t(lang, card.labelKey)}</span>
-          </div>
-          {card.ping && <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>}
-        </div>
-        <div class="font-display font-bold text-base text-white whitespace-nowrap">{t(lang, card.titleKey)}</div>
-        <div class:list={["text-[7px] font-mono tracking-widest mt-1 uppercase", card.iconColor === 'text-accent' ? "text-accent/80" : "text-muted"]}>{t(lang, card.descKey)}</div>
+
+      <h3 class="font-display font-bold text-xl lg:text-2xl text-white leading-tight">
+        {t(lang, `home.services.${card.key}.title`)}
+      </h3>
+      <p class="text-muted text-sm lg:text-base leading-relaxed">
+        {t(lang, `home.services.${card.key}.desc`)}
+      </p>
+
+      {i === 0 && (
+        <!-- Code preview: only in the tall card (real HTML text, crisp) -->
+        <pre class="hidden lg:block mt-2 flex-grow rounded-lg border border-white/10 bg-black/40 p-4 font-mono text-[12px] leading-relaxed text-white/70 overflow-hidden" aria-hidden="true"><span class="text-accent">export async function</span> deploy(app) {'{'}
+  <span class="text-muted">// tests → build → release</span>
+  <span class="text-accent">await</span> pipeline.run(app);
+  <span class="text-accent">return</span> {'{'} status: <span class="text-sky-300">'live'</span> {'}'};
+{'}'}</pre>
+      )}
+
+      <div class="mt-auto flex flex-wrap items-center gap-2 pt-2">
+        {(t(lang, `home.services.${card.key}.tags`) as string[]).map((tag) => (
+          <span class="tech-tag font-mono text-[11px] text-white/70 px-2 py-1 rounded">{tag}</span>
+        ))}
+        <a href={servicesPath} class="ml-auto font-mono text-xs text-accent flex items-center gap-1 no-underline opacity-80 group-hover:opacity-100">
+          {t(lang, 'home.services.more')}
+          <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+        </a>
       </div>
-    ))}
-  </>
-)}
+    </article>
+  ))}
+</div>

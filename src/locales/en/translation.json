@@ -3,53 +3,113 @@
         "systemTitle": "TEKOSOFT",
         "systemSubtitle": "S.A.S. SYSTEM",
         "nav": {
-            "home": "Home Command",
+            "home": "Home",
             "identity": "Identity",
-            "systems": "Systems",
+            "systems": "Services",
             "quality": "Quality",
             "expertise": "Expertise",
             "software": "Our Software",
             "contact": "Contact"
         },
-        "statusOnline": "SYS: ONLINE",
         "footer": {
             "coordinates": "COORDINATES:",
             "coordValue": "34.0522° N, 118.2437° W",
             "sysStatus": "SYS.STATUS",
             "optimal": "OPTIMAL"
-        }
+        },
+        "ctaDiagnosis": "Book a diagnosis"
     },
     "home": {
-        "protocol": "PROTOCOL V.2.04",
-        "title1": "Engineer",
-        "title2": "The Future",
-        "subtitle": "We build custom software and integrate artificial intelligence and business intelligence into your systems to automate processes and improve your company's performance.",
-        "initProject": "Initialize Project",
-        "viewCaps": "VIEW CAPABILITIES",
-        "metrics": {
-            "latency": "LATENCY",
-            "latencyValue": "12ms",
-            "uptime": "UPTIME",
-            "uptimeValue": "99.99%",
-            "encryption": "ENCRYPTION",
-            "encryptionValue": "AES-256"
+        "eyebrow": "TEKOSOFT S.A.S. // DIGITAL ENGINEERING",
+        "title1": "We automate your business",
+        "title2": "with software, data and AI agents.",
+        "subtitle": "Scalable architectures, intelligent data pipelines and autonomous AI agents designed around your operation.",
+        "ctaPrimary": "Book a diagnosis",
+        "ctaSecondary": "See success stories",
+        "scene": {
+            "software": "Software",
+            "data": "Data & Infrastructure",
+            "ai": "AI & Automation",
+            "ariaLabel": "Isometric scene: Software, Data/AWS and AI connected by data flows",
+            "nodes": {
+                "software": {
+                    "label": "Software",
+                    "title": "Software Engineering",
+                    "desc": "Custom digital products: frontends, APIs and microservices with continuous delivery.",
+                    "items": [
+                        "React · Astro · TypeScript",
+                        "REST / GraphQL APIs",
+                        "Automated testing and CI/CD"
+                    ],
+                    "tag": "Apps · APIs · CI/CD"
+                },
+                "data": {
+                    "label": "Data & Infrastructure",
+                    "title": "Data Architecture & AWS",
+                    "desc": "Governed pipelines and data lakes on AWS, ready for analytics and AI.",
+                    "items": [
+                        "S3 · Glue · Redshift",
+                        "Orchestrated ETL / ELT",
+                        "Infrastructure as code"
+                    ],
+                    "tag": "Data lakes · ETL · AWS"
+                },
+                "ai": {
+                    "label": "AI & Automation",
+                    "title": "AI Automation",
+                    "desc": "LLM-powered agents and workflows that act on your systems and data.",
+                    "items": [
+                        "LLM agents",
+                        "RAG over your own data",
+                        "Process orchestration"
+                    ],
+                    "tag": "Agents · LLMs · RAG"
+                }
+            },
+            "hint": "Select a node to see details",
+            "close": "Close"
         },
-        "liveStats": {
-            "service1": "SOFTWARE ENGINEERING",
-            "service1Title": "Custom Software",
-            "service1Desc": "Web, Mobile & Desktop",
-            "service2": "ARTIFICIAL INTELLIGENCE",
-            "service2Title": "Integrated AI",
-            "service2Desc": "Autonomous Agents",
-            "service3": "BUSINESS INTELLIGENCE",
-            "service3Title": "BI Ecosystems",
-            "service3Desc": "Data Dashboards",
-            "service4": "STAFF AUGMENTATION",
-            "service4Title": "Elite Talent",
-            "service4Desc": "Senior Dev Teams",
-            "service5": "STRATEGIC CONSULTING",
-            "service5Title": "Tech Consulting",
-            "service5Desc": "Digital Transformation"
+        "services": {
+            "label": "SERVICES",
+            "title": "One team, from idea to production",
+            "more": "Learn more",
+            "software": {
+                "title": "Software Engineering",
+                "desc": "Custom web, mobile and backend platforms with clean architecture, automated testing and CI/CD from day one.",
+                "tags": [
+                    "TypeScript",
+                    "Python",
+                    "APIs",
+                    "CI/CD"
+                ]
+            },
+            "data": {
+                "title": "Data Architecture & AWS",
+                "desc": "Data lakes, pipelines and BI dashboards on AWS, with infrastructure as code and costs under control.",
+                "tags": [
+                    "AWS",
+                    "ETL",
+                    "BI",
+                    "IaC"
+                ]
+            },
+            "ai": {
+                "title": "AI Automation",
+                "desc": "Autonomous agents and LLM integrations that remove repetitive work and plug into your systems.",
+                "tags": [
+                    "Agents",
+                    "LLMs",
+                    "RPA"
+                ]
+            }
+        },
+        "trust": {
+            "label": "Partnerships & technology",
+            "partner": "Partner to Partner"
+        },
+        "metrics": {
+            "automated": "Processes automated",
+            "cloud": "Cloud native"
         }
     },
     "identity": {

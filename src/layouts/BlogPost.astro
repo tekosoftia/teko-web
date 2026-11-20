@@ -35,7 +35,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   <div
     id="reading-bar"
     class="fixed top-0 left-0 h-[3px] z-50 transition-all duration-100"
-    style="width:0%; background: linear-gradient(90deg, #62C3F6, #6D28D9);"
+    style="width:0%; background: linear-gradient(90deg, #38BDF8, #2563EB);"
   ></div>
 
   <main class="relative z-10 flex-grow w-full py-16 px-4 md:px-8">
@@ -126,7 +126,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
               {lang === 'es' ? 'Progreso de lectura' : 'Reading progress'}
             </span>
             <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-              <div id="sidebar-bar" class="h-full rounded-full transition-all duration-150" style="width:0%; background: linear-gradient(90deg,#62C3F6,#6D28D9);"></div>
+              <div id="sidebar-bar" class="h-full rounded-full transition-all duration-150" style="width:0%; background: linear-gradient(90deg,#38BDF8,#2563EB);"></div>
             </div>
             <span id="sidebar-pct" class="font-mono text-xs text-white/40">0%</span>
           </div>
@@ -188,7 +188,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
     margin-top: 3rem;
     margin-bottom: 1rem;
     padding-left: 1rem;
-    border-left: 2px solid rgba(98, 195, 246, 0.5);
+    border-left: 2px solid rgba(56, 189, 248, 0.5);
     line-height: 1.3;
   }
 
@@ -208,7 +208,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   }
 
   .blog-content a {
-    color: #62C3F6;
+    color: #38BDF8;
     text-decoration: none;
   }
   .blog-content a:hover { text-decoration: underline; }
@@ -227,7 +227,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
     content: '▸';
     position: absolute;
     left: -0.5rem;
-    color: #62C3F6;
+    color: #38BDF8;
     font-size: 0.75rem;
     top: 0.3rem;
   }
@@ -238,10 +238,10 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   .blog-content blockquote {
     margin: 2rem 0;
     padding: 1.25rem 1.5rem;
-    background: rgba(98, 195, 246, 0.05);
-    border-left: 3px solid #62C3F6;
+    background: rgba(56, 189, 248, 0.05);
+    border-left: 3px solid #38BDF8;
     border-radius: 0 0.5rem 0.5rem 0;
-    box-shadow: 0 0 20px rgba(98, 195, 246, 0.08), inset 0 1px 0 rgba(98,195,246,0.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.08), inset 0 1px 0 rgba(56,189,248,0.1);
     color: rgba(255,255,255,0.75);
     font-style: normal;
   }
@@ -256,7 +256,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   .blog-content hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, rgba(98,195,246,0.3), rgba(109,40,217,0.2), transparent);
+    background: linear-gradient(90deg, rgba(56,189,248,0.3), rgba(37,99,235,0.2), transparent);
     margin: 2.5rem 0;
   }
 
@@ -265,7 +265,7 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85em;
     background: rgba(255,255,255,0.06);
-    color: #62C3F6;
+    color: #38BDF8;
     padding: 0.15em 0.45em;
     border-radius: 0.25rem;
   }

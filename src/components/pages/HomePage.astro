@@ -1,128 +1,126 @@
 ---
 import { t, type Lang } from '../../i18n/utils';
-import ServiceCards from './ServiceCards.astro';
+import HeroScene from './HeroScene.astro';
+import HeroScene3D from '../scene/HeroScene3D';
+import AwsLogo from '../brand/AwsLogo.astro';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const contactPath = lang === 'es' ? '/es/contacto' : '/en/contact';
+// Copy for the 3D scene labels / node detail panel.
+const sceneCopy = {
+  ...t(lang, 'home.scene.nodes'),
+  hint: t(lang, 'home.scene.hint'),
+  close: t(lang, 'home.scene.close'),
+  ariaLabel: t(lang, 'home.scene.ariaLabel'),
+};
+const casesPath = lang === 'es' ? '/es/software' : '/en/software';
+
+// Wordmarks rendered as text (swap for official SVG logos when available).
+// Wordmarks rendered as text (swap for official SVG logos when available).
+// Grouped loosely: AI · Data · Software / Cloud.
+const stack = [
+  'Claude', 'Meta Llama', 'Hugging Face', 'OpenAI', 'LangChain',
+  'Python', 'PostgreSQL', 'Databricks',
+  'Docker', 'Kubernetes', 'Terraform', 'React', 'Node.js',
+];
+
 ---
 
-<main class="relative z-10 flex-grow w-full flex items-center justify-center px-6 overflow-hidden">
-  <div class="max-w-[1440px] w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center relative h-full py-12 lg:py-0">
+<main class="relative z-10 flex-grow w-full flex flex-col items-center px-6 overflow-hidden">
+  <!-- ── Hero ── -->
+  <section class="max-w-[1440px] w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] gap-8 lg:gap-4 items-center relative py-10 lg:py-6">
     <!-- Left Column: Typography & Action -->
-    <div class="flex flex-col gap-8 z-20 order-1">
+    <div class="flex flex-col gap-7 z-20 order-1">
       <!-- Decorative Label -->
       <div class="flex items-center gap-3">
         <div class="h-[1px] w-12 bg-accent/50"></div>
-        <span class="font-mono text-accent text-xs tracking-[0.2em]">{t(lang, 'home.protocol')}</span>
+        <span class="font-mono text-accent text-xs tracking-[0.2em]">{t(lang, 'home.eyebrow')}</span>
       </div>
       <!-- Main Heading -->
       <div class="relative">
-        <h1 class="font-display font-bold text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.9] tracking-tighter text-white uppercase">
-          {t(lang, 'home.title1')} <br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-primary bg-[length:200%_auto] animate-pulse-glow">{t(lang, 'home.title2')}</span>
+        <h1 class="font-display font-extrabold text-[2rem] sm:text-5xl lg:text-[2.6rem] xl:text-[2.9rem] 2xl:text-[3.3rem] leading-[1.06] tracking-tight text-white uppercase">
+          {t(lang, 'home.title1')}{' '}
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accent">{t(lang, 'home.title2')}</span>
         </h1>
-        <div class="absolute -z-10 -top-10 -left-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full"></div>
+        <div class="absolute -z-10 -top-10 -left-10 w-40 h-40 bg-accent/15 blur-3xl rounded-full"></div>
       </div>
       <!-- Subtitle -->
-      <p class="font-tech text-lg md:text-xl text-muted max-w-lg border-l-2 border-primary/50 pl-6 py-1">
+      <p class="font-tech text-lg md:text-xl text-muted max-w-xl border-l-2 border-accent/50 pl-6 py-1 leading-relaxed">
         {t(lang, 'home.subtitle')}
       </p>
       <!-- CTA Area -->
-      <div class="pt-6 flex flex-wrap gap-6 items-center">
-        <a href={lang === 'es' ? '/es/contacto' : '/en/contact'} class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[12deg] glitch-hover no-underline">
+      <div class="pt-2 flex flex-wrap gap-6 items-center">
+        <a href={contactPath} class="group relative px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] -skew-x-[12deg] glitch-hover no-underline">
           <span class="relative z-10 flex items-center gap-2 skew-x-[12deg]">
-            {t(lang, 'home.initProject')}
+            {t(lang, 'home.ctaPrimary')}
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </span>
           <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
         </a>
-        <a class="font-mono text-sm text-white/70 hover:text-accent flex items-center gap-2 group transition-colors no-underline" href="#">
+        <a class="font-mono text-sm text-white/70 hover:text-accent flex items-center gap-2 group transition-colors no-underline uppercase" href={casesPath}>
           <span class="w-8 h-[1px] bg-white/30 group-hover:bg-accent transition-colors"></span>
-          {t(lang, 'home.viewCaps')}
+          {t(lang, 'home.ctaSecondary')}
         </a>
       </div>
-      <!-- Bottom Metrics (Decor) — visible only on desktop -->
-      <div class="mt-12 hidden lg:flex gap-8 font-mono text-[10px] text-white/40">
-        <div>
-          <span class="block text-accent mb-1">{t(lang, 'home.metrics.latency')}</span>
-          {t(lang, 'home.metrics.latencyValue')}
-        </div>
-        <div>
-          <span class="block text-accent mb-1">{t(lang, 'home.metrics.uptime')}</span>
-          {t(lang, 'home.metrics.uptimeValue')}
-        </div>
-        <div>
-          <span class="block text-accent mb-1">{t(lang, 'home.metrics.encryption')}</span>
-          {t(lang, 'home.metrics.encryptionValue')}
+    </div>
+
+    <!-- Right Column: Isometric 3D scene (R3F island over a CSS fallback) -->
+    <div class="relative order-2 w-full" data-scene-root>
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] bg-accent/10 blur-[90px] rounded-full"></div>
+      </div>
+      <div class="scene-fallback">
+        <HeroScene lang={lang} />
+      </div>
+      <HeroScene3D client:only="react" copy={sceneCopy} />
+      <noscript><style>[data-scene-root] .scene-fallback{opacity:1!important;visibility:visible!important}</style></noscript>
+    </div>
+  </section>
+
+  <!-- ── Trust strip: AWS Partner + stack ── -->
+  <section class="max-w-[1440px] w-full border-y border-white/10 py-6 flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+    <span class="font-mono text-[11px] tracking-[0.2em] text-muted uppercase shrink-0">{t(lang, 'home.trust.label')}</span>
+    <div class="flex items-center gap-8 min-w-0 flex-1">
+      <span class="inline-flex items-center gap-3 shrink-0">
+        <AwsLogo class="h-9 w-auto shrink-0" />
+        <span class="w-px h-8 bg-white/20"></span>
+        <span class="font-display font-bold text-base text-white tracking-tight whitespace-nowrap">{t(lang, 'home.trust.partner')}</span>
+      </span>
+      <!-- Auto-scrolling tech ribbon (duplicated list for a seamless loop) -->
+      <div class="tk-marquee min-w-0 flex-1" role="list" aria-label={t(lang, 'home.trust.label')}>
+        <div class="tk-marquee-track">
+          {[0, 1].map((copy) => (
+            <div class="tk-marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {stack.map((name) => (
+                <span role={copy === 0 ? 'listitem' : undefined} class="font-display font-bold text-lg text-white/40 hover:text-white/80 transition-colors tracking-tight whitespace-nowrap">{name}</span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Right Column: Visual Anchor -->
-    <div class="relative flex items-center justify-center min-h-[380px] sm:min-h-[500px] lg:min-h-[800px] order-2 w-full lg:w-[110%] lg:-ml-[5%]" style="perspective: 1000px;">
-
-      <!-- Background Orbit/Rings System -->
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none translate-x-0 sm:translate-x-[20%] lg:translate-x-[30%] opacity-40">
-        <div class="w-[450px] h-[450px] md:w-[750px] md:h-[750px] rounded-full border border-white/5 animate-spin-slow absolute"></div>
-        <div class="w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full border border-dashed border-accent/20 animate-spin-reverse-slow absolute"></div>
-        <div class="w-[250px] h-[250px] md:w-[450px] md:h-[450px] rounded-full border border-primary/30 shadow-[0_0_40px_rgba(109,40,217,0.3)] animate-pulse-glow absolute"></div>
-        <div class="absolute w-[750px] h-[750px] animate-spin-slow hidden md:block">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-void border border-accent/50 px-2 py-0.5 text-[8px] font-mono text-accent rounded-sm backdrop-blur-sm">NODE_ALFA</div>
-        </div>
-        <div class="absolute w-[600px] h-[600px] animate-spin-reverse-slow hidden md:block">
-          <div class="absolute bottom-[10%] right-[10%] bg-void border border-primary/50 px-2 py-0.5 text-[8px] font-mono text-primary rounded-sm backdrop-blur-sm">DATA_STREAM</div>
-        </div>
-      </div>
-
-      <!-- AI & Data Analytics Central Core -->
-      <div class="relative z-10 w-full h-[380px] sm:h-[500px] lg:h-[800px]">
-
-        <!-- Central Corporate Panel -->
-        <div class="absolute left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-[-50%] top-1/2 -translate-y-1/2 z-10 w-[260px] lg:w-[340px] min-h-[350px] glass-panel p-10 rounded-lg cyber-corner border border-primary/50 bg-void/90 backdrop-blur-xl shadow-[0_0_50px_rgba(109,40,217,0.2)] flex flex-col justify-center">
-          <div class="text-center mb-6">
-            <h2 class="font-mono text-accent text-base tracking-[0.3em] uppercase">{lang === 'es' ? 'QUIENES SOMOS' : 'WHO WE ARE'}</h2>
-          </div>
-          <p class="font-tech text-white/80 text-sm xl:text-base leading-relaxed text-center">
-            {lang === 'es'
-              ? 'TEKOSOFT S.A.S. es una firma de ingeniería dedicada al desarrollo, consultoría y comercialización de soluciones informáticas integrales. Nuestra operación abarca desde IA y analítica de datos (BI) hasta la exportación de servicios de ingeniería con estándares globales.'
-              : 'TEKOSOFT S.A.S. is an engineering firm dedicated to the development, consulting and commercialization of comprehensive IT solutions. Our operations range from AI and data analytics (BI) to exporting engineering services with global standards.'}
-          </p>
-        </div>
-
-        <!-- Service Modules: desktop floating cards -->
-        <div class="hidden lg:contents">
-          <ServiceCards lang={lang} />
-        </div>
-
-        <!-- Neural Network SVG Lines -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0 hidden lg:block overflow-visible" style="position:relative;z-index:2;">
-          <line x1="70%" y1="40%" x2="35%" y2="15%" stroke="url(#cyan-purple)" stroke-width="1.5" stroke-dasharray="4 4" class="animate-[pulse_3s_linear_infinite]" />
-          <circle cx="35%" cy="15%" r="4" fill="#62C3F6" class="animate-ping" />
-          <line x1="70%" y1="43%" x2="20%" y2="30%" stroke="url(#cyan-purple)" stroke-width="1.5" stroke-dasharray="4 4" class="animate-[pulse_4s_linear_infinite]" />
-          <circle cx="20%" cy="30%" r="4" fill="#6D28D9" class="animate-ping" />
-          <line x1="70%" y1="50%" x2="15%" y2="47%" stroke="#62C3F6" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6" class="animate-[pulse_3s_linear_infinite]" />
-          <circle cx="15%" cy="47%" r="3" fill="#62C3F6" opacity="0.6" />
-          <line x1="70%" y1="55%" x2="20%" y2="63%" stroke="#6D28D9" stroke-width="1" stroke-dasharray="2 4" opacity="0.5" />
-          <circle cx="20%" cy="63%" r="3" fill="#6D28D9" opacity="0.5" />
-          <line x1="70%" y1="58%" x2="35%" y2="78%" stroke="url(#cyan-purple)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.7" />
-          <circle cx="35%" cy="78%" r="3" fill="#62C3F6" opacity="0.7" />
-          <defs>
-            <linearGradient id="cyan-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#62C3F6" />
-              <stop offset="100%" stop-color="#6D28D9" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </div>
-
-    <!-- Service Cards — mobile only -->
-    <div class="order-3 lg:hidden w-full">
-      <ServiceCards lang={lang} mobile={true} />
-    </div>
-  </div>
 </main>
 
+<script>
+  // Decide early (before the 3D bundle loads) whether this device gets the CSS scene,
+  // so visitors never see the fallback flash before the 3D version.
+  const root = document.querySelector<HTMLElement>('[data-scene-root]');
+  if (root) {
+    const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+    let webgl = false;
+    try {
+      const c = document.createElement('canvas');
+      webgl = !!(c.getContext('webgl2') || c.getContext('webgl'));
+    } catch { webgl = false; }
+    const lowEnd = !!nav.connection?.saveData || (nav.hardwareConcurrency ?? 8) <= 2 || (nav.deviceMemory ?? 8) <= 2;
+    if (!webgl || lowEnd) root.classList.add('is-css');
+    // Safety net: if the 3D scene isn't ready in 8s, show the CSS version.
+    setTimeout(() => { if (!root.classList.contains('is-3d')) root.classList.add('is-css'); }, 8000);
+  }
+</script>

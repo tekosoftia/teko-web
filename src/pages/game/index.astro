@@ -6,12 +6,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Teko Runner | TekoSoft</title>
-  <link rel="icon" href="/favicon-teko.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style is:inline>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #0B0B12;
+      background: #070B14;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -35,11 +35,11 @@
       margin-bottom: 16px;
       letter-spacing: 6px;
     }
-    h1 span { color: #62C3F6; text-shadow: 0 0 20px rgba(98,195,246,0.35); }
+    h1 span { color: #38BDF8; text-shadow: 0 0 20px rgba(56,189,248,0.35); }
     canvas {
       width: 100%;
       display: block;
-      border: 1px solid rgba(109,40,217,0.3);
+      border: 1px solid rgba(37,99,235,0.3);
       border-radius: 8px;
       cursor: pointer;
     }
@@ -50,11 +50,11 @@
       margin-top: 12px;
     }
     kbd {
-      background: rgba(109,40,217,0.2);
-      border: 1px solid rgba(109,40,217,0.4);
+      background: rgba(37,99,235,0.2);
+      border: 1px solid rgba(37,99,235,0.4);
       padding: 2px 8px;
       border-radius: 4px;
-      color: #62C3F6;
+      color: #38BDF8;
       font-family: inherit;
     }
     @media (max-width: 500px) {
@@ -90,9 +90,9 @@
     const GRAY   = '#E2E8F0';
     const DGRAY  = '#E0E0E8';
     const BLACK  = '#1E1E2E';
-    const BG     = '#0B0B12';
-    const CYAN   = '#62C3F6';
-    const PURPLE = '#6D28D9';
+    const BG     = '#070B14';
+    const CYAN   = '#38BDF8';
+    const PURPLE = '#2563EB';
     const PINK   = '#FF6B9D';
     const GREEN  = '#22C55E';
     const RED    = '#EF4444';
@@ -222,7 +222,7 @@
         if (p.life <= 0) parts.splice(i, 1);
       }
       if (dog.gnd && tick % 8 === 0)
-        emitP(dog.x + 12, GROUND - 1, 1, 'rgba(98,195,246,0.3)', 1.5, -1.5, 0);
+        emitP(dog.x + 12, GROUND - 1, 1, 'rgba(56,189,248,0.3)', 1.5, -1.5, 0);
 
       if (shake > 0) { shake *= 0.85; if (shake < 0.3) shake = 0; }
     }
@@ -240,12 +240,12 @@
     function drawBg() {
       ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
       // Grid
-      ctx.strokeStyle = 'rgba(109,40,217,0.05)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(37,99,235,0.05)'; ctx.lineWidth = 1;
       const gs = 40, ox = scroll % gs;
       for (let x = -ox; x < W; x += gs) { ctx.beginPath(); ctx.moveTo(x|0,0); ctx.lineTo(x|0,H); ctx.stroke(); }
       for (let y = 0; y < H; y += gs)   { ctx.beginPath(); ctx.moveTo(0,y);   ctx.lineTo(W,y);   ctx.stroke(); }
       // Parallax floaters
-      ctx.fillStyle = 'rgba(109,40,217,0.07)';
+      ctx.fillStyle = 'rgba(37,99,235,0.07)';
       const cs = scroll * 0.3;
       for (let i = 0; i < 5; i++) {
         const cx = ((i * 180 - cs) % 1000 + 1000) % 1000 - 50;
@@ -263,13 +263,13 @@
       ctx.beginPath(); ctx.moveTo(0, GROUND); ctx.lineTo(W, GROUND); ctx.stroke();
       ctx.restore();
       // Dashes
-      ctx.fillStyle = 'rgba(98,195,246,0.12)';
+      ctx.fillStyle = 'rgba(56,189,248,0.12)';
       const ds = 28, doff = scroll % ds;
       for (let x = -doff; x < W; x += ds)
         ctx.fillRect(x|0, GROUND + 4, 2 + Math.abs(Math.sin(x * 0.05)) * 4, 1);
       // Code text
       ctx.font = '8px "JetBrains Mono",monospace';
-      ctx.fillStyle = 'rgba(98,195,246,0.06)';
+      ctx.fillStyle = 'rgba(56,189,248,0.06)';
       const txts = ['> npm run build','01001011','const teko = new App()','████ 100%','git push','{ ok: true }','deploy --prod'];
       const to = scroll % 800;
       for (let i = 0; i < txts.length; i++)
@@ -416,7 +416,7 @@
           // Shelves + LEDs
           for (let i = 1; i < 5; i++) {
             const sy = o.y + i * 10;
-            ctx.strokeStyle = 'rgba(109,40,217,0.25)';
+            ctx.strokeStyle = 'rgba(37,99,235,0.25)';
             ctx.beginPath(); ctx.moveTo(o.x + 2, sy); ctx.lineTo(o.x + o.w - 2, sy); ctx.stroke();
             // LEDs
             ctx.fillStyle = i % 2 ? GREEN : RED;
@@ -424,7 +424,7 @@
             ctx.fillStyle = CYAN;
             ctx.beginPath(); ctx.arc(o.x + 12, sy - 4, 1.5, 0, Math.PI * 2); ctx.fill();
             // Mini lines (data)
-            ctx.fillStyle = 'rgba(98,195,246,0.2)';
+            ctx.fillStyle = 'rgba(56,189,248,0.2)';
             ctx.fillRect(o.x + 16, sy - 5, 4, 1);
             ctx.fillRect(o.x + 16, sy - 3, 3, 1);
           }
@@ -458,7 +458,7 @@
       ctx.textAlign = 'left';
       // Brand
       ctx.font = '10px "Space Grotesk",sans-serif';
-      ctx.fillStyle = 'rgba(109,40,217,0.35)';
+      ctx.fillStyle = 'rgba(37,99,235,0.35)';
       ctx.fillText('TEKOSOFT', 12, 18);
     }
 

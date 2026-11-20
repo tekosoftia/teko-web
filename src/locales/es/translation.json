@@ -3,53 +3,113 @@
         "systemTitle": "TEKOSOFT",
         "systemSubtitle": "Software Development",
         "nav": {
-            "home": "Comando Base",
+            "home": "Home",
             "identity": "Identidad",
-            "systems": "Sistemas",
+            "systems": "Servicios",
             "quality": "Calidad",
             "expertise": "Experticia",
             "software": "Nuestro Software",
             "contact": "Contacto"
         },
-        "statusOnline": "SISTEMA: EN LÍNEA",
         "footer": {
             "coordinates": "COORDENADAS:",
             "coordValue": "34.0522° N, 118.2437° O",
             "sysStatus": "ESTADO SIS.",
             "optimal": "ÓPTIMO"
-        }
+        },
+        "ctaDiagnosis": "Agendar diagnóstico"
     },
     "home": {
-        "protocol": "PROTOCOLO V.2.04",
-        "title1": "Diseñando",
-        "title2": "El Futuro",
-        "subtitle": "Desarrollamos software a medida e integramos inteligencia artificial y business intelligence en tus sistemas para automatizar procesos y mejorar el rendimiento de tu empresa.",
-        "initProject": "Inicializar Proyecto",
-        "viewCaps": "VER CAPACIDADES",
-        "metrics": {
-            "latency": "LATENCIA",
-            "latencyValue": "12ms",
-            "uptime": "DISPONIB.",
-            "uptimeValue": "99.99%",
-            "encryption": "ENCRIPTACIÓN",
-            "encryptionValue": "AES-256"
+        "eyebrow": "TEKOSOFT S.A.S. // INGENIERÍA DIGITAL",
+        "title1": "Automatizamos tu empresa",
+        "title2": "con software, datos y agentes de IA.",
+        "subtitle": "Arquitecturas escalables, pipelines de datos inteligentes y agentes de IA autónomos diseñados a la medida de tu operación.",
+        "ctaPrimary": "Agendar diagnóstico",
+        "ctaSecondary": "Ver casos de éxito",
+        "scene": {
+            "software": "Software",
+            "data": "Datos e Infraestructura",
+            "ai": "IA y Automatización",
+            "ariaLabel": "Escena isométrica: Software, Datos/AWS e IA conectados por flujos de datos",
+            "nodes": {
+                "software": {
+                    "label": "Software",
+                    "title": "Ingeniería de Software",
+                    "desc": "Producto digital a medida: frontends, APIs y microservicios con entrega continua.",
+                    "items": [
+                        "React · Astro · TypeScript",
+                        "APIs REST / GraphQL",
+                        "Pruebas automatizadas y CI/CD"
+                    ],
+                    "tag": "Apps · APIs · CI/CD"
+                },
+                "data": {
+                    "label": "Datos e Infraestructura",
+                    "title": "Arquitectura de Datos & AWS",
+                    "desc": "Pipelines y data lakes gobernados sobre AWS, listos para analítica e IA.",
+                    "items": [
+                        "S3 · Glue · Redshift",
+                        "ETL / ELT orquestado",
+                        "Infraestructura como código"
+                    ],
+                    "tag": "Data lakes · ETL · AWS"
+                },
+                "ai": {
+                    "label": "IA y Automatización",
+                    "title": "Automatización con IA",
+                    "desc": "Agentes y flujos con LLMs que ejecutan tareas sobre tus sistemas y datos.",
+                    "items": [
+                        "Agentes con LLMs",
+                        "RAG sobre datos propios",
+                        "Orquestación de procesos"
+                    ],
+                    "tag": "Agentes · LLMs · RAG"
+                }
+            },
+            "hint": "Selecciona un nodo para ver detalles",
+            "close": "Cerrar"
         },
-        "liveStats": {
-            "service1": "ING. DE SOFTWARE",
-            "service1Title": "Desarrollo a Medida",
-            "service1Desc": "Web, Mobile y Desktop",
-            "service2": "INTELIGENCIA ARTIFICIAL",
-            "service2Title": "IA Integrada",
-            "service2Desc": "Agentes Autónomos",
-            "service3": "BUSINESS INTELLIGENCE",
-            "service3Title": "Ecosistemas BI",
-            "service3Desc": "Tableros de Datos",
-            "service4": "STAFF AUGMENTATION",
-            "service4Title": "Talento de Élite",
-            "service4Desc": "Células de Desarrollo",
-            "service5": "CONSULTORÍA",
-            "service5Title": "Consultoría Estratégica",
-            "service5Desc": "Transformación Digital"
+        "services": {
+            "label": "SERVICIOS",
+            "title": "Un solo equipo, de la idea a producción",
+            "more": "Ver más",
+            "software": {
+                "title": "Ingeniería de Software",
+                "desc": "Plataformas web, móviles y backends a medida, con arquitectura limpia, pruebas automatizadas y CI/CD desde el día uno.",
+                "tags": [
+                    "TypeScript",
+                    "Python",
+                    "APIs",
+                    "CI/CD"
+                ]
+            },
+            "data": {
+                "title": "Arquitectura de Datos & AWS",
+                "desc": "Data lakes, pipelines y tableros de BI sobre AWS, con infraestructura como código y costos bajo control.",
+                "tags": [
+                    "AWS",
+                    "ETL",
+                    "BI",
+                    "IaC"
+                ]
+            },
+            "ai": {
+                "title": "Automatización con IA",
+                "desc": "Agentes autónomos e integraciones con LLMs que eliminan tareas repetitivas y se conectan a tus sistemas.",
+                "tags": [
+                    "Agentes",
+                    "LLMs",
+                    "RPA"
+                ]
+            }
+        },
+        "trust": {
+            "label": "Alianzas y tecnología",
+            "partner": "Partner to Partner"
+        },
+        "metrics": {
+            "automated": "Procesos automatizados",
+            "cloud": "Cloud native"
         }
     },
     "identity": {

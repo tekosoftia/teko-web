@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
 import { t, getAlternatePath, type Lang } from '../i18n/utils';
-import logo from '../assets/logo.png';
+import { Image } from 'astro:assets';
+import logo from '../assets/logotipo-tekosoft.png';
 
 interface Props {
   lang: Lang;
@@ -40,7 +41,6 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.expertise'),  path: '/es/tecnologias' },
       { label: t(lang, 'layout.nav.software'),   path: '/es/software' },
       { label: 'Blog',                           path: '/es/blog' },
-      { label: t(lang, 'layout.nav.contact'),    path: '/es/contacto' },
     ]
   : [
       { label: t(lang, 'layout.nav.home'),      path: '/en' },
@@ -50,7 +50,6 @@ const navLinks = lang === 'es'
       { label: t(lang, 'layout.nav.expertise'),  path: '/en/technologies' },
       { label: t(lang, 'layout.nav.software'),   path: '/en/software' },
       { label: 'Blog',                           path: '/en/blog' },
-      { label: t(lang, 'layout.nav.contact'),    path: '/en/contact' },
     ];
 
 function isActive(linkPath: string): boolean {
@@ -66,13 +65,17 @@ function isActive(linkPath: string): boolean {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0A0A0F" />
-  <link rel="icon" type="image/png" href="/favicon-teko.png" />
+  <meta name="theme-color" content="#070B14" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
   <title>{displayTitle}</title>
@@ -106,7 +109,7 @@ function isActive(linkPath: string): boolean {
     "@type": "Organization",
     "name": "Tekosoft S.A.S.",
     "url": "https://tekosoft.io",
-    "logo": "https://tekosoft.io/favicon-teko.png",
+    "logo": "https://tekosoft.io/icon-512.png",
     "description": "Firma de ingeniería dedicada al desarrollo, consultoría y comercialización de soluciones informáticas integrales.",
     "sameAs": []
   })} />
@@ -125,25 +128,19 @@ function isActive(linkPath: string): boolean {
 
     <!-- Top Navbar -->
     <header class="relative z-40 w-full border-b border-white/10 backdrop-blur-md bg-void/50">
-      <div class="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="max-w-[1440px] mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
         <!-- Logo Section -->
-        <a href={`/${lang}`} class="flex items-center gap-3 no-underline">
-          <div class="relative size-14 md:size-20 flex items-center justify-center shrink-0">
-            <img src={logo.src} alt="Tekosoft Logo" class="size-14 md:size-20 object-contain" />
-          </div>
-          <div>
-            <h2 class="font-orbitron font-bold text-xl tracking-wide leading-none text-white">{t(lang, 'layout.systemTitle')}</h2>
-            <span class="font-mono text-[10px] text-accent tracking-[0.2em] opacity-80">{t(lang, 'layout.systemSubtitle')}</span>
-          </div>
+        <a href={`/${lang}`} class="flex items-center shrink-0 no-underline" aria-label="Tekosoft">
+          <Image src={logo} alt="Tekosoft" width={680} class="h-14 md:h-20 w-auto object-contain" loading="eager" fetchpriority="high" />
         </a>
 
         <!-- Navigation Links (Desktop) -->
-        <nav class="hidden lg:flex items-center gap-8">
+        <nav class="hidden xl:flex items-center gap-7">
           {navLinks.map(link => (
             <a
               href={link.path}
               class:list={[
-                'font-tech font-semibold text-sm tracking-widest transition-colors uppercase relative group flex flex-col no-underline',
+                'font-tech font-semibold text-[13px] tracking-wider whitespace-nowrap transition-colors uppercase relative group flex flex-col no-underline',
                 isActive(link.path) ? 'text-accent' : 'text-muted hover:text-accent'
               ]}
             >
@@ -165,18 +162,20 @@ function isActive(linkPath: string): boolean {
           >
             {lang}
           </a>
-          <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-sm">
-            <div class="size-2 rounded-full bg-green-500 animate-pulse"></div>
-            <span class="font-mono text-xs text-green-400">{t(lang, 'layout.statusOnline')}</span>
-          </div>
-          <button id="mobile-menu-btn" class="lg:hidden text-white" aria-label="Menu">
+          <a
+            href={lang === 'es' ? '/es/contacto' : '/en/contact'}
+            class="hidden md:inline-flex whitespace-nowrap items-center gap-2 px-4 py-2 rounded-lg bg-accent text-void font-jakarta font-semibold text-sm no-underline transition-all hover:shadow-neon hover:-translate-y-px"
+          >
+            {t(lang, 'layout.ctaDiagnosis')}
+          </a>
+          <button id="mobile-menu-btn" class="xl:hidden text-white" aria-label="Menu">
             <span class="material-symbols-outlined">menu</span>
           </button>
         </div>
       </div>
 
       <!-- Mobile Menu -->
-      <nav id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-void/95 backdrop-blur-md">
+      <nav id="mobile-menu" class="hidden xl:hidden border-t border-white/10 bg-void/95 backdrop-blur-md">
         <div class="flex flex-col px-6 py-4 gap-3">
           {navLinks.map(link => (
             <a
@@ -189,6 +188,12 @@ function isActive(linkPath: string): boolean {
               {link.label}
             </a>
           ))}
+          <a
+            href={lang === 'es' ? '/es/contacto' : '/en/contact'}
+            class="mt-2 inline-flex justify-center items-center px-4 py-3 rounded-lg bg-accent text-void font-jakarta font-semibold text-sm no-underline"
+          >
+            {t(lang, 'layout.ctaDiagnosis')}
+          </a>
         </div>
       </nav>
     </header>
@@ -197,14 +202,14 @@ function isActive(linkPath: string): boolean {
     <slot />
 
     <!-- HUD Decor: Corners -->
-    <div class="fixed bottom-8 left-8 hidden xl:block font-mono text-[10px] text-accent/40 z-30 pointer-events-none">
+    <div class="fixed bottom-8 left-8 hidden 2xl:block font-mono text-[10px] text-accent/40 z-0 opacity-[0.12] pointer-events-none select-none">
       <div class="flex flex-col gap-1">
         <span>{t(lang, 'layout.footer.coordinates')}</span>
         <span class="text-white">{t(lang, 'layout.footer.coordValue')}</span>
         <div class="w-full h-[1px] bg-accent/30 mt-1"></div>
       </div>
     </div>
-    <div class="fixed bottom-8 right-8 hidden xl:block font-mono text-[10px] text-right text-primary/60 z-30 pointer-events-none">
+    <div class="fixed bottom-8 right-8 hidden 2xl:block font-mono text-[10px] text-right text-primary/60 z-0 opacity-[0.12] pointer-events-none select-none">
       <div class="flex flex-col gap-1 items-end">
         <span>{t(lang, 'layout.footer.sysStatus')}</span>
         <span class="text-white flex items-center gap-2">

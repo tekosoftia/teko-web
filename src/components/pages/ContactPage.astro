@@ -8,7 +8,7 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const calendlyEmbed = `${CALENDLY_URL}?background_color=0b0b12&text_color=ffffff&primary_color=62c3f6&locale=${lang}`;
+const calendlyEmbed = `${CALENDLY_URL}?background_color=070b14&text_color=ffffff&primary_color=38bdf8&locale=${lang}`;
 
 const serviceOptions = [
   { value: 'software', label: t(lang, 'contact.form.serviceOptions.software') },
@@ -110,7 +110,7 @@ const budgetOptions = [
         </div>
 
         <!-- Calendly embed -->
-        <div class="lg:col-span-3 rounded-lg overflow-hidden relative border border-white/5 flex items-center justify-center p-2" style="background:#0b0b12;">
+        <div class="lg:col-span-3 rounded-lg overflow-hidden relative border border-white/5 flex items-center justify-center p-2" style="background:#070b14;">
           <div class="calendly-inline-widget w-full"
             data-url={calendlyEmbed}
             data-resize="true"
@@ -295,7 +295,7 @@ const budgetOptions = [
             <button
               type="submit"
               id="form-submit"
-              class="group relative mt-2 px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(98,195,246,0.6)] -skew-x-[8deg] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              class="group relative mt-2 px-8 py-4 bg-accent text-void font-bold font-display tracking-widest uppercase text-sm overflow-hidden transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] -skew-x-[8deg] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               <span class="relative z-10 flex items-center justify-center gap-2 skew-x-[8deg]">
                 <span id="submit-label">{t(lang, 'contact.form.submit')}</span>
@@ -320,26 +320,26 @@ const budgetOptions = [
            transition-all duration-200;
   }
   .form-input:focus {
-    box-shadow: 0 0 0 1px rgba(98,195,246,0.3), inset 0 0 8px rgba(98,195,246,0.05);
+    box-shadow: 0 0 0 1px rgba(56,189,248,0.3), inset 0 0 8px rgba(56,189,248,0.05);
   }
   .active-mode {
     @apply bg-accent/10 text-accent border border-accent/30;
   }
   .custom-select-option:hover {
-    background-color: rgba(109, 40, 217, 0.3);
+    background-color: rgba(37, 99, 235, 0.3);
     color: #ffffff;
   }
   .custom-select-option.selected {
-    background-color: rgba(109, 40, 217, 0.5);
+    background-color: rgba(37, 99, 235, 0.5);
     color: #ffffff;
   }
   .custom-select-trigger.open {
-    border-color: rgba(98, 195, 246, 0.6);
-    box-shadow: 0 0 0 1px rgba(98,195,246,0.3);
+    border-color: rgba(56, 189, 248, 0.6);
+    box-shadow: 0 0 0 1px rgba(56,189,248,0.3);
   }
   .custom-select-trigger.open .material-symbols-outlined {
     transform: rotate(180deg);
-    color: #62C3F6;
+    color: #38BDF8;
   }
   .form-input.input-error {
     border-color: rgba(248, 113, 113, 0.6);

@@ -1,0 +1,273 @@
+---
+/**
+ * CSS-only fallback of the hero scene (no WebGL): shown while the React Three Fiber
+ * island loads, and kept on low-end devices / no WebGL. Labels are flat HTML.
+ */
+import { t, type Lang } from '../../i18n/utils';
+import IsoBox from './IsoBox.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// Floor is 440×440. Orthogonal "circuit" routes between node centers.
+const flows = [
+  { id: 'flow-sw-data', d: 'M110 150 H220 V92 H322', dur: '3.2s' },
+  { id: 'flow-data-ai', d: 'M322 92 H372 V282', dur: '2.6s' },
+  { id: 'flow-sw-ai', d: 'M110 150 V282 H372', dur: '3.8s' },
+];
+---
+
+<div class="hero-scene relative w-full h-[290px] sm:h-[400px] md:h-[460px] lg:h-[clamp(440px,calc(100svh_-_250px),600px)]" data-hero-scene role="img" aria-label={t(lang, 'home.scene.ariaLabel')}>
+  <!-- Soft cyan halo behind the scene -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] bg-accent/10 blur-[90px] rounded-full"></div>
+  </div>
+
+  <!-- 3D layer (scaled per breakpoint; overlay below stays unscaled) -->
+  <div class="hs-viewport absolute left-1/2 top-1/2" aria-hidden="true">
+    <div class="hs-stage" data-hs-stage>
+      <div class="hs-floor">
+        <svg class="hs-flows" viewBox="0 0 440 440" width="440" height="440">
+          <defs>
+            <filter id="hs-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="b" />
+              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
+          {flows.map((f) => (
+            <g>
+              <path id={f.id} d={f.d} class="hs-flow-base" />
+              <path d={f.d} class="hs-flow-dash" filter="url(#hs-glow)" />
+              <circle r="3.2" class="hs-packet" filter="url(#hs-glow)">
+                <animateMotion dur={f.dur} repeatCount="indefinite" rotate="auto">
+                  <mpath href={`#${f.id}`} />
+                </animateMotion>
+              </circle>
+            </g>
+          ))}
+          <!-- Junction nodes -->
+          <circle cx="220" cy="92" r="4" class="hs-junction" />
+          <circle cx="372" cy="92" r="4" class="hs-junction" />
+          <circle cx="110" cy="282" r="4" class="hs-junction" />
+        </svg>
+
+        <!-- Software: code block -->
+        <IsoBox x={66} y={106} w={88} d={88} h={58}>
+          <div class="hs-code">
+            <span style="width:62%"></span>
+            <span style="width:40%;margin-left:14%" class="is-cyan"></span>
+            <span style="width:52%;margin-left:14%"></span>
+            <span style="width:30%;margin-left:28%" class="is-cyan"></span>
+            <span style="width:46%"></span>
+          </div>
+        </IsoBox>
+        <div class="hs-anchor" style="left:110px;top:150px;--z:96px" data-anchor="software"></div>
+
+        <!-- Data / AWS: stacked storage slabs -->
+        <IsoBox x={282} y={52} w={80} d={80} h={16} z={0} />
+        <IsoBox x={282} y={52} w={80} d={80} h={16} z={24} />
+        <IsoBox x={282} y={52} w={80} d={80} h={16} z={48} glow>
+          <div class="hs-db-top"></div>
+        </IsoBox>
+        <div class="hs-anchor" style="left:322px;top:92px;--z:96px" data-anchor="data"></div>
+
+        <!-- AI: core + floating chip -->
+        <IsoBox x={336} y={246} w={72} d={72} h={34}>
+          <div class="hs-ai-core"></div>
+        </IsoBox>
+        <div class="hs-bob">
+          <IsoBox x={350} y={260} w={44} d={44} h={14} z={58} glow>
+            <div class="hs-chip"></div>
+          </IsoBox>
+        </div>
+        <div class="hs-anchor" style="left:372px;top:282px;--z:110px" data-anchor="ai"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crisp HTML overlay: labels positioned from the 3D anchors -->
+  <div class="hs-overlay absolute inset-0 pointer-events-none" data-hs-overlay>
+    <div class="hs-label" data-label="software">
+      <span class="material-symbols-outlined text-[15px] text-accent">code</span>
+      {t(lang, 'home.scene.software')}
+    </div>
+    <div class="hs-label" data-label="data">
+      <span class="material-symbols-outlined text-[15px] text-accent">database</span>
+      {t(lang, 'home.scene.data')}
+    </div>
+    <div class="hs-label" data-label="ai">
+      <span class="material-symbols-outlined text-[15px] text-accent">neurology</span>
+      {t(lang, 'home.scene.ai')}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .hero-scene { --tilt: 58deg; perspective: 1800px; }
+
+  .hs-viewport {
+    width: 640px; height: 520px;
+    margin: -260px 0 0 -320px;
+    transform: scale(.56);
+    transform-style: preserve-3d;
+  }
+  @media (min-width: 640px)  { .hs-viewport { transform: scale(.66); } }
+  @media (min-width: 768px)  { .hs-viewport { transform: scale(.8); } }
+  @media (min-width: 1024px) { .hs-viewport { transform: scale(.9); } }
+  @media (min-width: 1280px) { .hs-viewport { transform: scale(1); } }
+
+  .hs-stage {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  }
+
+  .hs-floor {
+    position: absolute; left: 100px; top: 50px;
+    width: 440px; height: 440px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--tilt)) rotateZ(-45deg);
+    border-radius: 18px;
+    background:
+      linear-gradient(rgba(56,189,248,.07) 1px, transparent 1px) 0 0 / 22px 22px,
+      linear-gradient(90deg, rgba(56,189,248,.07) 1px, transparent 1px) 0 0 / 22px 22px,
+      radial-gradient(circle at 50% 50%, rgba(12,30,52,.9), rgba(7,11,20,.6) 70%);
+    border: 1px solid rgba(56,189,248,.22);
+    box-shadow: 0 0 60px rgba(56,189,248,.12), inset 0 0 40px rgba(56,189,248,.08);
+  }
+
+  .hs-flows { position: absolute; inset: 0; overflow: visible; transform: translateZ(1px); }
+  .hs-flow-base { fill: none; stroke: rgba(56,189,248,.22); stroke-width: 2; }
+  .hs-flow-dash {
+    fill: none; stroke: #38BDF8; stroke-width: 2; stroke-linecap: round;
+    stroke-dasharray: 6 16; animation: hs-dash 1.6s linear infinite;
+  }
+  .hs-packet { fill: #E0F7FF; }
+  .hs-junction { fill: #070B14; stroke: #38BDF8; stroke-width: 1.5; }
+  @keyframes hs-dash { to { stroke-dashoffset: -44; } }
+
+  /* Glass boxes */
+  .iso-box {
+    position: absolute; width: var(--w); height: var(--d);
+    transform-style: preserve-3d; transform: translateZ(var(--z));
+  }
+  .iso-face {
+    position: absolute; left: 0; top: 0;
+    border: 1px solid rgba(56,189,248,.38);
+    background: linear-gradient(180deg, rgba(56,189,248,.16), rgba(12,19,34,.72));
+  }
+  .iso-face--top {
+    width: var(--w); height: var(--d); transform: translateZ(var(--h));
+    background: linear-gradient(135deg, rgba(125,211,252,.22), rgba(12,25,45,.85));
+    border-color: rgba(125,211,252,.55);
+    box-shadow: inset 0 0 18px rgba(56,189,248,.18);
+    border-radius: 3px;
+  }
+  .iso-face--n, .iso-face--s { width: var(--w); height: var(--h); transform-origin: top; transform: rotateX(90deg); }
+  .iso-face--s { top: var(--d); background: linear-gradient(0deg, rgba(56,189,248,.20), rgba(10,18,32,.8)); }
+  .iso-face--w, .iso-face--e { width: var(--h); height: var(--d); transform-origin: left; transform: rotateY(-90deg); }
+  .iso-face--e { left: var(--w); }
+  .iso-face--w { background: linear-gradient(90deg, rgba(56,189,248,.10), rgba(7,11,20,.88)); }
+  .iso-face--n, .iso-face--e { opacity: .45; }
+  .iso-box--glow .iso-face--top { box-shadow: 0 0 26px rgba(56,189,248,.55), inset 0 0 18px rgba(56,189,248,.35); }
+
+  /* Top-face decorations */
+  .hs-code { position: absolute; inset: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .hs-code span { display: block; height: 5px; border-radius: 3px; background: rgba(226,240,255,.35); }
+  .hs-code span.is-cyan { background: rgba(56,189,248,.85); box-shadow: 0 0 8px rgba(56,189,248,.6); }
+  .hs-db-top { position: absolute; inset: 14px; border-radius: 50%; border: 2px solid rgba(56,189,248,.7); box-shadow: 0 0 14px rgba(56,189,248,.5); }
+  .hs-ai-core { position: absolute; inset: 16px; border-radius: 6px; background: radial-gradient(circle, rgba(56,189,248,.65), transparent 70%); }
+  .hs-chip {
+    position: absolute; inset: 8px; border-radius: 4px;
+    background:
+      repeating-linear-gradient(90deg, rgba(56,189,248,.5) 0 2px, transparent 2px 7px),
+      radial-gradient(circle, rgba(186,230,253,.9), rgba(56,189,248,.4));
+  }
+  .hs-bob { position: absolute; inset: 0; transform-style: preserve-3d; animation: hs-bob 4s ease-in-out infinite; }
+  @keyframes hs-bob { 0%, 100% { transform: translateZ(0); } 50% { transform: translateZ(10px); } }
+
+  /* Anchors (zero-size points in 3D used to place overlay labels) */
+  .hs-anchor { position: absolute; width: 0; height: 0; transform: translateZ(var(--z)); }
+
+  /* Overlay labels (flat, crisp HTML) */
+  .hs-label {
+    position: absolute; left: 0; top: 0;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: .04em;
+    color: #E6EDF7; white-space: nowrap;
+    background: rgba(7,11,20,.72);
+    border: 1px solid rgba(56,189,248,.35);
+    box-shadow: 0 0 18px rgba(56,189,248,.18);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    opacity: 0; transition: opacity .4s ease;
+    will-change: transform;
+  }
+  .hs-label.is-ready { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hs-flow-dash, .hs-bob { animation: none; }
+  }
+</style>
+
+<script>
+  function initHeroScene(root: HTMLElement) {
+    const stage = root.querySelector<HTMLElement>('[data-hs-stage]');
+    const overlay = root.querySelector<HTMLElement>('[data-hs-overlay]');
+    if (!stage || !overlay) return;
+
+    const anchors = new Map<string, HTMLElement>();
+    root.querySelectorAll<HTMLElement>('[data-anchor]').forEach((el) => anchors.set(el.dataset.anchor!, el));
+    const labels = Array.from(root.querySelectorAll<HTMLElement>('[data-label]'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Snap labels to whole pixels so the text never gets sub-pixel blur.
+    function placeLabels() {
+      const box = overlay!.getBoundingClientRect();
+      for (const label of labels) {
+        const a = anchors.get(label.dataset.label!);
+        if (!a) continue;
+        const r = a.getBoundingClientRect();
+        const x = Math.round(r.left - box.left - label.offsetWidth / 2);
+        const y = Math.round(r.top - box.top - label.offsetHeight);
+        label.style.transform = `translate(${x}px, ${y}px)`;
+        label.classList.add('is-ready');
+      }
+    }
+
+    placeLabels();
+    window.addEventListener('resize', placeLabels, { passive: true });
+    document.fonts?.ready.then(placeLabels);
+    if (reduceMotion) return;
+
+    // Subtle mouse parallax (±5°), eased with a lerp; the loop stops once settled.
+    const MAX = 5;
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    const hero = root.closest('section, main') ?? root;
+
+    function tick() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      stage!.style.setProperty('--rx', `${cy.toFixed(3)}deg`);
+      stage!.style.setProperty('--ry', `${cx.toFixed(3)}deg`);
+      placeLabels();
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.01 ? requestAnimationFrame(tick) : 0;
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+
+    hero.addEventListener('pointermove', (e) => {
+      const ev = e as PointerEvent;
+      if (ev.pointerType !== 'mouse') return;
+      const r = (hero as HTMLElement).getBoundingClientRect();
+      tx = ((ev.clientX - r.left) / r.width - 0.5) * 2 * MAX;
+      ty = -((ev.clientY - r.top) / r.height - 0.5) * 2 * MAX;
+      kick();
+    });
+    hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-hero-scene]').forEach(initHeroScene);
+</script>

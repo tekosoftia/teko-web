@@ -1,0 +1,29 @@
+---
+/**
+ * Glass box built from CSS 3D faces, placed on the isometric floor of HeroScene.
+ * x/y = top-left corner on the floor (px), w/d = footprint, h = height, z = elevation.
+ */
+interface Props {
+  x: number;
+  y: number;
+  w: number;
+  d: number;
+  h: number;
+  z?: number;
+  glow?: boolean;
+  class?: string;
+}
+
+const { x, y, w, d, h, z = 0, glow = false, class: className } = Astro.props;
+---
+
+<div
+  class:list={['iso-box', glow && 'iso-box--glow', className]}
+  style={`left:${x}px;top:${y}px;--w:${w}px;--d:${d}px;--h:${h}px;--z:${z}px;`}
+>
+  <div class="iso-face iso-face--n"></div>
+  <div class="iso-face iso-face--e"></div>
+  <div class="iso-face iso-face--w"></div>
+  <div class="iso-face iso-face--s"></div>
+  <div class="iso-face iso-face--top"><slot /></div>
+</div>
